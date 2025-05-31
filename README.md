@@ -17,6 +17,7 @@
             background-position: center center;
         }
         .header {
+        background-color: transparent !important;
             padding: 10px;
             text-align: center;
         }
