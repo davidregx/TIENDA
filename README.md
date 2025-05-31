@@ -16,15 +16,23 @@
             background-attachment: fixed;
             background-position: center center;
         }
-        .header {
-            padding: 10px;
-            text-align: center;
-        }
-        .header img {
-             background-color: transparent !important;
-             display: block; /* elimina espacios por línea base */
-         }
-        .carousel {
+           .header {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px; /* ajusta según necesites */
+}
+
+.header img {
+    background-color: transparent;
+    max-width: 150px;
+    height: auto;
+    display: block;
+}
+
+
+ .carousel {
             width: 100%;
             margin: auto;
             padding: 10px;
