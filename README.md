@@ -1,12 +1,12 @@
-    <!DOCTYPE html>
-    <html lang="es">
+<!DOCTYPE html>
+<html lang="es">
     <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
     <style>
 
-        html, body {
+ html, body {
             height: 100%;
             margin: 0;
             padding: 0;
@@ -56,17 +56,17 @@
             transition: box-shadow 0.3s ease, border-color 0.3s ease;
         }
 
-          .category.active {
+ .category.active {
               border: 2px solid #ff5722;
               box-shadow: 0 0 10px 3px #ff5722, 0 0 20px 5px #ff7043;
          }
 
-           .category:hover {
+ .category:hover {
                box-shadow: 0 0 8px 2px #ff5722, 0 0 16px 4px #ff7043;
                border-color: #ff5722;
         }
 
-        .category img {
+ .category img {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -272,7 +272,7 @@
         }
        /* Móvil (menos de 600px) — mantiene el estilo original o auto */
 
-       /* Tablet (entre 600px y 1023px) */
+ /* Tablet (entre 600px y 1023px) */
         @media (min-width: 600px) and (max-width: 1023px) {
     .carousel {
         max-width: 600px; /* ancho máximo para tablet */
@@ -292,7 +292,7 @@
     }
     }
 
-     /* Escritorio (1024px en adelante) */
+ /* Escritorio (1024px en adelante) */
      @media (min-width: 1024px) {
     .carousel {
         max-width: 900px; /* ancho máximo para escritorio */
@@ -312,7 +312,7 @@
     }
     }
 
-    @media (min-width: 600px) and (max-width: 1023px) {
+ @media (min-width: 600px) and (max-width: 1023px) {
     .categories {
         max-width: 600px;
         margin: 0 auto;
@@ -322,7 +322,7 @@
     }
     }
 
-     @media (min-width: 1024px) {
+ @media (min-width: 1024px) {
     .categories {
         max-width: 900px;
         margin: 0 auto;
@@ -337,9 +337,8 @@
     <div class="header">
     <img alt="Logo de la tienda de cervezas" src="https://lh3.googleusercontent.com/gps-cs/AIky0YUu_iHb76HWQOsSQBflySl2faKq5R4GyoZzZFn0mTwGFQB_CSITg3e5OYfI0N85MvqdxIGu82itcWGacnVBJQneFQAI3amSYcVYVmNcpzOu-3_kikJ7KAounBFfEZcWru_N9hjsVSGLLfG3=w1000-h1000-p-k-no" style="width: 150px; height: auto;"/>
     </div>
-
 <!-- Carousel Bootstrap -->
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="max-width:900px; margin: 10px auto; border-radius:20px;">
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="max-width:900px; margin: 10px auto; border-radius:20px;">
     <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -371,12 +370,12 @@
     </div>
 
 <!-- Barra de búsqueda -->
-    <div style="text-align:center; margin: 10px;">
+ <div style="text-align:center; margin: 10px;">
     <input id="search-input" placeholder="Buscar producto por nombre..." style="padding: 8px; width: 80%; max-width: 400px; border-radius: 8px; border: 1px solid #ddd;" type="text" />
     </div>
 
 <!-- Categorías -->
-    <section class="categories">
+<section class="categories">
     <div class="category active" onclick="filterProducts('category1')">
         <img alt="Cerveza Pilsen" src="https://lh5.googleusercontent.com/p/AF1QipN0zZRSSPIXHijb0sKIsoEwiA98_Mav3NcWx0PJ=w1000-h1000-p-k-no"/>
         <div class="category-title">Pilsen</div>
@@ -395,7 +394,7 @@
     </div>
     </section>
 
-    <main>
+ <main>
     <section class='products-container' id='products'>
         <!-- Category 1: Pilsen -->
         <div class='product-item category1'>
@@ -614,7 +613,7 @@
 
 
 <!-- Carrito -->
-    <section id="cart">
+<section id="cart">
     <h2>Carrito de Compras</h2>
     <div style="margin:10px 0;">
         <input id="client-name" placeholder="Nombre del cliente" style="width:90%; padding:8px; margin:5px auto; display:block; border:1px solid #ddd; border-radius:5px;" type="text" />
@@ -625,10 +624,10 @@
     <button id="order-button">Realizar Pedido</button>
     </section>
 
-    <div id="cart-button" onclick="toggleCart()">🛒</div>
+<div id="cart-button" onclick="toggleCart()">🛒</div>
 
 <!-- Modal Producto -->
-    <div id="product-modal">
+<div id="product-modal">
     <div>
         <button id="close-product-modal">&#10006;</button>
         <img alt="Producto" id="modal-product-image" src="" />
@@ -643,15 +642,15 @@
     </div>
     </div>
 
-     <div id="loading-spinner">Cargando...</div>
+ <div id="loading-spinner">Cargando...</div>
 
 <!-- Scripts JS -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-    <script>
+ <script>
 
     $(document).ready(function() {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -969,5 +968,5 @@
     });
 
     </script>
-    </body>
-    </html>
+</body>
+</html>
