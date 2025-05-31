@@ -28,6 +28,7 @@
             border-radius: 20px;
         }
         .carousel-inner img {
+            background-color: transparent !important;
             width: auto;
             height: auto;
             padding: 10px;
