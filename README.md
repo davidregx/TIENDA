@@ -335,7 +335,7 @@
     </head>
     <body>
     <div class="header">
-   <img src="https://i.ibb.co/VbtcGbg/unnamed.png" alt="unnamed" border="0">
+   [img]https://i.ibb.co/VbtcGbg/unnamed.png[/img]
     </div>
 <!-- Carousel Bootstrap -->
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="max-width:900px; margin: 10px auto; border-radius:20px;">
