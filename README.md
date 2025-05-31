@@ -335,7 +335,7 @@
     </head>
     <body>
     <div class="header">
-    <img alt="Logo de la tienda de cervezas" src='<img src="https://i.ibb.co/VbtcGbg/unnamed.png" alt="unnamed" border="0">
+    <img alt="Logo de la tienda de cervezas" src='https://ibb.co/2Ry1rRv
 '/>
     </div>
 <!-- Carousel Bootstrap -->
