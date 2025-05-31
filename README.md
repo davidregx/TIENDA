@@ -43,28 +43,28 @@
             overflow-x: auto;
             padding: 20px;
         }
-.category {
-    position: relative;
-    flex: 0 0 auto;
-    width: 120px;
-    height: 120px;
-    margin-right: 10px;
-    border-radius: 10px;
-    overflow: hidden;
-    cursor: pointer;
-    border: 2px solid transparent;
-    transition: box-shadow 0.3s ease, border-color 0.3s ease;
-}
+        .category {
+            position: relative;
+            flex: 0 0 auto;
+            width: 120px;
+            height: 120px;
+            margin-right: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        }
 
-.category.active {
-    border: 2px solid #ff5722;
-    box-shadow: 0 0 10px 3px #ff5722, 0 0 20px 5px #ff7043;
-}
+          .category.active {
+              border: 2px solid #ff5722;
+              box-shadow: 0 0 10px 3px #ff5722, 0 0 20px 5px #ff7043;
+         }
 
-.category:hover {
-    box-shadow: 0 0 8px 2px #ff5722, 0 0 16px 4px #ff7043;
-    border-color: #ff5722;
-}
+           .category:hover {
+               box-shadow: 0 0 8px 2px #ff5722, 0 0 16px 4px #ff7043;
+               border-color: #ff5722;
+        }
 
         .category img {
             width: 100%;
@@ -270,10 +270,10 @@
             padding: 20px;
             border-radius: 10px;
         }
-/* Móvil (menos de 600px) — mantiene el estilo original o auto */
+       /* Móvil (menos de 600px) — mantiene el estilo original o auto */
 
-/* Tablet (entre 600px y 1023px) */
-@media (min-width: 600px) and (max-width: 1023px) {
+       /* Tablet (entre 600px y 1023px) */
+        @media (min-width: 600px) and (max-width: 1023px) {
     .carousel {
         max-width: 600px; /* ancho máximo para tablet */
         margin: 10px auto;
@@ -290,10 +290,10 @@
         height: auto;
         aspect-ratio: 16 / 9;
     }
-}
+    }
 
-/* Escritorio (1024px en adelante) */
-@media (min-width: 1024px) {
+     /* Escritorio (1024px en adelante) */
+     @media (min-width: 1024px) {
     .carousel {
         max-width: 900px; /* ancho máximo para escritorio */
         margin: 10px auto;
@@ -310,9 +310,9 @@
         height: auto;
         aspect-ratio: 16 / 9;
     }
-}
+    }
 
-@media (min-width: 600px) and (max-width: 1023px) {
+    @media (min-width: 600px) and (max-width: 1023px) {
     .categories {
         max-width: 600px;
         margin: 0 auto;
@@ -320,9 +320,9 @@
         padding: 20px;
         overflow-x: auto;
     }
-}
+    }
 
-@media (min-width: 1024px) {
+     @media (min-width: 1024px) {
     .categories {
         max-width: 900px;
         margin: 0 auto;
@@ -330,8 +330,8 @@
         padding: 20px;
         overflow-x: auto;
     }
-}
-    </style>
+    }
+ </style>
 </head>
 <body>
 <div class="header">
