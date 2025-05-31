@@ -17,10 +17,13 @@
             background-position: center center;
         }
         .header {
-        background-color: transparent !important;
             padding: 10px;
             text-align: center;
         }
+        .header img {
+  background-color: transparent !important;
+  display: block; /* elimina espacios por línea base */
+}
         .carousel {
             width: 100%;
             margin: auto;
