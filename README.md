@@ -10,7 +10,7 @@
             height: 100%;
             margin: 0;
             padding: 0;
-            background-image: url('');
+            background-image: url('https://lh3.googleusercontent.com/gps-cs/AIky0YWZF8wu37kpyKmtSowVsNaeNGpRMtvKeWkCZif90TIR3x-SxoKtOhnsCjpKQy82BoA-1rwQT5Y5PM-iy0Ko_pymybn_Ep_RsCCd3tB7tbdzJuTVLMEHIEJhWNijbZBBri_rwnZ_eAbuC70=w1024-h1536-p-k-no');
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
