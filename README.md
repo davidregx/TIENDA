@@ -335,8 +335,8 @@
     </head>
     <body>
     <div class="header">
-    <img alt="Logo de la tienda de cervezas" src="https://lh3.googleusercontent.com/gps-cs/AIky0YUpv_rZRfXtofW8QTdBlhjHSI7-8oXKJ2yNxeEkmEUvcEFK3MIk-Ss1PW5adoQG6ZQeHE4jvKJLyzRUIIXbN70-HNrdNDGKjXeh7vvcHjLvSjHPsf0zMG2pmA_4XpX7_gOwgSAEXBuPvDD8=w1000-h1000-p-k-no
-"/>
+    <img alt="Logo de la tienda de cervezas" src='https://lh3.googleusercontent.com/gps-cs/AIky0YUpv_rZRfXtofW8QTdBlhjHSI7-8oXKJ2yNxeEkmEUvcEFK3MIk-Ss1PW5adoQG6ZQeHE4jvKJLyzRUIIXbN70-HNrdNDGKjXeh7vvcHjLvSjHPsf0zMG2pmA_4XpX7_gOwgSAEXBuPvDD8=w1000-h1000-p-k-no
+'/>
     </div>
 <!-- Carousel Bootstrap -->
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="max-width:900px; margin: 10px auto; border-radius:20px;">
