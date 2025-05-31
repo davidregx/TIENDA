@@ -1,6 +1,6 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
@@ -331,15 +331,15 @@
         overflow-x: auto;
     }
     }
- </style>
-</head>
-<body>
-<div class="header">
+    </style>
+    </head>
+    <body>
+    <div class="header">
     <img alt="Logo de la tienda de cervezas" src="https://lh3.googleusercontent.com/gps-cs/AIky0YUu_iHb76HWQOsSQBflySl2faKq5R4GyoZzZFn0mTwGFQB_CSITg3e5OYfI0N85MvqdxIGu82itcWGacnVBJQneFQAI3amSYcVYVmNcpzOu-3_kikJ7KAounBFfEZcWru_N9hjsVSGLLfG3=w1000-h1000-p-k-no" style="width: 150px; height: auto;"/>
-</div>
+    </div>
 
 <!-- Carousel Bootstrap -->
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="max-width:900px; margin: 10px auto; border-radius:20px;">
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="max-width:900px; margin: 10px auto; border-radius:20px;">
     <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -368,15 +368,15 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Siguiente</span>
     </a>
-</div>
+    </div>
 
 <!-- Barra de búsqueda -->
-<div style="text-align:center; margin: 10px;">
-  <input id="search-input" placeholder="Buscar producto por nombre..." style="padding: 8px; width: 80%; max-width: 400px; border-radius: 8px; border: 1px solid #ddd;" type="text" />
-</div>
+    <div style="text-align:center; margin: 10px;">
+    <input id="search-input" placeholder="Buscar producto por nombre..." style="padding: 8px; width: 80%; max-width: 400px; border-radius: 8px; border: 1px solid #ddd;" type="text" />
+    </div>
 
 <!-- Categorías -->
-<section class="categories">
+    <section class="categories">
     <div class="category active" onclick="filterProducts('category1')">
         <img alt="Cerveza Pilsen" src="https://lh5.googleusercontent.com/p/AF1QipN0zZRSSPIXHijb0sKIsoEwiA98_Mav3NcWx0PJ=w1000-h1000-p-k-no"/>
         <div class="category-title">Pilsen</div>
@@ -393,9 +393,9 @@
         <img alt="Cerveza Corona" src="https://lh5.googleusercontent.com/p/AF1QipMKukYDijPnCrcbfRTUVW5c8DPfagwxBg5C4P_A=w1000-h1000-p-k-no"/>
         <div class="category-title">Corona</div>
     </div>
-</section>
+    </section>
 
-<main>
+    <main>
     <section class='products-container' id='products'>
         <!-- Category 1: Pilsen -->
         <div class='product-item category1'>
@@ -610,11 +610,11 @@
             </div>
         </div>
     </section>
-</main>
+    </main>
 
 
 <!-- Carrito -->
-<section id="cart">
+    <section id="cart">
     <h2>Carrito de Compras</h2>
     <div style="margin:10px 0;">
         <input id="client-name" placeholder="Nombre del cliente" style="width:90%; padding:8px; margin:5px auto; display:block; border:1px solid #ddd; border-radius:5px;" type="text" />
@@ -623,12 +623,12 @@
     <div id="cart-items"></div>
     <p id="cart-total">Total: S/ 0.00</p>
     <button id="order-button">Realizar Pedido</button>
-</section>
+    </section>
 
-<div id="cart-button" onclick="toggleCart()">🛒</div>
+    <div id="cart-button" onclick="toggleCart()">🛒</div>
 
 <!-- Modal Producto -->
-<div id="product-modal">
+    <div id="product-modal">
     <div>
         <button id="close-product-modal">&#10006;</button>
         <img alt="Producto" id="modal-product-image" src="" />
@@ -641,19 +641,19 @@
         </div>
         <button id="modal-add-to-cart" style="width:100%; padding:10px; background:#ff5722; color:#fff; border:none; border-radius:10px; cursor:pointer;">Agregar al carrito</button>
     </div>
-</div>
+    </div>
 
-<div id="loading-spinner">Cargando...</div>
+     <div id="loading-spinner">Cargando...</div>
 
 <!-- Scripts JS -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-<script>
+    <script>
 
-$(document).ready(function() {
+    $(document).ready(function() {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     let modalQuantity = 1;
     let modalCurrentProduct = null;
@@ -708,7 +708,7 @@ $(document).ready(function() {
         }
         updateCart();
     });
-document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.categories').addEventListener('click', (event) => {
         const category = event.target.closest('.category');
         if (category) {
@@ -954,7 +954,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
         window.location.reload();
     }, 2000);
-});
+    });
 
         modal.addEventListener('click', function(e) {
             if (e.target === modal) {
@@ -966,8 +966,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.onload = function() {
         filterProducts('category1');
     };
-});
+    });
 
-</script>
-</body>
-</html>
+    </script>
+    </body>
+    </html>
