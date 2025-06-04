@@ -1000,111 +1000,61 @@
             }
         }
         
-        /* Media queries para tablets */
-    @media (min-width: 768px) {
-            .container {
-                max-width: 720px;
+
+        /* Responsive */
+    @media (max-width: 768px) {
+            .product {
+                width: 150px;
+                min-width: 150px;
             }
-            
-   .mobile-header {
-                padding: 15px 20px;
+            .product .add-to-cart {
+                padding: 8px 15px;
+                font-size: 0.8em;
             }
-            
-   .logo img {
-                height: 50px;
+            .view-all-products, .clips-damas-products, .clips-ninas-products {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             }
-            
-    .products {
-                grid-template-columns: repeat(3, 1fr);
-                margin: 0 20px 25px;
+            .search-input {
+                width: 90%;
             }
-            
-   .model-section {
-                grid-template-columns: repeat(2, 1fr);
-                margin: 25px 20px;
+            .category-btn {
+                font-size: 1em; /* Smaller font for smaller screens */
+                padding: 4px 8px;
             }
-            
-    .model-item {
-                height: 250px;
+            .model-item {
+                width: 50%; /* Maintain equal width */
             }
-            
-   .footer-content {
-                grid-template-columns: repeat(2, 1fr);
-                padding: 0 25px;
+            .model-item img {
+                width: 100%;
             }
         }
-        
-        /* Media queries para escritorio */
-    @media (min-width: 992px) {
-            .container {
-                max-width: 960px;
+        @media (max-width: 480px) {
+            .product {
+                width: 120px;
+                min-width: 120px;
             }
-            
-    .mobile-header {
-                display: none;
+            .product p {
+                font-size: 0.9em;
             }
-            
-    .desktop-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 15px 20px;
-                background-color: white;
-                box-shadow: var(--shadow);
-                position: sticky;
-                top: 0;
-                z-index: 100;
+            .product .add-to-cart {
+                padding: 6px 10px;
+                font-size: 0.7em;
             }
-            
-    .logo img {
-                height: 55px;
+            .view-all-products, .clips-damas-products, .clips-ninas-products {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             }
-            
-     nav ul {
-                display: flex;
-                list-style: none;
-                gap: 20px;
-                margin: 0;
-                padding: 0;
+            .search-input {
+                width: 95%;
             }
-            
-    nav ul li a {
-                text-decoration: none;
-                color: var(--dark-color);
-                font-weight: 600;
-                font-size: 1rem;
+            .category-btn {
+                font-size: 0.9em; /* Even smaller font for mobile */
+                padding: 3px 6px;
             }
-            
-   .header-icons {
-                display: flex;
-                align-items: center;
-                gap: 18px;
+            .model-item {
+                width: 50%; /* Maintain equal width */
             }
-            
-    .header-icons i {
-                font-size: 1.3rem;
-            }
-            
-    .products {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 20px;
-                margin: 0 20px 30px;
-            }
-            
-    .model-section {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 20px;
-                margin: 30px 20px;
-            }
-            
-   .model-item {
-                height: 280px;
-            }
-            
-   .footer-content {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 30px;
-                padding: 0 30px;
+            .model-item img {
+                width: 100%;
             }
         }
     </style>
