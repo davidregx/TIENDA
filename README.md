@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TodoModa - Tienda Online</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
     <style>
         :root {
             --primary-color: #d81b60;
@@ -22,21 +22,22 @@
             box-sizing: border-box;
         }
         
-     body {
+  body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--light-color);
             color: var(--dark-color);
             line-height: 1.6;
+            overflow-x: hidden;
         }
         
-    .container {
+.container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 15px;
         }
         
         /* Header mejorado */
-    .header {
+ .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -49,16 +50,16 @@
             flex-wrap: wrap;
         }
         
-    .logo img {
+ .logo img {
             height: 60px;
             transition: transform 0.3s ease;
         }
         
-   .logo:hover img {
+.logo:hover img {
             transform: scale(1.05);
         }
         
-    nav ul {
+nav ul {
             display: flex;
             list-style: none;
             gap: 25px;
@@ -66,7 +67,7 @@
             padding: 0;
         }
         
-    nav ul li a {
+ nav ul li a {
             text-decoration: none;
             color: var(--dark-color);
             font-weight: 600;
@@ -75,42 +76,42 @@
             transition: color 0.3s ease;
         }
         
-    nav ul li a:hover {
+ nav ul li a:hover {
             color: var(--primary-color);
         }
         
-     nav ul li a::after {
+ nav ul li a::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
             width: 0;
             height: 2px;
-            background-color: var(--primary-color);
+            background: var(--primary-color);
             transition: width 0.3s ease;
         }
         
-    nav ul li a:hover::after {
+ nav ul li a:hover::after {
             width: 100%;
         }
         
-    .header-icons {
+.header-icons {
             display: flex;
             align-items: center;
             gap: 20px;
         }
         
-    .cart-icon {
+.cart-icon {
             position: relative;
             cursor: pointer;
             font-size: 1.4rem;
         }
         
-    .cart-count {
+.cart-count {
             position: absolute;
             top: -8px;
             right: -10px;
-            background-color: var(--primary-color);
+            background: var(--primary-color);
             color: white;
             border-radius: 50%;
             width: 20px;
@@ -123,7 +124,7 @@
         }
         
         /* Carousel mejorado */
-   .carousel {
+ .carousel {
             position: relative;
             width: 100%;
             overflow: hidden;
@@ -132,24 +133,24 @@
             box-shadow: var(--shadow);
         }
         
-    .slides {
+.slides {
             display: flex;
             transition: transform 0.5s ease-in-out;
         }
         
-    .slide-container {
+.slide-container {
             min-width: 100%;
             aspect-ratio: 16 / 9;
             position: relative;
         }
         
-    .slides img {
+ .slides img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
         
-    .banner-text {
+.banner-text {
             position: absolute;
             bottom: 30px;
             left: 50%;
@@ -164,14 +165,15 @@
             transition: all 0.3s ease;
             backdrop-filter: blur(2px);
             text-align: center;
+            z-index: 10;
         }
         
-    .banner-text:hover {
+ .banner-text:hover {
             background: rgba(0, 0, 0, 0.8);
             transform: translateX(-50%) scale(1.05);
         }
         
-    .carousel-controls {
+ .carousel-controls {
             position: absolute;
             top: 50%;
             width: 100%;
@@ -179,9 +181,10 @@
             justify-content: space-between;
             transform: translateY(-50%);
             padding: 0 15px;
+            z-index: 10;
         }
         
-    .carousel-btn {
+ .carousel-btn {
             background: rgba(255, 255, 255, 0.7);
             border: none;
             width: 40px;
@@ -196,21 +199,21 @@
             color: var(--dark-color);
         }
         
-    .carousel-btn:hover {
+.carousel-btn:hover {
             background: rgba(255, 255, 255, 0.9);
             transform: scale(1.1);
         }
-        
-   .dots {
+            .dots {
             position: absolute;
             bottom: 15px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
             gap: 10px;
+            z-index: 10;
         }
         
-   .dots span {
+  .dots span {
             width: 12px;
             height: 12px;
             background-color: rgba(255, 255, 255, 0.6);
@@ -219,13 +222,13 @@
             transition: all 0.3s ease;
         }
         
-   .dots span.active {
+ .dots span.active {
             background-color: white;
             transform: scale(1.2);
         }
         
         /* Productos mejorados */
-   .section-title {
+ .section-title {
             text-align: center;
             margin: 30px 0 20px;
             font-size: 1.8rem;
@@ -233,7 +236,7 @@
             padding-bottom: 10px;
         }
         
-    .section-title::after {
+  .section-title::after {
             content: '';
             position: absolute;
             bottom: 0;
@@ -244,28 +247,29 @@
             background: var(--primary-color);
         }
         
-    .products {
+  .products {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 25px;
             margin: 20px 0;
         }
         
-    .product {
+  .product {
             background: white;
             border-radius: 10px;
             overflow: hidden;
             box-shadow: var(--shadow);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
+            cursor: pointer;
         }
         
-    .product:hover {
+  .product:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
         
-    .product-badge {
+.product-badge {
             position: absolute;
             top: 10px;
             left: 10px;
@@ -278,18 +282,18 @@
             z-index: 1;
         }
         
-    .product-img {
+.product-img {
             width: 100%;
             height: 220px;
             object-fit: cover;
             border-bottom: 1px solid var(--gray-color);
         }
         
-   .product-info {
+ .product-info {
             padding: 15px;
         }
         
-    .product-name {
+ .product-name {
             font-weight: 600;
             margin-bottom: 5px;
             font-size: 1.1rem;
@@ -297,20 +301,20 @@
             overflow: hidden;
         }
         
-    .product-price {
+.product-price {
             font-weight: bold;
             color: var(--primary-color);
             font-size: 1.2rem;
             margin: 8px 0;
         }
         
-   .product-rating {
+.product-rating {
             color: #f1c40f;
             margin: 5px 0;
             font-size: 0.9rem;
         }
         
-   .add-to-cart {
+.add-to-cart {
             width: 100%;
             background: var(--primary-color);
             color: white;
@@ -326,19 +330,19 @@
             gap: 8px;
         }
         
-   .add-to-cart:hover {
+.add-to-cart:hover {
             background: #ad1457;
         }
         
         /* Model Section mejorada */
-    .model-section {
+.model-section {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
             margin: 40px 0;
         }
         
-    .model-item {
+.model-item {
             position: relative;
             border-radius: 10px;
             overflow: hidden;
@@ -346,18 +350,18 @@
             height: 300px;
         }
         
-    .model-item img {
+.model-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
         }
         
-   .model-item:hover img {
+.model-item:hover img {
             transform: scale(1.05);
         }
         
-    .model-btn {
+.model-btn {
             position: absolute;
             bottom: 20px;
             left: 50%;
@@ -375,36 +379,37 @@
             max-width: 250px;
             text-align: center;
             backdrop-filter: blur(2px);
+            z-index: 10;
         }
         
-    .model-btn:hover {
+.model-btn:hover {
             background: rgba(0, 0, 0, 0.9);
             transform: translateX(-50%) scale(1.05);
         }
         
         /* Footer */
-    .footer {
+ .footer {
             background: var(--dark-color);
             color: white;
             padding: 40px 0 20px;
             margin-top: 50px;
         }
         
-   .footer-content {
+ .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
             margin-bottom: 30px;
         }
         
-   .footer-column h3 {
+ .footer-column h3 {
             font-size: 1.3rem;
             margin-bottom: 20px;
             position: relative;
             padding-bottom: 10px;
         }
         
-   .footer-column h3::after {
+ .footer-column h3::after {
             content: '';
             position: absolute;
             bottom: 0;
@@ -414,15 +419,15 @@
             background: var(--primary-color);
         }
         
-    .footer-links {
+ .footer-links {
             list-style: none;
         }
         
-    .footer-links li {
+ .footer-links li {
             margin-bottom: 12px;
         }
         
-    .footer-links a {
+.footer-links a {
             color: #ccc;
             text-decoration: none;
             transition: color 0.3s ease;
@@ -431,24 +436,24 @@
             gap: 8px;
         }
         
-   .footer-links a:hover {
+ .footer-links a:hover {
             color: white;
         }
         
-    .footer-contact p {
+ .footer-contact p {
             display: flex;
             align-items: center;
             gap: 10px;
             margin-bottom: 12px;
         }
         
-    .social-icons {
+ .social-icons {
             display: flex;
             gap: 15px;
             margin-top: 15px;
         }
         
-    .social-icons a {
+ .social-icons a {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -460,12 +465,12 @@
             transition: all 0.3s ease;
         }
         
-    .social-icons a:hover {
+ .social-icons a:hover {
             background: var(--primary-color);
             transform: translateY(-3px);
         }
         
-    .copyright {
+.copyright {
             text-align: center;
             padding-top: 20px;
             border-top: 1px solid rgba(255,255,255,0.1);
@@ -474,7 +479,7 @@
         }
         
         /* Carrito de compras */
-    .cart-modal {
+.cart-modal {
             display: none;
             position: fixed;
             top: 0;
@@ -486,7 +491,7 @@
             justify-content: flex-end;
         }
         
-    .cart-content {
+ .cart-content {
             background: white;
             width: 100%;
             max-width: 450px;
@@ -498,11 +503,11 @@
             position: relative;
         }
         
-    .cart-content.active {
+ .cart-content.active {
             transform: translateX(0);
         }
         
-    .cart-header {
+ .cart-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -511,7 +516,7 @@
             margin-bottom: 20px;
         }
         
-   .close-cart {
+ .close-cart {
             background: none;
             border: none;
             font-size: 1.5rem;
@@ -519,46 +524,46 @@
             color: var(--dark-color);
         }
         
-   .cart-items {
+.cart-items {
             margin-bottom: 20px;
         }
         
-    .cart-item {
+.cart-item {
             display: flex;
             gap: 15px;
             padding: 15px 0;
             border-bottom: 1px solid var(--gray-color);
         }
         
-    .cart-item-img {
+.cart-item-img {
             width: 80px;
             height: 80px;
             object-fit: cover;
             border-radius: 5px;
         }
         
-     .cart-item-details {
+.cart-item-details {
             flex: 1;
         }
         
-   .cart-item-name {
+ .cart-item-name {
             font-weight: 600;
             margin-bottom: 5px;
         }
         
-    .cart-item-price {
+ .cart-item-price {
             color: var(--primary-color);
             font-weight: bold;
         }
         
-    .cart-item-actions {
+ .cart-item-actions {
             display: flex;
             align-items: center;
             gap: 10px;
             margin-top: 8px;
         }
         
-    .quantity-btn {
+.quantity-btn {
             width: 30px;
             height: 30px;
             border-radius: 50%;
@@ -570,7 +575,7 @@
             justify-content: center;
         }
         
-    .remove-item {
+.remove-item {
             color: #e74c3c;
             background: none;
             border: none;
@@ -578,14 +583,14 @@
             margin-left: auto;
         }
         
-     .cart-total {
+.cart-total {
             font-size: 1.2rem;
             font-weight: bold;
             text-align: right;
             margin: 20px 0;
         }
         
-    .checkout-btn {
+ .checkout-btn {
             width: 100%;
             background: var(--success-color);
             color: white;
@@ -601,80 +606,318 @@
             gap: 10px;
         }
         
-    .checkout-btn:hover {
+ .checkout-btn:hover {
             background: #388e3c;
         }
         
-     .empty-cart {
+.empty-cart {
             text-align: center;
             padding: 30px 0;
             color: #777;
         }
         
+        /* Sistema de modales */
+.modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+.modal-content {
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+ .modal-content img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        
+.modal-content h3 {
+            margin: 0 0 10px;
+            font-size: 1.5em;
+        }
+        
+.modal-content .description {
+            margin: 15px 0;
+            font-size: 1em;
+            color: #555;
+        }
+        
+ .modal-content .rating {
+            margin: 15px 0;
+            color: #f1c40f;
+            font-size: 1.2em;
+        }
+        
+ .modal-content .price {
+            font-weight: bold;
+            margin: 15px 0;
+            font-size: 1.3em;
+            color: var(--primary-color);
+        }
+        
+ .modal-content .color-palette {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        
+ .modal-content .color-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: transform 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+ .modal-content .color-circle.selected {
+            transform: scale(1.2);
+            border: 2px solid var(--primary-color);
+        }
+        
+ .modal-content .quantity {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+ .modal-content .quantity-btn {
+            background: var(--primary-color);
+            color: #fff;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+ .modal-content .quantity-btn:hover {
+            background: #ad1457;
+        }
+        
+ .modal-content .quantity-input {
+            width: 60px;
+            height: 40px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1.1em;
+        }
+        
+.modal-content .btn-add-cart {
+            background: var(--primary-color);
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+        
+.modal-content .btn-add-cart:hover {
+            background: #ad1457;
+        }
+        
+ .modal-content .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #333;
+            background: none;
+            border: none;
+        }
+        
+        /* View All and Category Modals */
+.category-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2500;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+        }
+        
+ .category-modal-content {
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            max-width: 90%;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-sizing: border-box;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+        }
+        
+.category-modal-content h2 {
+            margin: 0 0 20px;
+            font-size: 1.8em;
+            text-align: center;
+            color: var(--primary-color);
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--gray-color);
+        }
+        
+ .search-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+.search-input {
+            width: 80%;
+            max-width: 500px;
+            padding: 12px;
+            border: 1px solid var(--gray-color);
+            border-radius: 30px;
+            font-size: 1em;
+            box-shadow: var(--shadow);
+        }
+        
+ .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+ .view-all-products, .clips-damas-products, .clips-ninas-products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+            padding: 15px;
+        }
+        
+.view-all-products .product, .clips-damas-products .product, .clips-ninas-products .product {
+            width: 100%;
+            min-width: unset;
+        }
+        
+.category-modal-content .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #333;
+            background: none;
+            border: none;
+        }
+        
         /* Responsive */
-    @media (max-width: 992px) {
+ @media (max-width: 992px) {
             .header {
                 flex-direction: column;
                 gap: 15px;
             }
             
-   nav ul {
+ nav ul {
                 flex-wrap: wrap;
                 justify-content: center;
             }
         }
         
-    @media (max-width: 768px) {
+ @media (max-width: 768px) {
             .products {
                 grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
             }
             
-    .product-img {
+ .product-img {
                 height: 180px;
             }
             
-    .model-section {
+  .model-section {
                 grid-template-columns: 1fr;
             }
             
-    .banner-text {
+  .banner-text {
                 font-size: 1.2rem;
                 padding: 8px 20px;
             }
             
-    .section-title {
+ .section-title {
                 font-size: 1.5rem;
+            }
+            
+ .modal-content {
+                max-width: 90%;
             }
         }
         
-   @media (max-width: 480px) {
+ @media (max-width: 480px) {
             nav ul {
                 gap: 15px;
             }
             
-    .header-icons {
+.header-icons {
                 gap: 15px;
             }
             
-    .products {
+.products {
                 grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
                 gap: 15px;
             }
             
-    .product-img {
+ .product-img {
                 height: 150px;
             }
             
-    .product-name {
+ .product-name {
                 font-size: 1rem;
                 height: auto;
             }
             
-   .cart-content {
+.cart-content {
                 max-width: 100%;
             }
+            
+ .modal-content {
+                padding: 15px;
+            }
+            
+.category-modal-content {
+                padding: 15px;
+            }
         }
- </style>
+    </style>
 </head>
 <body>
     <div class="container">
@@ -729,186 +972,26 @@
 
         <!-- Productos destacados -->
  <h2 class="section-title">Productos Destacados</h2>
-        <div class="products">
-            <!-- Producto 1 -->
-            <div class="product">
-                <span class="product-badge">Nuevo</span>
-                <img src="https://lh3.googleusercontent.com/gps-cs/AIky0YXdnjCFtJm5EhEvClhpsqjsYwwH2Xdqql3H45tWmgLdhiRX--KLwloCAl85SxTImNaOYYbS1MOrlGYrDwH31YoIyFBBn7KapQIKbAHVfoyNmbRBjjgmF0_SefXWn6udgSSaO19kdNtmnQBd=w2000-h2000-p-k-no" alt="Maxilazos" class="product-img">
-                <div class="product-info">
-                    <h3 class="product-name">Maxilazos - 5 Colores</h3>
-                    <div class="product-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                        <span>(4.2)</span>
-                    </div>
-                    <p class="product-price">S/ 7.00</p>
-                    <button class="add-to-cart">
-                        <i class="fas fa-shopping-cart"></i> Agregar al carrito
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Producto 2 -->
- <div class="product">
-                <span class="product-badge">Popular</span>
-                <img src="https://lh3.googleusercontent.com/gps-cs/AIky0YUd2bofobsLtUl3qONXRSiTNou1a9W74yTaVYEr6h64PAuOOqQ-g_w6Ifs8arhOVjWboOrUFEcEDZlmtSBZkgS1YjEnSIw1f3w4IZRdMBwxibVChvNz2c93C78bOxNsx68MuBmN-4iYNCg=w2000-h2000-p-k-no" alt="Mini Gancho Corazón" class="product-img">
-                <div class="product-info">
-                    <h3 class="product-name">Mini Gancho Corazón</h3>
-                    <div class="product-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="far fa-star"></i>
-                        <i class="far fa-star"></i>
-                        <span>(3.2)</span>
-                    </div>
-                    <p class="product-price">S/ 2.50</p>
-                    <button class="add-to-cart">
-                        <i class="fas fa-shopping-cart"></i> Agregar al carrito
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Producto 3 -->
- <div class="product">
-                <img src="https://lh3.googleusercontent.com/gps-cs/AIky0YV8A_P0YjCC6AIfC2B6HFvCKobK0UJZjVWMnzr6lfYPVXUk0gsszvJXojCK_ycIVH0cOD1-Qw3ICj1Bi9eLIf2TH0ZFaL14TuisJOWESznCPwqs2AAn_lgVOo2yGLhrKuG1yjgsGrWPIZ0k=w2000-h2000-p-k-no" alt="Ganchos Navideños" class="product-img">
-                <div class="product-info">
-                    <h3 class="product-name">Ganchos Navideños</h3>
-                    <div class="product-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <span>(5.0)</span>
-                    </div>
-                    <p class="product-price">S/ 4.00</p>
-                    <button class="add-to-cart">
-                        <i class="fas fa-shopping-cart"></i> Agregar al carrito
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Producto 4 -->
- <div class="product">
-                <img src="https://lh3.googleusercontent.com/gps-cs/AIky0YVaD4OrbInMGPZXKiKtKplaYEn2Ck-9KCl8p9FJbJIXPMWFCDw9Dd5lrbO-8FfXeJZKvIEr-K5UpFwrCnofwtR30imdZTojz2gxrHqZLSM3qody1gDhWdXAm_C4le7hQ4zKL3imga1TIh_j=w2000-h2000-p-k-no" alt="Gancho Hawaiano" class="product-img">
-                <div class="product-info">
-                    <h3 class="product-name">Gancho Hawaiano</h3>
-                    <div class="product-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="far fa-star"></i>
-                        <span>(4.0)</span>
-                    </div>
-                    <p class="product-price">S/ 5.00</p>
-                    <button class="add-to-cart">
-                        <i class="fas fa-shopping-cart"></i> Agregar al carrito
-                    </button>
-                </div>
-            </div>
+        <div class="products" id="featuredProducts">
+            <!-- Los productos se insertarán dinámicamente aquí -->
         </div>
 
         <!-- Model Section mejorada -->
- <div class="model-section">
+<div class="model-section">
             <div class="model-item">
                 <img src="https://lh3.googleusercontent.com/gps-cs/AIky0YUGuPXaSC1mPGUKkOYa5z7JyvELvbIy0B4-WtB3tMHIKm2D6Sbg1cTWwU0MsxRJR_5lKb5t1MnVOStZk-tNPdUudQ6-h7M7ueR4l8N5IgmuOrhlNRMi0B_uohBDRomdzQUIHP7y244Zc150=w1024-h1024-p-k-no" alt="Clips Damas">
-                <button class="model-btn">CLIPS DAMAS</button>
+                <button class="model-btn" id="clipsDamasBtn">CLIPS DAMAS</button>
             </div>
             <div class="model-item">
                 <img src="https://lh3.googleusercontent.com/gps-cs/AIky0YUDER3L7ISerfG6uiIU8ISdgKkibO-SXwGGNL1azb_TJ0qYIN3T7LsJyU-qc9-kQtucnOkLr5rPYtWt0fW0UL8-7RDD46bg_0JnGLkD8RSfQvGydDvq6L_ZLBoj4hnIhwHB3CEx1fPtJ58O=w1024-h1024-p-k-no" alt="Clips Niñas">
-                <button class="model-btn">CLIPS NIÑAS</button>
+                <button class="model-btn" id="clipsNinasBtn">CLIPS NIÑAS</button>
             </div>
         </div>
 
         <!-- Nuevos productos -->
  <h2 class="section-title">Nuevos Productos</h2>
-        <div class="products">
-            <!-- Producto 5 -->
-            <div class="product">
-                <img src="https://lh3.googleusercontent.com/gps-cs/AIky0YXULCa-2ZSbLgwDDlphVpkyxIs_jH2pp8AIHp25rY65c3VTGPdLnesGcrtuCiDtLbovSHvwiSUpzfWiwyle1UmqeO6d0OEvhBLqp_6k4YBo2QzMGd9aduXbKMXqGVHIB0FKSWvBYE1FNgj_=w2000-h2000-p-k-no" alt="Ganchos Acrílicos Color Celeste" class="product-img">
-                <div class="product-info">
-                    <h3 class="product-name">Ganchos Acrílicos Color Celeste</h3>
-                    <div class="product-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="far fa-star"></i>
-                        <span>(4.0)</span>
-                    </div>
-                    <p class="product-price">S/ 5.00</p>
-                    <button class="add-to-cart">
-                        <i class="fas fa-shopping-cart"></i> Agregar al carrito
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Producto 6 -->
- <div class="product">
-                <span class="product-badge">Oferta</span>
-                <img src="https://lh3.googleusercontent.com/gps-cs/AIky0YUepENF6loS0sqfXxEEZlTcAEQ7R-6iS6rmphnT9YjPc9whL2WIk8tCzVNnHDeaj6AaV3e6-k4yeUx9j6nSHq-l2Tc_t0dGMQLhBQrbdREDnxR65_tbipCAL3NCKmRQYWk5geU5V_jn3EiW=w2000-h2000-p-k-no" alt="Ganchos" class="product-img">
-                <div class="product-info">
-                    <h3 class="product-name">Ganchos</h3>
-                    <div class="product-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="far fa-star"></i>
-                        <i class="far fa-star"></i>
-                        <span>(3.1)</span>
-                    </div>
-                    <p class="product-price">S/ 4.50</p>
-                    <button class="add-to-cart">
-                        <i class="fas fa-shopping-cart"></i> Agregar al carrito
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Producto 7 -->
- <div class="product">
-                <img src="https://lh3.googleusercontent.com/gps-cs/AIky0YX2NRiy9kc9B9F5EY9kAoTjy699I8L7qzIaAFyN6ktzntZDbknG5_v1B6_JgD_hJDZQ7pAonmz2ynxpJqX4tYXVpt2EJISwaxV7Vd5er2HXevBcfzH_2KoEuxffPMG6wVLrMxkXZaJcUGxc=w2000-h2000-p-k-no" alt="Ganchos Torna Sol en forma de Flor" class="product-img">
-                <div class="product-info">
-                    <h3 class="product-name">Ganchos Torna Sol en forma de Flor</h3>
-                    <div class="product-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="far fa-star"></i>
-                        <span>(4.1)</span>
-                    </div>
-                    <p class="product-price">S/ 6.00</p>
-                    <button class="add-to-cart">
-                        <i class="fas fa-shopping-cart"></i> Agregar al carrito
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Producto 8 -->
- <div class="product">
-                <span class="product-badge">Nuevo</span>
-                <img src="https://lh3.googleusercontent.com/gps-cs/AIky0YXzdeSiF8Ekcd_sbWEkePfXIFlDCt8BeIvwjgW0_jHy1u9d3KWkRPGKY0IPp8ADAmGFn46hFm8U5vXqhoZ738QBNnwuwb-UXng4k1wKXRwyarfw7ST9PYntIH_SA_XEF0lDF6STVaLz16z2=w2000-h2000-p-k-no" alt="Ganchos Kawai en forma de Flor" class="product-img">
-                <div class="product-info">
-                    <h3 class="product-name">Ganchos Kawai en forma de Flor</h3>
-                    <div class="product-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                        <i class="far fa-star"></i>
-                        <span>(3.5)</span>
-                    </div>
-                    <p class="product-price">S/ 4.50</p>
-                    <button class="add-to-cart">
-                        <i class="fas fa-shopping-cart"></i> Agregar al carrito
-                    </button>
-                </div>
-            </div>
+        <div class="products" id="newProducts">
+            <!-- Los productos se insertarán dinámicamente aquí -->
         </div>
     </div>
     
@@ -928,7 +1011,7 @@
                 </div>
                 
  <div class="footer-column">
-                    <h3>Categorías</h3>
+                     <h3>Categorías</h3>
                     <ul class="footer-links">
                         <li><a href="#">Accesorios para Damas</a></li>
                         <li><a href="#">Accesorios para Niñas</a></li>
@@ -958,7 +1041,7 @@
                 </div>
             </div>
             
-<div class="copyright">
+ <div class="copyright">
                 <p>&copy; 2023 TodoModa. Todos los derechos reservados.</p>
             </div>
         </div>
@@ -975,7 +1058,6 @@
             </div>
             
  <div class="cart-items" id="cartItems">
-                <!-- Los elementos del carrito se añadirán aquí dinámicamente -->
                 <div class="empty-cart">
                     <i class="fas fa-shopping-cart fa-3x"></i>
                     <p>Tu carrito está vacío</p>
@@ -986,13 +1068,283 @@
                 Total: S/ 0.00
             </div>
             
- <button class="checkout-btn" id="checkoutBtn">
+<button class="checkout-btn" id="checkoutBtn">
                 <i class="fas fa-check"></i> Realizar Pedido
             </button>
         </div>
     </div>
     
+    <!-- Modal de producto -->
+ <div class="modal-overlay" id="productModal">
+        <div class="modal-content">
+            <button class="close-btn">&times;</button>
+            <img id="modalImage" alt="" src="">
+            <h3 id="modalTitle"></h3>
+            <p class="description" id="modalDescription"></p>
+            <div class="rating" id="modalRating"></div>
+            <p class="price" id="modalPrice"></p>
+            <div class="color-palette" id="modalColors"></div>
+            <div class="quantity">
+                <button class="quantity-btn" id="decreaseQty">−</button>
+                <input type="number" class="quantity-input" id="quantityInput" value="1" min="1">
+                <button class="quantity-btn" id="increaseQty">+</button>
+            </div>
+            <button class="btn-add-cart" id="modalAddCart">Agregar al carrito</button>
+        </div>
+    </div>
+    
+    <!-- View All Products Modal -->
+ <div class="category-modal" id="viewAllModal">
+        <div class="category-modal-content">
+            <button class="close-btn">&times;</button>
+            <h2>Todos los Productos</h2>
+            <div class="search-container">
+                <input type="text" class="search-input" id="productSearch" placeholder="Buscar productos...">
+            </div>
+            <div class="view-all-products" id="viewAllProducts"></div>
+        </div>
+    </div>
+    
+    <!-- Clips Damas Modal -->
+ <div class="category-modal" id="clipsDamasModal">
+        <div class="category-modal-content">
+            <button class="close-btn">&times;</button>
+            <h2>CLIPS DAMAS</h2>
+            <div class="search-container">
+                <input type="text" class="search-input" id="clipsDamasSearch" placeholder="Buscar en Clips Damas...">
+            </div>
+            <div class="clips-damas-products" id="clipsDamasProducts"></div>
+        </div>
+    </div>
+    
+    <!-- Clips Niñas Modal -->
+ <div class="category-modal" id="clipsNinasModal">
+        <div class="category-modal-content">
+            <button class="close-btn">&times;</button>
+            <h2>CLIPS NIÑAS</h2>
+            <div class="search-container">
+                <input type="text" class="search-input" id="clipsNinasSearch" placeholder="Buscar en Clips Niñas...">
+            </div>
+            <div class="clips-ninas-products" id="clipsNinasProducts"></div>
+        </div>
+   </div>
+    
 <script>
+        // Datos de productos
+        const productsData = [
+            // Productos destacados
+            {
+                id: 1,
+                name: "Maxilazos - 5 Colores",
+                price: 7.00,
+                image: "https://lh3.googleusercontent.com/gps-cs/AIky0YXdnjCFtJm5EhEvClhpsqjsYwwH2Xdqql3H45tWmgLdhiRX--KLwloCAl85SxTImNaOYYbS1MOrlGYrDwH31YoIyFBBn7KapQIKbAHVfoyNmbRBjjgmF0_SefXWn6udgSSaO19kdNtmnQBd=w2000-h2000-p-k-no",
+                rating: "⭐⭐⭐⭐☆ (4.2)",
+                description: "Maxilazos coloridos, perfectos para cualquier peinado.",
+                colors: [
+                    {color: "#ffeb3b", title: "Amarillo"},
+                    {color: "#d32f2f", title: "Rojo"},
+                    {color: "#e1bee7", title: "Lila"},
+                    {color: "#145a32", title: "Verde"},
+                    {color: "#d6eaf8", title: "Celeste"}
+                ],
+                featured: true
+            },
+            {
+                id: 2,
+                name: "Mini Gancho Corazón",
+                price: 2.50,
+                image: "https://lh3.googleusercontent.com/gps-cs/AIky0YUd2bofobsLtUl3qONXRSiTNou1a9W74yTaVYEr6h64PAuOOqQ-g_w6Ifs8arhOVjWboOrUFEcEDZlmtSBZkgS1YjEnSIw1f3w4IZRdMBwxibVChvNz2c93C78bOxNsx68MuBmN-4iYNCg=w2000-h2000-p-k-no",
+                rating: "⭐⭐⭐☆☆ (3.2)",
+                description: "Ganchos en forma de corazón, ideales para looks delicados.",
+                colors: [
+                    {color: "#17202a", title: "Negro"},
+                    {color: "#fff9c4", title: "Crema"},
+                    {color: "#fdebd0", title: "Piel"},
+                    {color: "#fdfefe", title: "Crema"}
+                ],
+                featured: true
+            },
+            {
+                id: 3,
+                name: "Ganchos Navideños",
+                price: 4.00,
+                image: "https://lh3.googleusercontent.com/gps-cs/AIky0YV8A_P0YjCC6AIfC2B6HFvCKobK0UJZjVWMnzr6lfYPVXUk0gsszvJXojCK_ycIVH0cOD1-Qw3ICj1Bi9eLIf2TH0ZFaL14TuisJOWESznCPwqs2AAn_lgVOo2yGLhrKuG1yjgsGrWPIZ0k=w2000-h2000-p-k-no",
+                rating: "⭐⭐⭐⭐⭐ (5.0)",
+                description: "Ganchos temáticos navideños para un estilo festivo.",
+                colors: [
+                    {color: "#FFFFFF", title: "Blanco"},
+                    {color: "#FF0000", title: "Rojo"},
+                    {color: "#008000", title: "Verde"}
+                ],
+                featured: true
+            },
+            {
+                id: 4,
+                name: "Gancho Hawaiano",
+                price: 5.00,
+                image: "https://lh3.googleusercontent.com/gps-cs/AIky0YVaD4OrbInMGPZXKiKtKplaYEn2Ck-9KCl8p9FJbJIXPMWFCDw9Dd5lrbO-8FfXeJZKvIEr-K5UpFwrCnofwtR30imdZTojz2gxrHqZLSM3qody1gDhWdXAm_C4le7hQ4zKL3imga1TIh_j=w2000-h2000-p-k-no",
+                rating: "⭐⭐⭐⭐☆ (4.0)",
+                description: "Ganchos hawaianos vibrantes para un look tropical.",
+                colors: [
+                    {color: "#FFD700", title: "Amarillo"}
+                ],
+                featured: true
+            },
+            // Nuevos productos
+            {
+                id: 5,
+                name: "Ganchos Acrílicos Color Celeste",
+                price: 5.00,
+                image: "https://lh3.googleusercontent.com/gps-cs/AIky0YXULCa-2ZSbLgwDDlphVpkyxIs_jH2pp8AIHp25rY65c3VTGPdLnesGcrtuCiDtLbovSHvwiSUpzfWiwyle1UmqeO6d0OEvhBLqp_6k4YBo2QzMGd9aduXbKMXqGVHIB0FKSWvBYE1FNgj_=w2000-h2000-p-k-no",
+                rating: "⭐⭐⭐⭐☆ (4.0)",
+                description: "Ganchos acrílicos elegantes en tonos celestes.",
+                colors: [
+                    {color: "#5dade2", title: "Celeste"},
+                    {color: "#ebf5fb", title: "Agua"},
+                    {color: "#FFFFFF", title: "Blanco"}
+                ],
+                new: true
+            },
+            {
+                id: 6,
+                name: "Ganchos",
+                price: 4.50,
+                image: "https://lh3.googleusercontent.com/gps-cs/AIky0YUepENF6loS0sqfXxEEZlTcAEQ7R-6iS6rmphnT9YjPc9whL2WIk8tCzVNnHDeaj6AaV3e6-k4yeUx9j6nSHq-l2Tc_t0dGMQLhBQrbdREDnxR65_tbipCAL3NCKmRQYWk5geU5V_jn3EiW=w2000-h2000-p-k-no",
+                rating: "⭐⭐⭐☆☆ (3.1)",
+                description: "Ganchos clásicos para un estilo minimalista.",
+                colors: [
+                    {color: "#8d6e63", title: "Marrón"},
+                    {color: "#fef9e7", title: "Crema"}
+                ],
+                new: true
+            },
+            {
+                id: 7,
+                name: "Ganchos Torna Sol en forma de Flor",
+                price: 6.00,
+                image: "https://lh3.googleusercontent.com/gps-cs/AIky0YX2NRiy9kc9B9F5EY9kAoTjy699I8L7qzIaAFyN6ktzntZDbknG5_v1B6_JgD_hJDZQ7pAonmz2ynxpJqX4tYXVpt2EJISwaxV7Vd5er2HXevBcfzH_2KoEuxffPMG6wVLrMxkXZaJcUGxc=w2000-h2000-p-k-no",
+                rating: "⭐⭐⭐⭐☆ (4.1)",
+                description: "Ganchos en forma de flor con diseño inspirado en el sol.",
+                colors: [],
+                new: true
+            },
+            {
+                id: 8,
+                name: "Ganchos Kawai en forma de Flor",
+                price: 4.50,
+                image: "https://lh3.googleusercontent.com/gps-cs/AIky0YXzdeSiF8Ekcd_sbWEkePfXIFlDCt8BeIvwjgW0_jHy1u9d3KWkRPGKY0IPp8ADAmGFn46hFm8U5vXqhoZ738QBNnwuwb-UXng4k1wKXRwyarfw7ST9PYntIH_SA_XEF0lDF6STVaLz16z2=w2000-h2000-p-k-no",
+                rating: "⭐⭐⭐☆☆ (3.5)",
+                description: "Ganchos kawai con diseño floral, ideales para niños.",
+                colors: [
+                    {color: "#FFFF66", title: "Amarillo"},
+                    {color: "#CCFF00", title: "Verde"},
+                    {color: "#FF8C00", title: "Anaranjado"}
+                ],
+                new: true
+            },
+            // Clips Damas
+            {
+                id: 9,
+                name: "Ganchos de Flores",
+                price: 5.00,
+                image: "https://lh3.googleusercontent.com/gps-cs/AIky0YUem5vYUL5I1PM57jknLifOO7yf5kSVMtMghU4lP6w0ZMUkV2L9UYoqFLTR_8PcGATvSRKyf0IVg5IYHBQzc5_aND9V8BvtQS47MAT--YXhLlrk645yFo2vaWRADuVRrnbiL5rs4ubhXvU=w2000-h2000-p-k-no",
+                rating: "⭐⭐⭐⭐☆ (4.0)",
+                description: "Ganchos florales en tonos cálidos para un look vibrante.",
+                colors: [
+                    {color: "#FFB347", title: "Melón"},
+                    {color: "#FFD700", title: "Amarillo"}
+                ],
+                category: "damas"
+            },
+            // Clips Niñas
+            {
+                id: 14,
+                name: "Par de mini ganchitos en forma de flor",
+                price: 3.00,
+                image: "https://lh3.googleusercontent.com/gps-cs/AIky0YVcDqGO_EKNry0Eb-BkdsNH0V0lOhwW7AM5WEqz8IiNlbpTs2U3Io9_kt4yCGgt5haYI5RgwRDHv-LMBqc5bvmX245QMyriwIoyJyniPQH9cJJ9iCC2fC8hY06M9BU9nFd6NhCLGVGCC34N=w2000-h2000-p-k-no",
+                rating: "⭐⭐⭐⭐☆ (4.0)",
+                description: "Mini ganchitos florales para destacar tu peinado.",
+                colors: [],
+                category: "ninas"
+            },
+            {
+                id: 15,
+                name: "Mini ganchitos en forma de mariposa",
+                price: 2.00,
+                image: "https://lh3.googleusercontent.com/gps-cs/AIky0YW1eFtqiwT_PM-xOZnd2iVogh-XQVJclLEtgsh0i5wUGm9NvOCot9LJLfDmZE58abznArTin0EgjEMw3HuKeK9_9hoODK0kla3nM-GYGSvA8_xXCBmu_qiSuoHzgpSaO_2EtqXLAjnCs34l=w2000-h2000-p-k-no",
+                rating: "⭐⭐⭐☆☆ (3.5)",
+                description: "Ganchitos en forma de mariposa, perfectos para peinados infantiles.",
+                colors: [],
+                category: "ninas"
+            },
+            {
+                id: 16,
+                name: "Mini ganchitos",
+                price: 1.50,
+                image: "https://lh3.googleusercontent.com/gps-cs/AIky0YUgnWieVRURnUHds0U4E5FROmRmvztpc0ynONqB5wFO-tvCmbrBn0-E971IAl2YG7r7cobC9Hx-g0AbDpTP71ukEEb6n20lHQz-aPBoI5xDWtVwABfSJFIbqdRT6_YJzOT7x8uhaX-KBSLE=w2000-h2000-p-k-no",
+                rating: "⭐⭐⭐☆☆ (3.3)",
+                description: "Mini ganchitos versátiles para cualquier ocasión.",
+                colors: [],
+                category: "ninas"
+            }
+        ];
+
+        // Generar productos en la página
+        function generateProducts(products, containerId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            products.forEach(product => {
+                const productElement = document.createElement('div');
+                productElement.className = 'product';
+                productElement.setAttribute('data-id', product.id);
+                productElement.setAttribute('data-colors', JSON.stringify(product.colors));
+                productElement.setAttribute('data-rating', product.rating);
+                productElement.setAttribute('data-description', product.description);
+                
+                let badge = '';
+                if (product.featured) {
+                    badge = '<span class="product-badge">Destacado</span>';
+                } else if (product.new) {
+                    badge = '<span class="product-badge">Nuevo</span>';
+                }
+                
+                productElement.innerHTML = `
+                    ${badge}
+                    <img src="${product.image}" alt="${product.name}" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        <div class="product-rating">${product.rating}</div>
+                        <p class="product-price">S/ ${product.price.toFixed(2)}</p>
+                        <button class="add-to-cart">
+                            <i class="fas fa-shopping-cart"></i> Agregar al carrito
+                        </button>
+                    </div>
+                `;
+                
+                container.appendChild(productElement);
+            });
+            
+            // Asignar eventos a los productos
+            document.querySelectorAll(`#${containerId} .product`).forEach(product => {
+                product.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('add-to-cart')) {
+                        e.stopPropagation();
+                        addToCart(product);
+                    } else {
+                        openProductModal(product);
+                    }
+                });
+            });
+        }
+        
+        // Inicializar productos
+        const featuredProducts = productsData.filter(p => p.featured);
+        const newProducts = productsData.filter(p => p.new);
+        
+        generateProducts(featuredProducts, 'featuredProducts');
+        generateProducts(newProducts, 'newProducts');
+        
         // Carrito de compras
         let cart = [];
         const cartIcon = document.getElementById('cartIcon');
@@ -1002,7 +1354,6 @@
         const cartItems = document.getElementById('cartItems');
         const cartTotal = document.getElementById('cartTotal');
         const checkoutBtn = document.getElementById('checkoutBtn');
-        const addToCartButtons = document.querySelectorAll('.add-to-cart');
         
         // Abrir carrito
         cartIcon.addEventListener('click', () => {
@@ -1031,37 +1382,36 @@
         });
         
         // Añadir producto al carrito
-        addToCartButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const product = button.closest('.product');
-                const name = product.querySelector('.product-name').textContent;
-                const price = parseFloat(product.querySelector('.product-price').textContent.replace('S/ ', ''));
-                const image = product.querySelector('.product-img').src;
-                
-                // Verificar si el producto ya está en el carrito
-                const existingItem = cart.find(item => item.name === name);
-                
-                if (existingItem) {
-                    existingItem.quantity++;
-                } else {
-                    cart.push({
-                        name,
-                        price,
-                        image,
-                        quantity: 1
-                    });
-                }
-                
-                updateCart();
-                showAddedNotification(name);
-            });
-        });
+        function addToCart(productElement) {
+            const id = parseInt(productElement.getAttribute('data-id'));
+            const product = productsData.find(p => p.id === id);
+            
+            if (!product) return;
+            
+            // Verificar si el producto ya está en el carrito
+            const existingItem = cart.find(item => item.id === id);
+            
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1
+                });
+            }
+            
+            updateCart();
+            showAddedNotification(product.name);
+        }
         
         // Mostrar notificación de producto añadido
         function showAddedNotification(productName) {
             const notification = document.createElement('div');
             notification.innerHTML = `
-                <div style="position: fixed; bottom: 20px; right: 20px; background: var(--success-color); color: white; padding: 15px 20px; border-radius: 5px; display: flex; align-items: center; gap: 10px; z-index: 1000; box-shadow: var(--shadow);">
+                <div style="position: fixed; bottom: 20px; right: 20px; background: var(--success-color); color: white; padding: 15px 20px; border-radius: 5px; display: flex; align-items: center; gap: 10px; z-index: 3000; box-shadow: var(--shadow);">
                     <i class="fas fa-check-circle"></i>
                     <span>¡${productName} añadido al carrito!</span>
                 </div>
@@ -1168,7 +1518,225 @@
             }, 300);
         });
         
-        // Carousel functionality
+        // Modal de producto
+        const productModal = document.getElementById('productModal');
+        const modalImage = document.getElementById('modalImage');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDescription = document.getElementById('modalDescription');
+        const modalRating = document.getElementById('modalRating');
+        const modalPrice = document.getElementById('modalPrice');
+        const modalColors = document.getElementById('modalColors');
+        const decreaseQty = document.getElementById('decreaseQty');
+        const increaseQty = document.getElementById('increaseQty');
+        const quantityInput = document.getElementById('quantityInput');
+        const modalAddCart = document.getElementById('modalAddCart');
+        const modalCloseBtn = document.querySelector('#productModal .close-btn');
+        
+        let selectedProduct = null;
+        let selectedColor = null;
+        
+        function openProductModal(productElement) {
+            const id = parseInt(productElement.getAttribute('data-id'));
+            const product = productsData.find(p => p.id === id);
+            
+            if (!product) return;
+            
+            selectedProduct = product;
+            
+            modalImage.src = product.image;
+            modalTitle.textContent = product.name;
+            modalDescription.textContent = product.description;
+            modalRating.textContent = product.rating;
+            modalPrice.textContent = `S/ ${product.price.toFixed(2)}`;
+            
+            // Generar paleta de colores
+            modalColors.innerHTML = '';
+            if (product.colors.length > 0) {
+                product.colors.forEach(color => {
+                    const colorCircle = document.createElement('span');
+                    colorCircle.className = 'color-circle';
+                    colorCircle.style.backgroundColor = color.color;
+                    colorCircle.title = color.title;
+                    colorCircle.dataset.color = color.color;
+                    
+                    colorCircle.addEventListener('click', () => {
+                        modalColors.querySelectorAll('.color-circle').forEach(c => c.classList.remove('selected'));
+                        colorCircle.classList.add('selected');
+                        selectedColor = color;
+                    });
+                    
+                    modalColors.appendChild(colorCircle);
+                });
+                
+                // Seleccionar el primer color por defecto
+                if (product.colors.length > 0) {
+                    modalColors.firstChild.click();
+                }
+            } else {
+                modalColors.innerHTML = '<p>No hay colores disponibles</p>';
+            }
+            
+            // Resetear cantidad
+            quantityInput.value = 1;
+            
+            // Mostrar modal
+            productModal.style.display = 'flex';
+        }
+        
+        // Cerrar modal de producto
+        modalCloseBtn.addEventListener('click', () => {
+            productModal.style.display = 'none';
+        });
+        
+        productModal.addEventListener('click', (e) => {
+            if (e.target === productModal) {
+                productModal.style.display = 'none';
+            }
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && productModal.style.display === 'flex') {
+                productModal.style.display = 'none';
+            }
+        });
+        
+        // Controles de cantidad
+        decreaseQty.addEventListener('click', () => {
+            let qty = parseInt(quantityInput.value);
+            if (qty > 1) quantityInput.value = qty - 1;
+        });
+        
+        increaseQty.addEventListener('click', () => {
+            let qty = parseInt(quantityInput.value);
+            quantityInput.value = qty + 1;
+        });
+        
+        quantityInput.addEventListener('input', () => {
+            if (quantityInput.value < 1) quantityInput.value = 1;
+        });
+        
+        // Añadir al carrito desde modal
+        modalAddCart.addEventListener('click', () => {
+            if (!selectedProduct) return;
+            
+            const quantity = parseInt(quantityInput.value);
+            
+            // Verificar si el producto ya está en el carrito
+            const existingItem = cart.find(item => item.id === selectedProduct.id);
+            
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({
+                    id: selectedProduct.id,
+                    name: selectedProduct.name,
+                    price: selectedProduct.price,
+                    image: selectedProduct.image,
+                    quantity: quantity
+                });
+            }
+            
+            updateCart();
+            showAddedNotification(selectedProduct.name);
+            productModal.style.display = 'none';
+        });
+        
+        // Modal "Ver Todo"
+        const viewAllModal = document.getElementById('viewAllModal');
+        const viewAllBtn = document.getElementById('viewAllBtn');
+        const viewAllProductsContainer = document.getElementById('viewAllProducts');
+        const viewAllCloseBtn = document.querySelector('#viewAllModal .close-btn');
+        const productSearch = document.getElementById('productSearch');
+        
+        viewAllBtn.addEventListener('click', () => {
+            generateProducts(productsData, 'viewAllProducts');
+            viewAllModal.style.display = 'flex';
+        });
+        
+        viewAllCloseBtn.addEventListener('click', () => {
+            viewAllModal.style.display = 'none';
+        });
+        
+        viewAllModal.addEventListener('click', (e) => {
+            if (e.target === viewAllModal) {
+                viewAllModal.style.display = 'none';
+            }
+        });
+        
+        // Búsqueda de productos
+        productSearch.addEventListener('input', () => {
+            const searchTerm = productSearch.value.toLowerCase();
+            const filteredProducts = productsData.filter(product => 
+                product.name.toLowerCase().includes(searchTerm)
+            );
+            generateProducts(filteredProducts, 'viewAllProducts');
+        });
+        
+        // Modal "Clips Damas"
+        const clipsDamasModal = document.getElementById('clipsDamasModal');
+        const clipsDamasBtn = document.getElementById('clipsDamasBtn');
+        const clipsDamasProductsContainer = document.getElementById('clipsDamasProducts');
+        const clipsDamasCloseBtn = document.querySelector('#clipsDamasModal .close-btn');
+        const clipsDamasSearch = document.getElementById('clipsDamasSearch');
+        
+        clipsDamasBtn.addEventListener('click', () => {
+            const damasProducts = productsData.filter(p => p.category === "damas");
+            generateProducts(damasProducts, 'clipsDamasProducts');
+            clipsDamasModal.style.display = 'flex';
+        });
+        
+        clipsDamasCloseBtn.addEventListener('click', () => {
+            clipsDamasModal.style.display = 'none';
+        });
+        
+        clipsDamasModal.addEventListener('click', (e) => {
+            if (e.target === clipsDamasModal) {
+                clipsDamasModal.style.display = 'none';
+            }
+        });
+        
+        clipsDamasSearch.addEventListener('input', () => {
+            const searchTerm = clipsDamasSearch.value.toLowerCase();
+            const filteredProducts = productsData.filter(product => 
+                product.category === "damas" && 
+                product.name.toLowerCase().includes(searchTerm)
+            );
+            generateProducts(filteredProducts, 'clipsDamasProducts');
+        });
+        
+        // Modal "Clips Niñas"
+        const clipsNinasModal = document.getElementById('clipsNinasModal');
+        const clipsNinasBtn = document.getElementById('clipsNinasBtn');
+        const clipsNinasProductsContainer = document.getElementById('clipsNinasProducts');
+        const clipsNinasCloseBtn = document.querySelector('#clipsNinasModal .close-btn');
+        const clipsNinasSearch = document.getElementById('clipsNinasSearch');
+        
+        clipsNinasBtn.addEventListener('click', () => {
+            const ninasProducts = productsData.filter(p => p.category === "ninas");
+            generateProducts(ninasProducts, 'clipsNinasProducts');
+            clipsNinasModal.style.display = 'flex';
+        });
+        
+        clipsNinasCloseBtn.addEventListener('click', () => {
+            clipsNinasModal.style.display = 'none';
+        });
+        
+        clipsNinasModal.addEventListener('click', (e) => {
+            if (e.target === clipsNinasModal) {
+                clipsNinasModal.style.display = 'none';
+            }
+        });
+        
+        clipsNinasSearch.addEventListener('input', () => {
+            const searchTerm = clipsNinasSearch.value.toLowerCase();
+            const filteredProducts = productsData.filter(product => 
+                product.category === "ninas" && 
+                product.name.toLowerCase().includes(searchTerm)
+            );
+            generateProducts(filteredProducts, 'clipsNinasProducts');
+        });
+        
+        // Carrusel
         const slides = document.querySelector('.slides');
         const dots = document.querySelectorAll('.dots span');
         const prevBtn = document.querySelector('.prev-btn');
