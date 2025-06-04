@@ -1,5 +1,5 @@
-
-<html lang="es">
+     <!DOCTYPE html>
+     <html lang="es">
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,13 +16,13 @@
             --shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
- * {
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         
-    body {
+        body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--light-color);
             color: var(--dark-color);
@@ -30,14 +30,14 @@
             overflow-x: hidden;
         }
         
-    .container {
+        .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 15px;
         }
         
         /* Header mejorado */
-    .header {
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -50,16 +50,16 @@
             flex-wrap: wrap;
         }
         
-    .logo img {
+        .logo img {
             height: 60px;
             transition: transform 0.3s ease;
         }
         
-    .logo:hover img {
+        .logo:hover img {
             transform: scale(1.05);
         }
         
-    nav ul {
+        nav ul {
             display: flex;
             list-style: none;
             gap: 25px;
@@ -67,7 +67,7 @@
             padding: 0;
         }
         
-    nav ul li a {
+        nav ul li a {
             text-decoration: none;
             color: var(--dark-color);
             font-weight: 600;
@@ -76,11 +76,11 @@
             transition: color 0.3s ease;
         }
         
-    nav ul li a:hover {
+        nav ul li a:hover {
             color: var(--primary-color);
         }
         
-   nav ul li a::after {
+        nav ul li a::after {
             content: '';
             position: absolute;
             bottom: 0;
@@ -91,23 +91,23 @@
             transition: width 0.3s ease;
         }
         
-    nav ul li a:hover::after {
+        nav ul li a:hover::after {
             width: 100%;
         }
         
-   .header-icons {
+        .header-icons {
             display: flex;
             align-items: center;
             gap: 20px;
         }
         
-   .cart-icon {
+        .cart-icon {
             position: relative;
             cursor: pointer;
             font-size: 1.4rem;
         }
         
-   .cart-count {
+        .cart-count {
             position: absolute;
             top: -8px;
             right: -10px;
@@ -124,7 +124,7 @@
         }
         
         /* Carousel mejorado */
-    .carousel {
+        .carousel {
             position: relative;
             width: 100%;
             overflow: hidden;
@@ -133,24 +133,24 @@
             box-shadow: var(--shadow);
         }
         
-   .slides {
+        .slides {
             display: flex;
             transition: transform 0.5s ease-in-out;
         }
         
-    .slide-container {
+        .slide-container {
             min-width: 100%;
             aspect-ratio: 16 / 9;
             position: relative;
         }
         
-    .slides img {
+        .slides img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
         
-    .banner-text {
+        .banner-text {
             position: absolute;
             bottom: 30px;
             left: 50%;
@@ -168,12 +168,12 @@
             z-index: 10;
         }
         
-    .banner-text:hover {
+        .banner-text:hover {
             background: rgba(0, 0, 0, 0.8);
             transform: translateX(-50%) scale(1.05);
         }
         
-    .carousel-controls {
+        .carousel-controls {
             position: absolute;
             top: 50%;
             width: 100%;
@@ -184,7 +184,7 @@
             z-index: 10;
         }
         
-    .carousel-btn {
+        .carousel-btn {
             background: rgba(255, 255, 255, 0.7);
             border: none;
             width: 40px;
@@ -199,12 +199,12 @@
             color: var(--dark-color);
         }
         
-    .carousel-btn:hover {
+        .carousel-btn:hover {
             background: rgba(255, 255, 255, 0.9);
             transform: scale(1.1);
         }
         
-   .dots {
+        .dots {
             position: absolute;
             bottom: 15px;
             left: 50%;
@@ -214,7 +214,7 @@
             z-index: 10;
         }
         
-    .dots span {
+        .dots span {
             width: 12px;
             height: 12px;
             background-color: rgba(255, 255, 255, 0.6);
@@ -223,13 +223,13 @@
             transition: all 0.3s ease;
         }
         
-    .dots span.active {
+        .dots span.active {
             background-color: white;
             transform: scale(1.2);
         }
         
         /* Productos mejorados */
-    .section-title {
+        .section-title {
             text-align: center;
             margin: 30px 0 20px;
             font-size: 1.8rem;
@@ -237,7 +237,7 @@
             padding-bottom: 10px;
         }
         
-    .section-title::after {
+        .section-title::after {
             content: '';
             position: absolute;
             bottom: 0;
@@ -248,14 +248,14 @@
             background: var(--primary-color);
         }
         
-   .products {
+        .products {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 25px;
             margin: 20px 0;
         }
         
-   .product {
+        .product {
             background: white;
             border-radius: 10px;
             overflow: hidden;
@@ -265,12 +265,12 @@
             cursor: pointer;
         }
         
-   .product:hover {
+        .product:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
         
-   .product-badge {
+        .product-badge {
             position: absolute;
             top: 10px;
             left: 10px;
@@ -283,18 +283,18 @@
             z-index: 1;
         }
         
-   .product-img {
+        .product-img {
             width: 100%;
             height: 220px;
             object-fit: cover;
             border-bottom: 1px solid var(--gray-color);
         }
         
-    .product-info {
+        .product-info {
             padding: 15px;
         }
         
-   .product-name {
+        .product-name {
             font-weight: 600;
             margin-bottom: 5px;
             font-size: 1.1rem;
@@ -302,20 +302,20 @@
             overflow: hidden;
         }
         
-   .product-price {
+        .product-price {
             font-weight: bold;
             color: var(--primary-color);
             font-size: 1.2rem;
             margin: 8px 0;
         }
         
-    .product-rating {
+        .product-rating {
             color: #f1c40f;
             margin: 5px 0;
             font-size: 0.9rem;
         }
         
-   .add-to-cart {
+        .add-to-cart {
             width: 100%;
             background: var(--primary-color);
             color: white;
@@ -331,19 +331,19 @@
             gap: 8px;
         }
         
-   .add-to-cart:hover {
+        .add-to-cart:hover {
             background: #ad1457;
         }
         
         /* Model Section mejorada */
-    .model-section {
+        .model-section {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
             margin: 40px 0;
         }
         
-    .model-item {
+        .model-item {
             position: relative;
             border-radius: 10px;
             overflow: hidden;
@@ -351,18 +351,18 @@
             height: 300px;
         }
         
-   .model-item img {
+        .model-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
         }
         
-   .model-item:hover img {
+        .model-item:hover img {
             transform: scale(1.05);
         }
         
-    .model-btn {
+        .model-btn {
             position: absolute;
             bottom: 20px;
             left: 50%;
@@ -383,34 +383,34 @@
             z-index: 10;
         }
         
-    .model-btn:hover {
+        .model-btn:hover {
             background: rgba(0, 0, 0, 0.9);
             transform: translateX(-50%) scale(1.05);
         }
         
         /* Footer */
-   .footer {
+        .footer {
             background: var(--dark-color);
             color: white;
             padding: 40px 0 20px;
             margin-top: 50px;
         }
         
-   .footer-content {
+        .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
             margin-bottom: 30px;
         }
         
-   .footer-column h3 {
+        .footer-column h3 {
             font-size: 1.3rem;
             margin-bottom: 20px;
             position: relative;
             padding-bottom: 10px;
         }
         
-   .footer-column h3::after {
+        .footer-column h3::after {
             content: '';
             position: absolute;
             bottom: 0;
@@ -420,15 +420,15 @@
             background: var(--primary-color);
         }
         
-   .footer-links {
+        .footer-links {
             list-style: none;
         }
         
-    .footer-links li {
+        .footer-links li {
             margin-bottom: 12px;
         }
         
-   .footer-links a {
+        .footer-links a {
             color: #ccc;
             text-decoration: none;
             transition: color 0.3s ease;
@@ -437,24 +437,24 @@
             gap: 8px;
         }
         
-   .footer-links a:hover {
+        .footer-links a:hover {
             color: white;
         }
         
-   .footer-contact p {
+        .footer-contact p {
             display: flex;
             align-items: center;
             gap: 10px;
             margin-bottom: 12px;
         }
         
-    .social-icons {
+        .social-icons {
             display: flex;
             gap: 15px;
             margin-top: 15px;
         }
         
-    .social-icons a {
+        .social-icons a {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -466,12 +466,12 @@
             transition: all 0.3s ease;
         }
         
-   .social-icons a:hover {
+        .social-icons a:hover {
             background: var(--primary-color);
             transform: translateY(-3px);
         }
         
-   .copyright {
+        .copyright {
             text-align: center;
             padding-top: 20px;
             border-top: 1px solid rgba(255,255,255,0.1);
@@ -480,7 +480,7 @@
         }
         
         /* Carrito de compras */
-   .cart-modal {
+        .cart-modal {
             display: none;
             position: fixed;
             top: 0;
@@ -492,7 +492,7 @@
             justify-content: flex-end;
         }
         
-    .cart-content {
+        .cart-content {
             background: white;
             width: 100%;
             max-width: 450px;
@@ -504,11 +504,11 @@
             position: relative;
         }
         
-    .cart-content.active {
+        .cart-content.active {
             transform: translateX(0);
         }
         
-   .cart-header {
+        .cart-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -517,7 +517,7 @@
             margin-bottom: 20px;
         }
         
-    .close-cart {
+        .close-cart {
             background: none;
             border: none;
             font-size: 1.5rem;
@@ -525,46 +525,46 @@
             color: var(--dark-color);
         }
         
-   .cart-items {
+        .cart-items {
             margin-bottom: 20px;
         }
         
-    .cart-item {
+        .cart-item {
             display: flex;
             gap: 15px;
             padding: 15px 0;
             border-bottom: 1px solid var(--gray-color);
         }
         
-    .cart-item-img {
+        .cart-item-img {
             width: 80px;
             height: 80px;
             object-fit: cover;
             border-radius: 5px;
         }
         
-   .cart-item-details {
+        .cart-item-details {
             flex: 1;
         }
         
-   .cart-item-name {
+        .cart-item-name {
             font-weight: 600;
             margin-bottom: 5px;
         }
         
-    .cart-item-price {
+        .cart-item-price {
             color: var(--primary-color);
             font-weight: bold;
         }
         
-   .cart-item-actions {
+        .cart-item-actions {
             display: flex;
             align-items: center;
             gap: 10px;
             margin-top: 8px;
         }
         
-   .quantity-btn {
+        .quantity-btn {
             width: 30px;
             height: 30px;
             border-radius: 50%;
@@ -576,7 +576,7 @@
             justify-content: center;
         }
         
-   .remove-item {
+        .remove-item {
             color: #e74c3c;
             background: none;
             border: none;
@@ -584,14 +584,14 @@
             margin-left: auto;
         }
         
-   .cart-total {
+        .cart-total {
             font-size: 1.2rem;
             font-weight: bold;
             text-align: right;
             margin: 20px 0;
         }
         
-   .checkout-btn {
+        .checkout-btn {
             width: 100%;
             background: var(--success-color);
             color: white;
@@ -607,18 +607,18 @@
             gap: 10px;
         }
         
-    .checkout-btn:hover {
+        .checkout-btn:hover {
             background: #388e3c;
         }
         
-   .empty-cart {
+        .empty-cart {
             text-align: center;
             padding: 30px 0;
             color: #777;
         }
         
         /* Sistema de modales */
-   .modal-overlay {
+        .modal-overlay {
             display: none;
             position: fixed;
             top: 0;
@@ -631,7 +631,7 @@
             align-items: center;
         }
         
-   .modal-content {
+        .modal-content {
             background: #fff;
             padding: 25px;
             border-radius: 10px;
@@ -644,7 +644,7 @@
             overflow-y: auto;
         }
         
-   .modal-content img {
+        .modal-content img {
             width: 100%;
             max-height: 300px;
             object-fit: contain;
@@ -652,31 +652,31 @@
             margin-bottom: 15px;
         }
         
-   .modal-content h3 {
+        .modal-content h3 {
             margin: 0 0 10px;
             font-size: 1.5em;
         }
         
-    .modal-content .description {
+        .modal-content .description {
             margin: 15px 0;
             font-size: 1em;
             color: #555;
         }
         
-    .modal-content .rating {
+        .modal-content .rating {
             margin: 15px 0;
             color: #f1c40f;
             font-size: 1.2em;
         }
         
-   .modal-content .price {
+        .modal-content .price {
             font-weight: bold;
             margin: 15px 0;
             font-size: 1.3em;
             color: var(--primary-color);
         }
         
-   .modal-content .color-palette {
+        .modal-content .color-palette {
             display: flex;
             gap: 15px;
             justify-content: center;
@@ -684,7 +684,7 @@
             margin: 20px 0;
         }
         
-   .modal-content .color-circle {
+        .modal-content .color-circle {
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -694,12 +694,12 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
-    .modal-content .color-circle.selected {
+        .modal-content .color-circle.selected {
             transform: scale(1.2);
             border: 2px solid var(--primary-color);
         }
         
-   .modal-content .quantity {
+        .modal-content .quantity {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -707,7 +707,7 @@
             margin: 20px 0;
         }
         
-   .modal-content .quantity-btn {
+        .modal-content .quantity-btn {
             background: var(--primary-color);
             color: #fff;
             border: none;
@@ -721,11 +721,11 @@
             justify-content: center;
         }
         
-   .modal-content .quantity-btn:hover {
+        .modal-content .quantity-btn:hover {
             background: #ad1457;
         }
         
-   .modal-content .quantity-input {
+        .modal-content .quantity-input {
             width: 60px;
             height: 40px;
             text-align: center;
@@ -734,7 +734,7 @@
             font-size: 1.1em;
         }
         
-   .modal-content .btn-add-cart {
+        .modal-content .btn-add-cart {
             background: var(--primary-color);
             color: #fff;
             border: none;
@@ -748,11 +748,11 @@
             transition: background 0.3s ease;
         }
         
-   .modal-content .btn-add-cart:hover {
+        .modal-content .btn-add-cart:hover {
             background: #ad1457;
         }
         
-   .modal-content .close-btn {
+        .modal-content .close-btn {
             position: absolute;
             top: 15px;
             right: 15px;
@@ -764,7 +764,7 @@
         }
         
         /* View All and Category Modals */
-    .category-modal {
+        .category-modal {
             display: none;
             position: fixed;
             top: 0;
@@ -778,7 +778,7 @@
             overflow-y: auto;
         }
         
-   .category-modal-content {
+        .category-modal-content {
             background: #fff;
             padding: 25px;
             border-radius: 10px;
@@ -791,7 +791,7 @@
             box-shadow: 0 5px 30px rgba(0,0,0,0.3);
         }
         
-    .category-modal-content h2 {
+        .category-modal-content h2 {
             margin: 0 0 20px;
             font-size: 1.8em;
             text-align: center;
@@ -800,12 +800,12 @@
             border-bottom: 2px solid var(--gray-color);
         }
         
-   .search-container {
+        .search-container {
             margin: 20px 0;
             text-align: center;
         }
         
-    .search-input {
+        .search-input {
             width: 80%;
             max-width: 500px;
             padding: 12px;
@@ -815,24 +815,24 @@
             box-shadow: var(--shadow);
         }
         
-    .search-input:focus {
+        .search-input:focus {
             outline: none;
             border-color: var(--primary-color);
         }
         
-    .view-all-products, .clips-damas-products, .clips-ninas-products {
+        .view-all-products, .clips-damas-products, .clips-ninas-products {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 25px;
             padding: 15px;
         }
         
-    .view-all-products .product, .clips-damas-products .product, .clips-ninas-products .product {
+        .view-all-products .product, .clips-damas-products .product, .clips-ninas-products .product {
             width: 100%;
             min-width: unset;
         }
         
-    .category-modal-content .close-btn {
+        .category-modal-content .close-btn {
             position: absolute;
             top: 15px;
             right: 15px;
@@ -844,7 +844,7 @@
         }
         
         /* MENÚ HAMBURGUESA PARA MÓVIL */
-    .menu-toggle {
+        .menu-toggle {
             display: none;
             flex-direction: column;
             justify-content: space-around;
@@ -854,7 +854,7 @@
             z-index: 1000;
         }
         
-   .menu-toggle span {
+        .menu-toggle span {
             height: 3px;
             width: 100%;
             background-color: var(--dark-color);
@@ -864,13 +864,13 @@
         
         /* Responsive */
         /* Media queries para móviles (compacto) */
-    @media (max-width: 767px) {
+        @media (max-width: 767px) {
             /* Menú móvil */
             .menu-toggle {
                 display: flex;
             }
             
-    nav {
+            nav {
                 position: fixed;
                 top: 0;
                 right: -100%;
@@ -884,22 +884,22 @@
                 box-shadow: -5px 0 15px rgba(0,0,0,0.1);
             }
             
-    nav.active {
+            nav.active {
                 right: 0;
             }
             
-    nav ul {
+            nav ul {
                 flex-direction: column;
                 padding: 20px;
                 gap: 15px;
             }
             
-    nav ul li a {
+            nav ul li a {
                 padding: 10px 0;
                 font-size: 1.1rem;
             }
             
-    .close-menu {
+            .close-menu {
                 position: absolute;
                 top: 20px;
                 right: 20px;
@@ -908,104 +908,208 @@
             }
             
             /* Header compacto */
-    .header {
+            .header {
                 padding: 10px 15px;
             }
             
-    .logo img {
+            .logo img {
                 height: 45px;
             }
             
             /* Carrusel más compacto */
-    .carousel {
+            .carousel {
                 margin: 10px 0;
             }
             
-    .banner-text {
+            .banner-text {
                 font-size: 1.2em;
                 padding: 8px 15px;
                 bottom: 15px;
             }
             
             /* Productos en 1 columna */
-    .products {
+            .products {
                 grid-template-columns: 1fr;
                 gap: 15px;
                 margin: 10px 0;
             }
             
-   .product-img {
+            .product-img {
                 height: 180px;
             }
             
-   .product-name {
+            .product-name {
                 font-size: 1rem;
                 height: auto;
             }
             
-   .product-price {
+            .product-price {
                 font-size: 1.1rem;
             }
             
             /* Model section en 1 columna */
-   .model-section {
+            .model-section {
                 grid-template-columns: 1fr;
                 gap: 15px;
                 margin: 20px 0;
             }
             
-   .model-item {
+            .model-item {
                 height: 220px;
             }
             
-    .model-btn {
+            .model-btn {
                 font-size: 1rem;
                 padding: 8px 15px;
             }
             
             /* Footer compacto */
-   .footer-content {
+            .footer-content {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
             
             /* Títulos más pequeños */
-   .section-title {
+            .section-title {
                 font-size: 1.5rem;
                 margin: 20px 0 15px;
             }
             
-   .section-title::after {
+            .section-title::after {
                 width: 60px;
             }
             
             /* Modales para móvil */
-   .modal-content {
+            .modal-content {
                 width: 95%;
                 padding: 20px;
             }
             
-   .modal-content img {
+            .modal-content img {
                 max-height: 200px;
             }
             
-    .category-modal-content {
+            .category-modal-content {
                 width: 95%;
                 padding: 15px;
             }
             
-   .view-all-products, .clips-damas-products, .clips-ninas-products {
+            .view-all-products, .clips-damas-products, .clips-ninas-products {
                 grid-template-columns: 1fr;
                 gap: 15px;
             }
         }
         
-
-        /* Responsive */
-
+        /* Media queries para tablets */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 720px;
+            }
+            
+            .mobile-header {
+                padding: 15px 20px;
+            }
+            
+            .logo img {
+                height: 50px;
+            }
+            
+            .products {
+                grid-template-columns: repeat(3, 1fr);
+                margin: 0 20px 25px;
+            }
+            
+            .model-section {
+                grid-template-columns: repeat(2, 1fr);
+                margin: 25px 20px;
+            }
+            
+            .model-item {
+                height: 250px;
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+                padding: 0 25px;
+            }
+        }
+        
+        /* Media queries para escritorio */
+        @media (min-width: 992px) {
+            .container {
+                max-width: 960px;
+            }
+            
+            .mobile-header {
+                display: none;
+            }
+            
+            .desktop-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 15px 20px;
+                background-color: white;
+                box-shadow: var(--shadow);
+                position: sticky;
+                top: 0;
+                z-index: 100;
+            }
+            
+            .logo img {
+                height: 55px;
+            }
+            
+            nav ul {
+                display: flex;
+                list-style: none;
+                gap: 20px;
+                margin: 0;
+                padding: 0;
+            }
+            
+            nav ul li a {
+                text-decoration: none;
+                color: var(--dark-color);
+                font-weight: 600;
+                font-size: 1rem;
+            }
+            
+            .header-icons {
+                display: flex;
+                align-items: center;
+                gap: 18px;
+            }
+            
+            .header-icons i {
+                font-size: 1.3rem;
+            }
+            
+            .products {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
+                margin: 0 20px 30px;
+            }
+            
+            .model-section {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+                margin: 30px 20px;
+            }
+            
+            .model-item {
+                height: 280px;
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 30px;
+                padding: 0 30px;
+            }
+        }
     </style>
-</head>
-<body>
+       </head>
+        <body>
     <div class="container">
         <!-- Header mejorado -->
         <header class="header">
@@ -1013,13 +1117,13 @@
                 <img src="https://lh3.googleusercontent.com/gps-cs/AIky0YXTTJyLqUwcNn1yduyV6i82lmL4ukvEZp-ePVd_P_Wa_y1VGwXNJOPpVxro2IxUZ55xE4oEndno5MItmJf7wjkFn0RYFCLtB4bOG2AHYHrupD1pkX8cf3jOUBHNUJOFEYOrwzTGEMSJj6j8=w1000-h1000-p-k-no" alt="TodoModa Logo">
             </div>
             
-   <div class="menu-toggle" id="menuToggle">
+            <div class="menu-toggle" id="menuToggle">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
             
-<nav id="mainNav">
+            <nav id="mainNav">
                 <div class="close-menu" id="closeMenu">
                     <i class="fas fa-times"></i>
                 </div>
@@ -1032,7 +1136,7 @@
                 </ul>
             </nav>
             
-<div class="header-icons">
+            <div class="header-icons">
                 <div class="search-icon">
                     <i class="fas fa-search"></i>
                 </div>
@@ -1047,7 +1151,7 @@
         </header>
 
         <!-- Carousel mejorado -->
- <div class="carousel">
+        <div class="carousel">
             <div class="slides">
                 <div class="slide-container">
                     <img src="https://pe.todomoda.com/media/wysiwyg/TM_DISNEY_STITCH_-_BANNERS_Desk_new_1.jpg" alt="Banner 1">
@@ -1068,13 +1172,13 @@
         </div>
 
         <!-- Productos destacados -->
- <h2 class="section-title">Productos Destacados</h2>
+        <h2 class="section-title">Productos Destacados</h2>
         <div class="products" id="featuredProducts">
             <!-- Los productos se insertarán dinámicamente aquí -->
         </div>
 
         <!-- Model Section mejorada -->
- <div class="model-section">
+        <div class="model-section">
             <div class="model-item">
                 <img src="https://lh3.googleusercontent.com/gps-cs/AIky0YUGuPXaSC1mPGUKkOYa5z7JyvELvbIy0B4-WtB3tMHIKm2D6Sbg1cTWwU0MsxRJR_5lKb5t1MnVOStZk-tNPdUudQ6-h7M7ueR4l8N5IgmuOrhlNRMi0B_uohBDRomdzQUIHP7y244Zc150=w1024-h1024-p-k-no" alt="Clips Damas">
                 <button class="model-btn" id="clipsDamasBtn">CLIPS DAMAS</button>
@@ -1086,14 +1190,14 @@
         </div>
 
         <!-- Nuevos productos -->
-<h2 class="section-title">Nuevos Productos</h2>
+        <h2 class="section-title">Nuevos Productos</h2>
         <div class="products" id="newProducts">
             <!-- Los productos se insertarán dinámicamente aquí -->
         </div>
     </div>
     
     <!-- Footer -->
- <footer class="footer">
+    <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-column">
@@ -1107,7 +1211,7 @@
                     </div>
                 </div>
                 
- <div class="footer-column">
+                <div class="footer-column">
                      <h3>Categorías</h3>
                     <ul class="footer-links">
                         <li><a href="#">Accesorios para Damas</a></li>
@@ -1118,7 +1222,7 @@
                     </ul>
                 </div>
                 
- <div class="footer-column">
+                <div class="footer-column">
                     <h3>Enlaces Rápidos</h3>
                     <ul class="footer-links">
                         <li><a href="#">Sobre Nosotros</a></li>
@@ -1129,7 +1233,7 @@
                     </ul>
                 </div>
                 
-<div class="footer-column footer-contact">
+                <div class="footer-column footer-contact">
                     <h3>Contacto</h3>
                     <p><i class="fas fa-map-marker-alt"></i> Av. Principal 123, Lima, Perú</p>
                     <p><i class="fas fa-phone"></i> +51 987 654 321</p>
@@ -1138,14 +1242,14 @@
                 </div>
             </div>
             
-<div class="copyright">
+            <div class="copyright">
                 <p>&copy; 2023 TodoModa. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
     
     <!-- Carrito de compras -->
- <div class="cart-modal" id="cartModal">
+    <div class="cart-modal" id="cartModal">
         <div class="cart-content" id="cartContent">
             <div class="cart-header">
                 <h2>Tu Carrito</h2>
@@ -1154,25 +1258,25 @@
                 </button>
             </div>
             
- <div class="cart-items" id="cartItems">
+            <div class="cart-items" id="cartItems">
                 <div class="empty-cart">
                     <i class="fas fa-shopping-cart fa-3x"></i>
                     <p>Tu carrito está vacío</p>
                 </div>
             </div>
             
- <div class="cart-total" id="cartTotal">
+            <div class="cart-total" id="cartTotal">
                 Total: S/ 0.00
             </div>
             
-<button class="checkout-btn" id="checkoutBtn">
+            <button class="checkout-btn" id="checkoutBtn">
                 <i class="fas fa-check"></i> Realizar Pedido
             </button>
         </div>
     </div>
     
     <!-- Modal de producto -->
-<div class="modal-overlay" id="productModal">
+    <div class="modal-overlay" id="productModal">
         <div class="modal-content">
             <button class="close-btn">&times;</button>
             <img id="modalImage" alt="" src="">
@@ -1191,7 +1295,7 @@
     </div>
     
     <!-- View All Products Modal -->
-<div class="category-modal" id="viewAllModal">
+    <div class="category-modal" id="viewAllModal">
         <div class="category-modal-content">
             <button class="close-btn">&times;</button>
             <h2>Todos los Productos</h2>
@@ -1203,7 +1307,7 @@
     </div>
     
     <!-- Clips Damas Modal -->
- <div class="category-modal" id="clipsDamasModal">
+    <div class="category-modal" id="clipsDamasModal">
         <div class="category-modal-content">
             <button class="close-btn">&times;</button>
             <h2>CLIPS DAMAS</h2>
@@ -1215,7 +1319,7 @@
     </div>
     
     <!-- Clips Niñas Modal -->
- <div class="category-modal" id="clipsNinasModal">
+    <div class="category-modal" id="clipsNinasModal">
         <div class="category-modal-content">
             <button class="close-btn">&times;</button>
             <h2>CLIPS NIÑAS</h2>
@@ -1224,12 +1328,11 @@
             </div>
             <div class="clips-ninas-products" id="clipsNinasProducts"></div>
         </div>
-   </div>
+    </div>
     
- <script>
-        // Datos de productos
+    <script>
+        // Datos de productos - Ahora con 17 productos
         const productsData = [
-            // Productos destacados
             {
                 id: 1,
                 name: "Maxilazos - 5 Colores",
@@ -1287,7 +1390,6 @@
                 ],
                 featured: true
             },
-            // Nuevos productos
             {
                 id: 5,
                 name: "Ganchos Acrílicos Color Celeste",
@@ -1339,7 +1441,6 @@
                 ],
                 new: true
             },
-            // Clips Damas
             {
                 id: 9,
                 name: "Ganchos de Flores",
@@ -1353,7 +1454,6 @@
                 ],
                 category: "damas"
             },
-            // Clips Niñas
             {
                 id: 14,
                 name: "Par de mini ganchitos en forma de flor",
@@ -1383,6 +1483,48 @@
                 description: "Mini ganchitos versátiles para cualquier ocasión.",
                 colors: [],
                 category: "ninas"
+            },
+            {
+                id: 17,
+                name: "Ligas colores pasteles y fuertes",
+                price: 1.00,
+                image: "https://lh3.googleusercontent.com/gps-cs/AIky0YVwhLWhfaBVh3ChmdRjktxd6WCi7W6fTmz2_7TvWPHTT_-3tX1zci-DGspLNMmn3SpAYgh9RN5G_lHRBehTbWzF16lZ9CNiBbjgj5-EVSXMU3aVjCsYaPQ5Maahznx9Fi79zzSnwLxM_nkC=w2000-h2000-p-k-no",
+                rating: "⭐⭐⭐⭐☆ (4.0)",
+                description: "Ligas en colores pasteles y fuertes, ideales para cualquier estilo.",
+                colors: [
+                    {color: "#FFC0CB", title: "Rosa Pastel"},
+                    {color: "#FFD700", title: "Amarillo"},
+                    {color: "#00BFFF", title: "Azul"},
+                    {color: "#FF4500", title: "Naranja"},
+                    {color: "#008000", title: "Verde"}
+                ],
+                new: true
+            },
+            {
+                id: 18,
+                name: "Colets negros",
+                price: 1.00,
+                image: "https://lh3.googleusercontent.com/gps-cs/AIky0YWE3Z0a1qVkSdmBI9RQzayKeT8bgvXn5RTJNXmMJjHG9uzg5VUrwt4-PKEq6AdcYPITi3LkJvKtdxDXq6PucsAOpzZGm2J8QGEYCR4Ff59f3YXXaKQ_Ww8lgm4vOYlRuyCNXxPuyWPFWf23=w2000-h2000-p-k-no",
+                rating: "⭐⭐⭐☆☆ (3.3)",
+                description: "Colets negros clásicos y resistentes.",
+                colors: [
+                    {color: "#000000", title: "Negro"}
+                ],
+                new: true
+            },
+            {
+                id: 19,
+                name: "Colets colores pasteles",
+                price: 1.00,
+                image: "https://lh3.googleusercontent.com/gps-cs/AIky0YVVXgYaHEulEuraO7tX6LShXlnoogs6cvwc7jryv8vOVwEt2wCEPWyj0ihUEHTjGMKv0HpL3uglAD96vZsANfdnMrLB4hRI1quw3OaPX-ewOFjUY9eF2ggyG4sMZLcBfJ8amsKoKsAgOXPG=w2000-h2000-p-k-no",
+                rating: "⭐⭐⭐☆☆ (3.4)",
+                description: "Colets en tonos pasteles para un look suave y elegante.",
+                colors: [
+                    {color: "#FFB6C1", title: "Rosa Pastel"},
+                    {color: "#87CEFA", title: "Azul Pastel"},
+                    {color: "#98FB98", title: "Verde Pastel"}
+                ],
+                new: true
             }
         ];
 
@@ -1555,6 +1697,7 @@
                     <img src="${item.image}" alt="${item.name}" class="cart-item-img">
                     <div class="cart-item-details">
                         <h3 class="cart-item-name">${item.name}</h3>
+                        ${item.color ? `<p>Color: ${item.color}</p>` : ''}
                         <p class="cart-item-price">S/ ${item.price.toFixed(2)}</p>
                         <div class="cart-item-actions">
                             <button class="quantity-btn decrease" data-index="${index}">-</button>
@@ -1631,6 +1774,7 @@
         
         let selectedProduct = null;
         let selectedColor = null;
+        let selectedColorTitle = null;
         
         function openProductModal(productElement) {
             const id = parseInt(productElement.getAttribute('data-id'));
@@ -1655,11 +1799,13 @@
                     colorCircle.style.backgroundColor = color.color;
                     colorCircle.title = color.title;
                     colorCircle.dataset.color = color.color;
+                    colorCircle.dataset.title = color.title;
                     
                     colorCircle.addEventListener('click', () => {
                         modalColors.querySelectorAll('.color-circle').forEach(c => c.classList.remove('selected'));
                         colorCircle.classList.add('selected');
-                        selectedColor = color;
+                        selectedColor = color.color;
+                        selectedColorTitle = color.title;
                     });
                     
                     modalColors.appendChild(colorCircle);
@@ -1671,6 +1817,8 @@
                 }
             } else {
                 modalColors.innerHTML = '<p>No hay colores disponibles</p>';
+                selectedColor = null;
+                selectedColorTitle = null;
             }
             
             // Resetear cantidad
@@ -1719,7 +1867,10 @@
             const quantity = parseInt(quantityInput.value);
             
             // Verificar si el producto ya está en el carrito
-            const existingItem = cart.find(item => item.id === selectedProduct.id);
+            const existingItem = cart.find(item => 
+                item.id === selectedProduct.id && 
+                item.color === selectedColor
+            );
             
             if (existingItem) {
                 existingItem.quantity += quantity;
@@ -1729,7 +1880,8 @@
                     name: selectedProduct.name,
                     price: selectedProduct.price,
                     image: selectedProduct.image,
-                    quantity: quantity
+                    quantity: quantity,
+                    color: selectedColorTitle // Guardamos el título del color
                 });
             }
             
@@ -1892,5 +2044,5 @@
         // Inicializar el carrito
         updateCart();
     </script>
-</body>
-</html>
+    </body>
+    </html>
