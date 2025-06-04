@@ -1002,61 +1002,7 @@
         
 
         /* Responsive */
-    @media (max-width: 768px) {
-            .product {
-                width: 150px;
-                min-width: 150px;
-            }
-            .product .add-to-cart {
-                padding: 8px 15px;
-                font-size: 0.8em;
-            }
-            .view-all-products, .clips-damas-products, .clips-ninas-products {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            }
-            .search-input {
-                width: 90%;
-            }
-            .category-btn {
-                font-size: 1em; /* Smaller font for smaller screens */
-                padding: 4px 8px;
-            }
-            .model-item {
-                width: 50%; /* Maintain equal width */
-            }
-            .model-item img {
-                width: 100%;
-            }
-        }
-        @media (max-width: 480px) {
-            .product {
-                width: 120px;
-                min-width: 120px;
-            }
-            .product p {
-                font-size: 0.9em;
-            }
-            .product .add-to-cart {
-                padding: 6px 10px;
-                font-size: 0.7em;
-            }
-            .view-all-products, .clips-damas-products, .clips-ninas-products {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            }
-            .search-input {
-                width: 95%;
-            }
-            .category-btn {
-                font-size: 0.9em; /* Even smaller font for mobile */
-                padding: 3px 6px;
-            }
-            .model-item {
-                width: 50%; /* Maintain equal width */
-            }
-            .model-item img {
-                width: 100%;
-            }
-        }
+
     </style>
 </head>
 <body>
