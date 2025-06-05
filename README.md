@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -45,13 +44,13 @@
             padding: 0;
         }
         .header nav ul li a {
-            text-decoration: none;
-            color: #333;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
+                text-decoration: none;
+                color: #333;
+                font-weight: bold;
+                transition: color 0.3s;
+            }
         .header nav ul li a:hover {
-            color: #d good
+            color: #d81b60;
         }
         .header-icons {
             display: flex;
@@ -112,7 +111,7 @@
             font-size: 1.8em;
             font-weight: bold;
             color: #fff;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0,0,0,0.6);
             padding: 12px 30px;
             border-radius: 30px;
             cursor: pointer;
@@ -120,7 +119,7 @@
             text-transform: uppercase;
         }
         .carousel .banner-text:hover {
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0,0,0,0.8);
             transform: translateX(-50%) scale(1.05);
         }
         .carousel .dots {
@@ -134,7 +133,7 @@
         .carousel .dots span {
             width: 12px;
             height: 12px;
-            background-color: rgba(255, 255, 255, 0.6);
+            background-color: rgba(255,255,255,0.6);
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.3s;
@@ -262,15 +261,15 @@
             justify-content: center;
             gap: 8px;
             position: absolute;
-            top: 180px; /* Position at the bottom of the image */
+            top: 180px;
             left: 0;
-            opacity: 0; /* Hidden by default */
-            transform: translateY(20px); /* Start below the image */
+            opacity: 0;
+            transform: translateY(20px);
             z-index: 2;
         }
         .product:hover .add-to-cart {
-            opacity: 1; /* Visible on hover */
-            transform: translateY(0); /* Slide up */
+            opacity: 1;
+            transform: translateY(0);
         }
         .add-to-cart:hover {
             background: #ad1457;
@@ -464,53 +463,53 @@
         }
         .modal-content {
             background: #fff;
-            padding: 25px;
+            padding: 15px;
             border-radius: 10px;
             max-width: 500px;
             width: 90%;
             text-align: center;
             position: relative;
             box-shadow: 0 5px 30px rgba(0,0,0,0.3);
-            max-height: 90vh;
+            max-height: 95vh;
             overflow-y: auto;
         }
         .modal-content img {
             width: 100%;
-            max-height: 300px;
+            max-height: 200px;
             object-fit: contain;
             border-radius: 5px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
         .modal-content h3 {
-            margin: 0 0 10px;
-            font-size: 1.5em;
+            margin: 0 0 8px;
+            font-size: 1.3em;
         }
         .modal-content .description {
-            margin: 15px 0;
-            font-size: 1em;
+            margin: 10px 0;
+            font-size: 0.9em;
             color: #555;
         }
         .modal-content .rating {
-            margin: 15px 0;
+            margin: 10px 0;
             color: #f1c40f;
-            font-size: 1.2em;
+            font-size: 1em;
         }
         .modal-content .price {
             font-weight: bold;
-            margin: 15px 0;
-            font-size: 1.3em;
+            margin: 10px 0;
+            font-size: 1.2em;
             color: #d81b60;
         }
         .modal-content .color-palette {
             display: flex;
-            gap: 15px;
+            gap: 10px;
             justify-content: center;
             flex-wrap: wrap;
-            margin: 20px 0;
+            margin: 15px 0;
         }
         .modal-content .color-circle {
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             border: 1px solid #ddd;
             cursor: pointer;
@@ -525,18 +524,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
-            margin: 20px 0;
+            gap: 10px;
+            margin: 15px 0;
         }
         .modal-content .quantity-btn {
             background: #d81b60;
             color: #fff;
             border: none;
-            width: 35px;
-            height: 35px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1.2em;
+            font-size: 1em;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -545,23 +544,23 @@
             background: #ad1457;
         }
         .modal-content .quantity-input {
-            width: 60px;
-            height: 40px;
+            width: 50px;
+            height: 35px;
             text-align: center;
             border: 1px solid #ddd;
             border-radius: 5px;
-            font-size: 1.1em;
+            font-size: 1em;
         }
         .modal-content .btn-add-cart {
             background: #d81b60;
             color: #fff;
             border: none;
-            padding: 12px;
+            padding: 10px;
             border-radius: 5px;
             cursor: pointer;
             width: 100%;
-            margin-top: 15px;
-            font-size: 1.1em;
+            margin-top: 10px;
+            font-size: 1em;
             font-weight: 600;
             transition: background 0.3s;
         }
@@ -570,9 +569,9 @@
         }
         .modal-content .close-btn {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 1.5em;
+            top: 10px;
+            right: 10px;
+            font-size: 1.3em;
             cursor: pointer;
             color: #333;
             background: none;
@@ -679,6 +678,62 @@
             .cart-content {
                 max-width: 100%;
             }
+            /* Product Modal Adjustments for Smaller Screens */
+            .modal-content {
+                padding: 10px;
+            }
+            .modal-content img {
+                max-height: 180px;
+                margin-bottom: 8px;
+            }
+            .modal-content h3 {
+                font-size: 1.2em;
+                margin-bottom: 6px;
+            }
+            .modal-content .description {
+                margin: 8px 0;
+                font-size: 0.85em;
+            }
+            .modal-content .rating {
+                margin: 8px 0;
+                font-size: 0.9em;
+            }
+            .modal-content .price {
+                margin: 8px 0;
+                font-size: 1.1em;
+            }
+            .modal-content .color-palette {
+                margin: 10px 0;
+                gap: 8px;
+            }
+            .modal-content .color-circle {
+                width: 30px;
+                height: 30px;
+            }
+            .modal-content .quantity {
+                margin: 10px 0;
+                gap: 8px;
+            }
+            .modal-content .quantity-btn {
+                width: 28px;
+                height: 28px;
+                font-size: 0.9em;
+            }
+            .modal-content .quantity-input {
+                width: 45px;
+                height: 32px;
+                font-size: 0.9em;
+            }
+            .modal-content .btn-add-cart {
+                margin-top: 8px;
+                padding: 8px;
+                font-size: 0.9em;
+            }
+            .modal-content .close-btn {
+                top: 8px;
+                right: 8px;
+                font-size: 1.2em;
+            }
         }
         @media (max-width: 480px) {
             .header nav ul {
@@ -697,13 +752,69 @@
                 height: 150px;
             }
             .add-to-cart {
-                top: 150px; /* Adjust for smaller image height */
+                top: 150px;
             }
             .section-title {
                 font-size: 1.5rem;
             }
             .view-all-products, .clips-damas-products, .clips-ninas-products {
                 grid-template-columns: 1fr;
+            }
+            /* Further Modal Adjustments for Very Small Screens */
+            .modal-content {
+                padding: 8px;
+            }
+            .modal-content img {
+                max-height: 160px;
+                margin-bottom: 6px;
+            }
+            .modal-content h3 {
+                font-size: 1.1em;
+                margin-bottom: 5px;
+            }
+            .modal-content .description {
+                margin: 6px 0;
+                font-size: 0.8em;
+            }
+            .modal-content .rating {
+                margin: 6px 0;
+                font-size: 0.85em;
+            }
+            .modal-content .price {
+                margin: 6px 0;
+                font-size: 1em;
+            }
+            .modal-content .color-palette {
+                margin: 8px 0;
+                gap: 6px;
+            }
+            .modal-content .color-circle {
+                width: 28px;
+                height: 28px;
+            }
+            .modal-content .quantity {
+                margin: 8px 0;
+                gap: 6px;
+            }
+            .modal-content .quantity-btn {
+                width: 26px;
+                height: 26px;
+                font-size: 0.85em;
+            }
+            .modal-content .quantity-input {
+                width: 40px;
+                height: 30px;
+                font-size: 0.85em;
+            }
+            .modal-content .btn-add-cart {
+                margin-top: 6px;
+                padding: 7px;
+                font-size: 0.85em;
+            }
+            .modal-content .close-btn {
+                top: 6px;
+                right: 6px;
+                font-size: 1.1em;
             }
         }
     </style>
@@ -739,7 +850,7 @@
         </header>
 
         <!-- Carousel -->
- <div class="carousel">
+<div class="carousel">
             <div class="slides">
                 <div class="slide-container">
                     <img src="https://pe.todomoda.com/media/wysiwyg/TM_DISNEY_STITCH_-_BANNERS_Desk_new_1.jpg" alt="Banner 1">
@@ -756,13 +867,13 @@
         </div>
 
         <!-- Productos destacados -->
-<h2 class="section-title">Productos Destacados</h2>
+ <h2 class="section-title">Productos Destacados</h2>
         <div class="products" id="featuredProducts">
             <!-- Los productos se insertarán dinámicamente aquí -->
         </div>
 
         <!-- Model Section -->
-<div class="model-section">
+ <div class="model-section">
             <div class="model-item">
                 <img src="https://lh3.googleusercontent.com/gps-cs/AIky0YUGuPXaSC1mPGUKkOYa5z7JyvELvbIy0B4-WtB3tMHIKm2D6Sbg1cTWwU0MsxRJR_5lKb5t1MnVOStZk-tNPdUudQ6-h7M7ueR4l8N5IgmuOrhlNRMi0B_uohBDRomdzQUIHP7y244Zc150=w1024-h1024-p-k-no" alt="Clips Damas">
                 <button class="model-btn" id="clipsDamasBtn">CLIPS DAMAS</button>
@@ -781,7 +892,7 @@
     </div>
     
     <!-- Carrito de compras -->
-<div class="cart-modal" id="cartModal">
+ <div class="cart-modal" id="cartModal">
         <div class="cart-content" id="cartContent">
             <div class="cart-header">
                 <h2>Tu Carrito</h2>
@@ -836,7 +947,7 @@
     </div>
     
     <!-- Clips Damas Modal -->
- <div class="category-modal" id="clipsDamasModal">
+<div class="category-modal" id="clipsDamasModal">
         <div class="category-modal-content">
             <button class="close-btn">×</button>
             <h2>CLIPS DAMAS</h2>
@@ -848,7 +959,7 @@
     </div>
     
     <!-- Clips Niñas Modal -->
- <div class="category-modal" id="clipsNinasModal">
+<div class="category-modal" id="clipsNinasModal">
         <div class="category-modal-content">
             <button class="close-btn">×</button>
             <h2>CLIPS NIÑAS</h2>
@@ -859,7 +970,7 @@
         </div>
     </div>
     
-<script>
+ <script>
         // Datos de productos
         const productsData = [
             {
@@ -950,7 +1061,7 @@
                 id: 7,
                 name: "Ganchos Torna Sol en forma de Flor",
                 price: 6.00,
-                image: "https://lh3.googleusercontent.com/gps-cs/AIky0YX2NRiy9kc9B9F5EY9kAoTjy699I8L7qzIaAFyN6ktzntZDbknG5_v1B6_JgD_hJDZQ7pAonmz2ynxpJqX4tYXVpt2EJISwaxV7Vd5er2HXevBcfzH_2KoEuxffPMG6wVLrMxkXZaJcUGxc=w2000-h2000-p-k-no",
+                image: "https://lh3.googleusercontent.com/gps-cs/AIky0YX2NRiy9kc9B9F5EY9kAoTjy699I8L7qzZ7IaAFyN6ktzntZDbknG5_v1B6_JgD_hJDZQ7pAonmz2ynxpJqX4tYXVpt2EJISwaxV7Vd5er2HXevBcfzH_2KoEuxffPMG6wVLrMxkXZaJcUGxc=w2000-h2000-p-k-no",
                 rating: "⭐⭐⭐⭐☆ (4.1)",
                 description: "Ganchos en forma de flor con diseño inspirado en el sol.",
                 colors: [],
@@ -998,7 +1109,7 @@
                 name: "Mini ganchitos en forma de mariposa",
                 price: 2.00,
                 image: "https://lh3.googleusercontent.com/gps-cs/AIky0YW1eFtqiwT_PM-xOZnd2iVogh-XQVJclLEtgsh0i5wUGm9NvOCot9LJLfDmZE58abznArTin0EgjEMw3HuKeK9_9hoODK0kla3nM-GYGSvA8_xXCBmu_qiSuoHzgpSaO_2EtqXLAjnCs34l=w2000-h2000-p-k-no",
-                rating: "⭐⭐⭐☆☆ (3.5)",
+                rating: "⭐⭐★☆☆ (3.5)",
                 description: "Ganchitos en forma de mariposa, perfectos para peinados infantiles.",
                 colors: [],
                 category: "ninas"
@@ -1007,7 +1118,7 @@
                 id: 16,
                 name: "Mini ganchitos",
                 price: 1.50,
-                image: "https://lh3.googleusercontent.com/gps-cs/AIky0YUgnWieVRURnUHds0U4E5FROmRmvztpc0ynONqB5wFO-tvCmbrBn0-E971IAl2YG7r7cobC9Hx-g0AbDpTP71ukEEb6n20lHQz-aPBoI5xDWtVwABfSJFIbqdRT6_YJzOT7x8uhaX-KBSLE=w2000-h2000-p-k-no",
+                image: "https://lh3.googleusercontent.com/gps-cs/AIky0YUqnvW6VRyURnUHds0U4E5FROmRmv0qztpc0ynONqB5wFO-tvvw-wmbnmB0CnMAl2YG7r7cobC9cy-g0xAbCDpTP71ukEEb6n20lHQz-aPBoI5xDWtVwABfSJjFIbQdRT6_YjR3OT7x8uhaX-KBSLE=w2000-h2000-p-k-no",
                 rating: "⭐⭐⭐☆☆ (3.3)",
                 description: "Mini ganchitos versátiles para cualquier ocasión.",
                 colors: [],
@@ -1017,7 +1128,7 @@
                 id: 17,
                 name: "Ligas colores pasteles y fuertes",
                 price: 1.00,
-                image: "https://lh3.googleusercontent.com/gps-cs/AIky0YVwhLWhfaBVh3ChmdRjktxd6WCi7W6fTmz2_7TvWPHTT_-3tX1zci-DGspLNMmn3SpAYgh9RN5G_lHRBehTbWzF16lZ9CNiBbjgj5-EVSXMU3aVjCsYaPQ5Maahznx9Fi79zzSnwLxM_nkC=w2000-h2000-p-k-no",
+                image: "https://lh3.googleusercontent.com/gps-cs/AIky0YVwhLWhfaBVh3ChmdRjktxd6WCi7W6fTmz2_7TvWPHTT_-3tX1zci-DGspLNMmn3SpAYgh9RN5G_lHRBehTbWzF16lZ9CNiBbjgj5-EVSXMU3aVjCsYaPQ5Maahznx9Fi79zzSnwLxM_n_kC=w2000-h2000-p-k-no",
                 rating: "⭐⭐⭐⭐☆ (4.0)",
                 description: "Ligas en colores pasteles y fuertes, ideales para cualquier estilo.",
                 colors: [
@@ -1033,8 +1144,8 @@
                 id: 18,
                 name: "Colets negros",
                 price: 1.00,
-                image: "https://lh3.googleusercontent.com/gps-cs/AIky0YWE3Z0a1qVkSdmBI9RQzayKeT8bgvXn5RTJNXmMJjHG9uzg5VUrwt4-PKEq6AdcYPITi3LkJvKtdxDXq6PucsAOpzZGm2J8QGEYCR4Ff59f3YXXaKQ_Ww8lgm4vOYlRuyCNXxPuyWPFWf23=w2000-h2000-p-k-no",
-                rating: "⭐⭐⭐☆☆ (3.3)",
+                image: "https://lh3.googleusercontent.com/gps-cs/AIky0YWE3Z0a1qVkSdmBI9RQzayKeW8bgvXn5RTJNXmMJjHG9uzg5VUrwt4-PKEq6AdcYPITi3LkSjvKtdxDXq6PucsAOpzZGm2J8QGEYCR4Ff59f3YXXaKQ_Ww8lgm4vOYlRuyCNXxPuyWPFWf23=w2000-h2000-p-k-no",
+                rating: "⭐⭐★☆☆ (3.3)",
                 description: "Colets negros clásicos y resistentes.",
                 colors: [
                     {color: "#000000", title: "Negro"}
@@ -1046,7 +1157,7 @@
                 name: "Colets colores pasteles",
                 price: 1.00,
                 image: "https://lh3.googleusercontent.com/gps-cs/AIky0YVVXgYaHEulEuraO7tX6LShXlnoogs6cvwc7jryv8vOVwEt2wCEPWyj0ihUEHTjGMKv0HpL3uglAD96vZsANfdnMrLB4hRI1quw3OaPX-ewOFjUY9eF2ggyG4sMZLcBfJ8amsKoKsAgOXPG=w2000-h2000-p-k-no",
-                rating: "⭐⭐⭐☆☆ (3.4)",
+                rating: "⭐⭐★☆☆ (3.4)",
                 description: "Colets en tonos pasteles para un look suave y elegante.",
                 colors: [
                     {color: "#FFB6C1", title: "Rosa Pastel"},
@@ -1098,7 +1209,7 @@
                 product.addEventListener('click', (e) => {
                     if (e.target.classList.contains('add-to-cart')) {
                         e.stopPropagation();
-                        openProductModal(product); // Open modal instead of adding to cart
+                        openProductModal(product);
                     } else {
                         openProductModal(product);
                     }
@@ -1410,7 +1521,7 @@
                     price: selectedProduct.price,
                     image: selectedProduct.image,
                     quantity: quantity,
-                    color: selectedColorTitle // Guardamos el título del color
+                    color: selectedColorTitle
                 });
             }
             
