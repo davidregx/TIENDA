@@ -51,7 +51,7 @@
             transition: color 0.3s;
         }
         .header nav ul li a:hover {
-            color: #d81b60;
+            color: #d good
         }
         .header-icons {
             display: flex;
@@ -256,11 +256,21 @@
             border-radius: 5px;
             cursor: pointer;
             font-weight: 600;
-            transition: background 0.3s;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            position: absolute;
+            top: 180px; /* Position at the bottom of the image */
+            left: 0;
+            opacity: 0; /* Hidden by default */
+            transform: translateY(20px); /* Start below the image */
+            z-index: 2;
+        }
+        .product:hover .add-to-cart {
+            opacity: 1; /* Visible on hover */
+            transform: translateY(0); /* Slide up */
         }
         .add-to-cart:hover {
             background: #ad1457;
@@ -686,6 +696,9 @@
             .product img {
                 height: 150px;
             }
+            .add-to-cart {
+                top: 150px; /* Adjust for smaller image height */
+            }
             .section-title {
                 font-size: 1.5rem;
             }
@@ -726,7 +739,7 @@
         </header>
 
         <!-- Carousel -->
-   <div class="carousel">
+ <div class="carousel">
             <div class="slides">
                 <div class="slide-container">
                     <img src="https://pe.todomoda.com/media/wysiwyg/TM_DISNEY_STITCH_-_BANNERS_Desk_new_1.jpg" alt="Banner 1">
@@ -743,13 +756,13 @@
         </div>
 
         <!-- Productos destacados -->
-   <h2 class="section-title">Productos Destacados</h2>
+<h2 class="section-title">Productos Destacados</h2>
         <div class="products" id="featuredProducts">
             <!-- Los productos se insertarán dinámicamente aquí -->
         </div>
 
         <!-- Model Section -->
-   <div class="model-section">
+<div class="model-section">
             <div class="model-item">
                 <img src="https://lh3.googleusercontent.com/gps-cs/AIky0YUGuPXaSC1mPGUKkOYa5z7JyvELvbIy0B4-WtB3tMHIKm2D6Sbg1cTWwU0MsxRJR_5lKb5t1MnVOStZk-tNPdUudQ6-h7M7ueR4l8N5IgmuOrhlNRMi0B_uohBDRomdzQUIHP7y244Zc150=w1024-h1024-p-k-no" alt="Clips Damas">
                 <button class="model-btn" id="clipsDamasBtn">CLIPS DAMAS</button>
@@ -761,14 +774,14 @@
         </div>
 
         <!-- Nuevos productos -->
-   <h2 class="section-title">Nuevos Productos</h2>
+ <h2 class="section-title">Nuevos Productos</h2>
         <div class="products" id="newProducts">
             <!-- Los productos se insertarán dinámicamente aquí -->
         </div>
     </div>
     
     <!-- Carrito de compras -->
-  <div class="cart-modal" id="cartModal">
+<div class="cart-modal" id="cartModal">
         <div class="cart-content" id="cartContent">
             <div class="cart-header">
                 <h2>Tu Carrito</h2>
@@ -792,9 +805,9 @@
     </div>
     
     <!-- Modal de producto -->
-   <div class="product-modal" id="productModal">
+<div class="product-modal" id="productModal">
         <div class="modal-content">
-            <button class="close-btn">&times;</button>
+            <button class="close-btn">×</button>
             <img id="modalImage" alt="" src="">
             <h3 id="modalTitle"></h3>
             <p class="description" id="modalDescription"></p>
@@ -811,9 +824,9 @@
     </div>
     
     <!-- View All Products Modal -->
-   <div class="category-modal" id="viewAllModal">
+<div class="category-modal" id="viewAllModal">
         <div class="category-modal-content">
-            <button class="close-btn">&times;</button>
+            <button class="close-btn">×</button>
             <h2>Todos los Productos</h2>
             <div class="search-container">
                 <input type="text" class="search-input" id="productSearch" placeholder="Buscar productos...">
@@ -823,9 +836,9 @@
     </div>
     
     <!-- Clips Damas Modal -->
-   <div class="category-modal" id="clipsDamasModal">
+ <div class="category-modal" id="clipsDamasModal">
         <div class="category-modal-content">
-            <button class="close-btn">&times;</button>
+            <button class="close-btn">×</button>
             <h2>CLIPS DAMAS</h2>
             <div class="search-container">
                 <input type="text" class="search-input" id="clipsDamasSearch" placeholder="Buscar en Clips Damas...">
@@ -835,9 +848,9 @@
     </div>
     
     <!-- Clips Niñas Modal -->
-   <div class="category-modal" id="clipsNinasModal">
+ <div class="category-modal" id="clipsNinasModal">
         <div class="category-modal-content">
-            <button class="close-btn">&times;</button>
+            <button class="close-btn">×</button>
             <h2>CLIPS NIÑAS</h2>
             <div class="search-container">
                 <input type="text" class="search-input" id="clipsNinasSearch" placeholder="Buscar en Clips Niñas...">
@@ -846,7 +859,7 @@
         </div>
     </div>
     
-   <script>
+<script>
         // Datos de productos
         const productsData = [
             {
@@ -1085,7 +1098,7 @@
                 product.addEventListener('click', (e) => {
                     if (e.target.classList.contains('add-to-cart')) {
                         e.stopPropagation();
-                        addToCart(product);
+                        openProductModal(product); // Open modal instead of adding to cart
                     } else {
                         openProductModal(product);
                     }
