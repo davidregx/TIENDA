@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -44,11 +45,11 @@
             padding: 0;
         }
         .header nav ul li a {
-                text-decoration: none;
-                color: #333;
-                font-weight: bold;
-                transition: color 0.3s;
-            }
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
         .header nav ul li a:hover {
             color: #d81b60;
         }
@@ -216,9 +217,6 @@
         }
         .new-badge {
             background: #4caf50;
-        }
-        .special-badge {
-            background: #9c27b0;
         }
         .product img {
             width: 100%;
@@ -551,6 +549,16 @@
             border-radius: 5px;
             font-size: 1em;
         }
+        .modal-content .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.3em;
+            cursor: pointer;
+            color: #333;
+            background: none;
+            border: none;
+        }
         .modal-content .btn-add-cart {
             background: #d81b60;
             color: #fff;
@@ -566,16 +574,6 @@
         }
         .modal-content .btn-add-cart:hover {
             background: #ad1457;
-        }
-        .modal-content .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 1.3em;
-            cursor: pointer;
-            color: #333;
-            background: none;
-            border: none;
         }
         /* View All and Category Modals */
         .category-modal {
@@ -678,7 +676,6 @@
             .cart-content {
                 max-width: 100%;
             }
-            /* Product Modal Adjustments for Smaller Screens */
             .modal-content {
                 padding: 10px;
             }
@@ -760,7 +757,6 @@
             .view-all-products, .clips-damas-products, .clips-ninas-products {
                 grid-template-columns: 1fr;
             }
-            /* Further Modal Adjustments for Very Small Screens */
             .modal-content {
                 padding: 8px;
             }
@@ -916,10 +912,10 @@
     </div>
     
     <!-- Modal de producto -->
-<div class="product-modal" id="productModal">
+ <div class="product-modal" id="productModal">
         <div class="modal-content">
             <button class="close-btn">×</button>
-            <img id="modalImage" alt="" src="">
+            <img id="modalImage" alt="Product Image" src="">
             <h3 id="modalTitle"></h3>
             <p class="description" id="modalDescription"></p>
             <div class="rating" id="modalRating"></div>
@@ -930,12 +926,12 @@
                 <input type="number" class="quantity-input" id="quantityInput" value="1" min="1">
                 <button class="quantity-btn" id="increaseQty">+</button>
             </div>
-            <button class="btn-add-cart" id="modalAddCart">Agregar al carrito</button>
+            <button class="btn-add-cart" id="btnAddToCart">Agregar al carrito</button>
         </div>
     </div>
     
     <!-- View All Products Modal -->
-<div class="category-modal" id="viewAllModal">
+ <div class="category-modal" id="viewAllModal">
         <div class="category-modal-content">
             <button class="close-btn">×</button>
             <h2>Todos los Productos</h2>
@@ -947,7 +943,7 @@
     </div>
     
     <!-- Clips Damas Modal -->
-<div class="category-modal" id="clipsDamasModal">
+ <div class="category-modal" id="clipsDamasModal">
         <div class="category-modal-content">
             <button class="close-btn">×</button>
             <h2>CLIPS DAMAS</h2>
@@ -959,7 +955,7 @@
     </div>
     
     <!-- Clips Niñas Modal -->
-<div class="category-modal" id="clipsNinasModal">
+ <div class="category-modal" id="clipsNinasModal">
         <div class="category-modal-content">
             <button class="close-btn">×</button>
             <h2>CLIPS NIÑAS</h2>
@@ -1207,9 +1203,9 @@
             // Asignar eventos a los productos
             document.querySelectorAll(`#${containerId} .product`).forEach(product => {
                 product.addEventListener('click', (e) => {
-                    if (e.target.classList.contains('add-to-cart')) {
+                    if (e.target.classList.contains('add-to-cart') || e.target.closest('.add-to-cart')) {
                         e.stopPropagation();
-                        openProductModal(product);
+                        addToCart(product);
                     } else {
                         openProductModal(product);
                     }
@@ -1262,13 +1258,12 @@
         
         // Añadir producto al carrito
         function addToCart(productElement) {
-            const id = parseInt(productElement.getAttribute('data-id'));
-            const product = productsData.find(p => p.id === id);
+            const id = productElement.getAttribute('data-id');
+            const product = productsData.find(p => p.id === Number(id));
             
             if (!product) return;
             
-            // Verificar si el producto ya está en el carrito
-            const existingItem = cart.find(item => item.id === id);
+            const existingItem = cart.find(item => item.id === Number(id));
             
             if (existingItem) {
                 existingItem.quantity++;
@@ -1304,12 +1299,10 @@
         
         // Actualizar carrito
         function updateCart() {
-            // Actualizar contador del ícono
             const cartCount = document.querySelector('.cart-count');
             const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
             cartCount.textContent = totalItems;
             
-            // Actualizar lista de productos en el carrito
             if (cart.length === 0) {
                 cartItems.innerHTML = `
                     <div class="empty-cart">
@@ -1355,7 +1348,6 @@
             
             cartTotal.textContent = `Total: S/ ${total.toFixed(2)}`;
             
-            // Añadir event listeners para los botones de cantidad
             document.querySelectorAll('.decrease').forEach(button => {
                 button.addEventListener('click', () => {
                     const index = button.getAttribute('data-index');
@@ -1409,7 +1401,7 @@
         const decreaseQty = document.getElementById('decreaseQty');
         const increaseQty = document.getElementById('increaseQty');
         const quantityInput = document.getElementById('quantityInput');
-        const modalAddCart = document.getElementById('modalAddCart');
+        const btnAddToCart = document.getElementById('btnAddToCart');
         const modalCloseBtn = document.querySelector('#productModal .close-btn');
         
         let selectedProduct = null;
@@ -1417,8 +1409,8 @@
         let selectedColorTitle = null;
         
         function openProductModal(productElement) {
-            const id = parseInt(productElement.getAttribute('data-id'));
-            const product = productsData.find(p => p.id === id);
+            const id = productElement.getAttribute('data-id');
+            const product = productsData.find(p => p.id === Number(id));
             
             if (!product) return;
             
@@ -1430,7 +1422,6 @@
             modalRating.textContent = product.rating;
             modalPrice.textContent = `S/ ${product.price.toFixed(2)}`;
             
-            // Generar paleta de colores
             modalColors.innerHTML = '';
             if (product.colors.length > 0) {
                 product.colors.forEach(color => {
@@ -1438,8 +1429,8 @@
                     colorCircle.className = 'color-circle';
                     colorCircle.style.backgroundColor = color.color;
                     colorCircle.title = color.title;
-                    colorCircle.dataset.color = color.color;
-                    colorCircle.dataset.title = color.title;
+                    colorCircle.setAttribute('data-color', color.color);
+                    colorCircle.dataset.colorTitle = color.title;
                     
                     colorCircle.addEventListener('click', () => {
                         modalColors.querySelectorAll('.color-circle').forEach(c => c.classList.remove('selected'));
@@ -1451,7 +1442,6 @@
                     modalColors.appendChild(colorCircle);
                 });
                 
-                // Seleccionar el primer color por defecto
                 if (product.colors.length > 0) {
                     modalColors.firstChild.click();
                 }
@@ -1461,10 +1451,8 @@
                 selectedColorTitle = null;
             }
             
-            // Resetear cantidad
-            quantityInput.value = 1;
+            quantityInput.value = '1';
             
-            // Mostrar modal
             productModal.style.display = 'flex';
         }
         
@@ -1488,7 +1476,9 @@
         // Controles de cantidad
         decreaseQty.addEventListener('click', () => {
             let qty = parseInt(quantityInput.value);
-            if (qty > 1) quantityInput.value = qty - 1;
+            if (qty > 1) {
+                quantityInput.value = qty - 1;
+            }
         });
         
         increaseQty.addEventListener('click', () => {
@@ -1497,19 +1487,20 @@
         });
         
         quantityInput.addEventListener('input', () => {
-            if (quantityInput.value < 1) quantityInput.value = 1;
+            if (quantityInput.value < 1) {
+                quantityInput.value = 1;
+            }
         });
         
         // Añadir al carrito desde modal
-        modalAddCart.addEventListener('click', () => {
+        btnAddToCart.addEventListener('click', () => {
             if (!selectedProduct) return;
             
             const quantity = parseInt(quantityInput.value);
             
-            // Verificar si el producto ya está en el carrito
             const existingItem = cart.find(item => 
                 item.id === selectedProduct.id && 
-                item.color === selectedColor
+                item.color === selectedColorTitle
             );
             
             if (existingItem) {
@@ -1569,7 +1560,7 @@
         const clipsDamasSearch = document.getElementById('clipsDamasSearch');
         
         clipsDamasBtn.addEventListener('click', () => {
-            const damasProducts = productsData.filter(p => p.category === "damas");
+            const damasProducts = productsData.slice(0, 9); // Primeros 9 productos
             generateProducts(damasProducts, 'clipsDamasProducts');
             clipsDamasModal.style.display = 'flex';
         });
@@ -1586,10 +1577,8 @@
         
         clipsDamasSearch.addEventListener('input', () => {
             const searchTerm = clipsDamasSearch.value.toLowerCase();
-            const filteredProducts = productsData.filter(product => 
-                product.category === "damas" && 
-                product.name.toLowerCase().includes(searchTerm)
-            );
+            const filteredProducts = productsData.slice(0, 9).filter(product => 
+                product.name.toLowerCase().includes(searchTerm));
             generateProducts(filteredProducts, 'clipsDamasProducts');
         });
         
@@ -1601,7 +1590,7 @@
         const clipsNinasSearch = document.getElementById('clipsNinasSearch');
         
         clipsNinasBtn.addEventListener('click', () => {
-            const ninasProducts = productsData.filter(p => p.category === "ninas");
+            const ninasProducts = productsData.slice(9, 15); // Productos del 10 al 15
             generateProducts(ninasProducts, 'clipsNinasProducts');
             clipsNinasModal.style.display = 'flex';
         });
@@ -1618,19 +1607,17 @@
         
         clipsNinasSearch.addEventListener('input', () => {
             const searchTerm = clipsNinasSearch.value.toLowerCase();
-            const filteredProducts = productsData.filter(product => 
-                product.category === "ninas" && 
-                product.name.toLowerCase().includes(searchTerm)
-            );
+            const filteredProducts = productsData.slice(9, 15).filter(product => 
+                product.name.toLowerCase().includes(searchTerm));
             generateProducts(filteredProducts, 'clipsNinasProducts');
         });
         
         // Carrusel
         const slides = document.querySelector('.slides');
-        const dots = document.querySelectorAll('.dots span');
+        const dots = document.querySelectorAll('.carousel .dots span');
         let currentIndex = 0;
         
-        function showSlide(index) {
+        function slideShow(index) {
             slides.style.transform = `translateX(-${index * 100}%)`;
             dots.forEach((dot, i) => {
                 dot.classList.toggle('active', i === index);
@@ -1640,16 +1627,16 @@
         dots.forEach((dot, i) => {
             dot.addEventListener('click', () => {
                 currentIndex = i;
-                showSlide(currentIndex);
+                slideShow(currentIndex);
             });
         });
         
         setInterval(() => {
             currentIndex = (currentIndex + 1) % dots.length;
-            showSlide(currentIndex);
-        }, 5000);
+            slideShow(currentIndex);
+        }, 3000);
         
-        // Hacer que las imágenes de la sección de modelos sean clickeables
+        // Hacer clicables las imágenes de la sección de modelos
         const modelItems = document.querySelectorAll('.model-item');
         modelItems.forEach(item => {
             const img = item.querySelector('img');
