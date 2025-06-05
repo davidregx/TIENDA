@@ -967,7 +967,7 @@
     </div>
     
  <script>
-        // Datos de productos
+// Datos de productos
         const productsData = [
             {
                 id: 1,
@@ -1203,12 +1203,8 @@
             // Asignar eventos a los productos
             document.querySelectorAll(`#${containerId} .product`).forEach(product => {
                 product.addEventListener('click', (e) => {
-                    if (e.target.classList.contains('add-to-cart') || e.target.closest('.add-to-cart')) {
-                        e.stopPropagation();
-                        addToCart(product);
-                    } else {
-                        openProductModal(product);
-                    }
+                    // Always open the product modal on click, including for the add-to-cart button
+                    openProductModal(product);
                 });
             });
         }
@@ -1257,23 +1253,26 @@
         });
         
         // Añadir producto al carrito
-        function addToCart(productElement) {
+        function addToCart(productElement, quantity, colorTitle) {
             const id = productElement.getAttribute('data-id');
             const product = productsData.find(p => p.id === Number(id));
             
             if (!product) return;
             
-            const existingItem = cart.find(item => item.id === Number(id));
+            const existingItem = cart.find(item => 
+                item.id === Number(id) && item.color === colorTitle
+            );
             
             if (existingItem) {
-                existingItem.quantity++;
+                existingItem.quantity += quantity;
             } else {
                 cart.push({
                     id: product.id,
                     name: product.name,
                     price: product.price,
                     image: product.image,
-                    quantity: 1
+                    quantity: quantity,
+                    color: colorTitle
                 });
             }
             
