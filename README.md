@@ -102,6 +102,7 @@
             position: absolute;
             top: 0;
             left: 0;
+            loading: lazy;
         }
         .carousel .banner-text {
             position: absolute;
@@ -112,7 +113,7 @@
             font-weight: bold;
             color: #fff;
             background: rgba(0,0,0,0.6);
-            padding: 12px 30px;
+            padding: 12px;
             border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s;
@@ -141,6 +142,29 @@
         .carousel .dots span.active {
             background-color: white;
             transform: scale(1.2);
+        }
+        .carousel-controls {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+        .carousel-controls button {
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+        .carousel-controls button:hover {
+            background: rgba(0,0,0,0.8);
         }
         /* Products */
         .section-title {
@@ -221,6 +245,7 @@
             width: 100%;
             height: 180px;
             object-fit: cover;
+            loading: lazy;
         }
         .product-info {
             padding: 15px;
@@ -298,6 +323,7 @@
             display: block;
             cursor: pointer;
             transition: transform 0.5s;
+            loading: lazy;
         }
         .model-item:hover img {
             transform: scale(1.05);
@@ -380,6 +406,7 @@
             height: 80px;
             object-fit: cover;
             border-radius: 5px;
+            loading: lazy;
         }
         .cart-item-details {
             flex: 1;
@@ -476,6 +503,7 @@
             object-fit: contain;
             border-radius: 5px;
             margin-bottom: 10px;
+            loading: lazy;
         }
         .modal-content h3 {
             margin: 0 0 8px;
@@ -645,6 +673,76 @@
             background: none;
             border: none;
         }
+        /* Boleta de Venta Modal */
+        .receipt-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 4000;
+            justify-content: center;
+            align-items: center;
+        }
+        .receipt-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+        }
+        .receipt-content h2 {
+            margin: 0 0 10px;
+            font-size: 1.5em;
+        }
+        .receipt-content p {
+            margin: 5px 0;
+            font-size: 1em;
+        }
+        .receipt-content .qr-code {
+            margin: 10px 0;
+        }
+        .receipt-content .buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .receipt-content button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .receipt-content .capture-btn {
+            background: #f39c12;
+            color: #fff;
+        }
+        .receipt-content .capture-btn:hover {
+            background: #e67e22;
+        }
+        .receipt-content .confirm-btn {
+            background: #2ecc71;
+            color: #fff;
+        }
+        .receipt-content .confirm-btn:hover {
+            background: #27ae60;
+        }
+        .receipt-content .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.3em;
+            cursor: pointer;
+            color: #333;
+            background: none;
+            border: none;
+        }
         /* Responsive */
         @media (max-width: 768px) {
             .header {
@@ -730,6 +828,18 @@
                 right: 8px;
                 font-size: 1.2em;
             }
+            .receipt-content {
+                padding: 15px;
+            }
+            .receipt-content h2 {
+                font-size: 1.3em;
+            }
+            .receipt-content p {
+                font-size: 0.9em;
+            }
+            .receipt-content button {
+                padding: 8px 15px;
+            }
         }
         @media (max-width: 480px) {
             .header nav ul {
@@ -811,6 +921,18 @@
                 right: 6px;
                 font-size: 1.1em;
             }
+            .receipt-content {
+                padding: 10px;
+            }
+            .receipt-content h2 {
+                font-size: 1.2em;
+            }
+            .receipt-content p {
+                font-size: 0.85em;
+            }
+            .receipt-content button {
+                padding: 6px 12px;
+            }
         }
     </style>
 </head>
@@ -819,25 +941,25 @@
         <!-- Header -->
         <header class="header">
             <div class="logo">
-                <img src="https://lh3.googleusercontent.com/gps-cs/AIky0YXTTJyLqUwcNn1yduyV6i82lmL4ukvEZp-ePVd_P_Wa_y1VGwXNJOPpVxro2IxUZ55xE4oEndno5MItmJf7wjkFn0RYFCLtB4bOG2AHYHrupD1pkX8cf3jOUBHNUJOFEYOrwzTGEMSJj6j8=w1000-h1000-p-k-no" alt="TodoModa Logo">
+                <img src="https://lh3.googleusercontent.com/gps-cs/AIky0YXTTJyLqUwcNn1yduyV6i82lmL4ukvEZp-ePVd_P_Wa_y1VGwXNJOPpVxro2IxUZ55xE4oEndno5MItmJf7wjkFn0RYFCLtB4bOG2AHYHrupD1pkX8cf3jOUBHNUJOFEYOrwzTGEMSJj6j8=w1000-h1000-p-k-no" alt="TodoModa Logo" loading="lazy">
             </div>
             <nav>
                 <ul>
-                    <li><a href="#"><i class="fas fa-home"></i> Inicio</a></li>
-                    <li><a href="#"><i class="fas fa-tshirt"></i> Mujer</a></li>
-                    <li><a href="#"><i class="fas fa-child"></i> Niñas</a></li>
-                    <li><a href="#"><i class="fas fa-percent"></i> Ofertas</a></li>
-                    <li><a href="#"><i class="fas fa-phone"></i> Contacto</a></li>
+                    <li><a href="#" aria-label="Ir a la página de inicio"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="#" aria-label="Ver productos para mujer"><i class="fas fa-tshirt"></i> Mujer</a></li>
+                    <li><a href="#" aria-label="Ver productos para niñas"><i class="fas fa-child"></i> Niñas</a></li>
+                    <li><a href="#" aria-label="Ver ofertas"><i class="fas fa-percent"></i> Ofertas</a></li>
+                    <li><a href="#" aria-label="Contacto"><i class="fas fa-phone"></i> Contacto</a></li>
                 </ul>
             </nav>
             <div class="header-icons">
                 <div class="search-icon">
-                    <i class="fas fa-search"></i>
+                    <i class="fas fa-search" aria-label="Buscar productos"></i>
                 </div>
                 <div class="user-icon">
-                    <i class="fas fa-user"></i>
+                    <i class="fas fa-user" aria-label="Perfil de usuario"></i>
                 </div>
-                <div class="cart-icon" id="cartIcon">
+                <div class="cart-icon" id="cartIcon" role="button" aria-label="Abrir carrito de compras">
                     <i class="fas fa-shopping-cart"></i>
                     <span class="cart-count">0</span>
                 </div>
@@ -848,21 +970,25 @@
 <div class="carousel">
             <div class="slides">
                 <div class="slide-container">
-                    <img src="https://pe.todomoda.com/media/wysiwyg/TM_DISNEY_STITCH_-_BANNERS_Desk_new_1.jpg" alt="Banner 1">
+                    <img src="https://pe.todomoda.com/media/wysiwyg/TM_DISNEY_STITCH_-_BANNERS_Desk_new_1.jpg" alt="Banner 1" loading="lazy">
                 </div>
                 <div class="slide-container">
-                    <img src="https://lh3.googleusercontent.com/gps-cs/AIky0YUd2bofobsLtUl3qONXRSiTNou1a9W74yTaVYEr6h64PAuOOqQ-g_w6Ifs8arhOVjWboOrUFEcEDZlmtSBZkgS1YjEnSIw1f3w4IZRdMBwxibVChvNz2c93C78bOxNsx68MuBmN-4iYNCg=w2000-h2000-p-k-no" alt="Banner 2">
+                    <img src="https://lh3.googleusercontent.com/gps-cs/AIky0YUd2bofobsLtUl3qONXRSiTNou1a9W74yTaVYEr6h64PAuOOqQ-g_w6Ifs8arhOVjWboOrUFEcEDZlmtSBZkgS1YjEnSIw1f3w4IZRdMBwxibVChvNz2c93C78bOxNsx68MuBmN-4iYNCg=w2000-h2000-p-k-no" alt="Banner 2" loading="lazy">
                 </div>
             </div>
-            <div class="banner-text" id="viewAllBtn">VER TODO</div>
+            <div class="banner-text" id="viewAllBtn" role="button" aria-label="Ver todos los productos">VER TODO</div>
             <div class="dots">
-                <span class="active"></span>
-                <span></span>
+                <span class="active" role="button" aria-label="Ir a la diapositiva 1"></span>
+                <span role="button" aria-label="Ir a la diapositiva 2"></span>
+            </div>
+            <div class="carousel-controls">
+                <button class="prev-slide" aria-label="Diapositiva anterior"><i class="fas fa-chevron-left"></i></button>
+                <button class="next-slide" aria-label="Diapositiva siguiente"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
 
         <!-- Productos destacados -->
- <h2 class="section-title">Productos Destacados</h2>
+<h2 class="section-title">Productos Destacados</h2>
         <div class="products" id="featuredProducts">
             <!-- Los productos se insertarán dinámicamente aquí -->
         </div>
@@ -870,12 +996,12 @@
         <!-- Model Section -->
  <div class="model-section">
             <div class="model-item">
-                <img src="https://lh3.googleusercontent.com/gps-cs/AIky0YUGuPXaSC1mPGUKkOYa5z7JyvELvbIy0B4-WtB3tMHIKm2D6Sbg1cTWwU0MsxRJR_5lKb5t1MnVOStZk-tNPdUudQ6-h7M7ueR4l8N5IgmuOrhlNRMi0B_uohBDRomdzQUIHP7y244Zc150=w1024-h1024-p-k-no" alt="Clips Damas">
-                <button class="model-btn" id="clipsDamasBtn">CLIPS DAMAS</button>
+                <img src="https://lh3.googleusercontent.com/gps-cs/AIky0YUGuPXaSC1mPGUKkOYa5z7JyvELvbIy0B4-WtB3tMHIKm2D6Sbg1cTWwU0MsxRJR_5lKb5t1MnVOStZk-tNPdUudQ6-h7M7ueR4l8N5IgmuOrhlNRMi0B_uohBDRomdzQUIHP7y244Zc150=w1024-h1024-p-k-no" alt="Clips Damas" loading="lazy">
+                <button class="model-btn" id="clipsDamasBtn" aria-label="Ver Clips Damas">CLIPS DAMAS</button>
             </div>
             <div class="model-item">
-                <img src="https://lh3.googleusercontent.com/gps-cs/AIky0YUDER3L7ISerfG6uiIU8ISdgKkibO-SXwGGNL1azb_TJ0qYIN3T7LsJyU-qc9-kQtucnOkLr5rPYtWt0fW0UL8-7RDD46bg_0JnGLkD8RSfQvGydDvq6L_ZLBoj4hnIhwHB3CEx1fPtJ58O=w1024-h1024-p-k-no" alt="Clips Niñas">
-                <button class="model-btn" id="clipsNinasBtn">CLIPS NIÑAS</button>
+                <img src="https://lh3.googleusercontent.com/gps-cs/AIky0YUDER3L7ISerfG6uiIU8ISdgKkibO-SXwGGNL1azb_TJ0qYIN3T7LsJyU-qc9-kQtucnOkLr5rPYtWt0fW0UL8-7RDD46bg_0JnGLkD8RSfQvGydDvq6L_ZLBoj4hnIhwHB3CEx1fPtJ58O=w1024-h1024-p-k-no" alt="Clips Niñas" loading="lazy">
+                <button class="model-btn" id="clipsNinasBtn" aria-label="Ver Clips Niñas">CLIPS NIÑAS</button>
             </div>
         </div>
 
@@ -887,11 +1013,11 @@
     </div>
     
     <!-- Carrito de compras -->
- <div class="cart-modal" id="cartModal">
+<div class="cart-modal" id="cartModal">
         <div class="cart-content" id="cartContent">
             <div class="cart-header">
                 <h2>Tu Carrito</h2>
-                <button class="close-cart" id="closeCart">
+                <button class="close-cart" id="closeCart" aria-label="Cerrar carrito">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -904,38 +1030,38 @@
             <div class="cart-total" id="cartTotal">
                 Total: S/ 0.00
             </div>
-            <button class="checkout-btn" id="checkoutBtn">
+            <button class="checkout-btn" id="checkoutBtn" aria-label="Realizar pedido">
                 <i class="fas fa-check"></i> Realizar Pedido
             </button>
         </div>
     </div>
     
     <!-- Modal de producto -->
- <div class="product-modal" id="productModal">
+<div class="product-modal" id="productModal">
         <div class="modal-content">
-            <button class="close-btn">×</button>
-            <img id="modalImage" alt="Product Image" src="">
+            <button class="close-btn" aria-label="Cerrar modal de producto">×</button>
+            <img id="modalImage" alt="Product Image" src="" loading="lazy">
             <h3 id="modalTitle"></h3>
             <p class="description" id="modalDescription"></p>
             <div class="rating" id="modalRating"></div>
             <p class="price" id="modalPrice"></p>
             <div class="color-palette" id="modalColors"></div>
             <div class="quantity">
-                <button class="quantity-btn" id="decreaseQty">−</button>
-                <input type="number" class="quantity-input" id="quantityInput" value="1" min="1">
-                <button class="quantity-btn" id="increaseQty">+</button>
+                <button class="quantity-btn" id="decreaseQty" aria-label="Disminuir cantidad">−</button>
+                <input type="number" class="quantity-input" id="quantityInput" value="1" min="1" aria-label="Cantidad">
+                <button class="quantity-btn" id="increaseQty" aria-label="Aumentar cantidad">+</button>
             </div>
-            <button class="btn-add-cart" id="btnAddToCart">Agregar al carrito</button>
+            <button class="btn-add-cart" id="btnAddToCart" aria-label="Agregar al carrito">Agregar al carrito</button>
         </div>
     </div>
     
     <!-- View All Products Modal -->
  <div class="category-modal" id="viewAllModal">
         <div class="category-modal-content">
-            <button class="close-btn">×</button>
+            <button class="close-btn" aria-label="Cerrar modal de todos los productos">×</button>
             <h2>Todos los Productos</h2>
             <div class="search-container">
-                <input type="text" class="search-input" id="productSearch" placeholder="Buscar productos...">
+                <input type="text" class="search-input" id="productSearch" placeholder="Buscar productos..." aria-label="Buscar productos">
             </div>
             <div class="view-all-products" id="viewAllProducts"></div>
         </div>
@@ -944,10 +1070,10 @@
     <!-- Clips Damas Modal -->
  <div class="category-modal" id="clipsDamasModal">
         <div class="category-modal-content">
-            <button class="close-btn">×</button>
+            <button class="close-btn" aria-label="Cerrar modal de Clips Damas">×</button>
             <h2>CLIPS DAMAS</h2>
             <div class="search-container">
-                <input type="text" class="search-input" id="clipsDamasSearch" placeholder="Buscar en Clips Damas...">
+                <input type="text" class="search-input" id="clipsDamasSearch" placeholder="Buscar en Clips Damas..." aria-label="Buscar en Clips Damas">
             </div>
             <div class="clips-damas-products" id="clipsDamasProducts"></div>
         </div>
@@ -956,17 +1082,50 @@
     <!-- Clips Niñas Modal -->
  <div class="category-modal" id="clipsNinasModal">
         <div class="category-modal-content">
-            <button class="close-btn">×</button>
+            <button class="close-btn" aria-label="Cerrar modal de Clips Niñas">×</button>
             <h2>CLIPS NIÑAS</h2>
             <div class="search-container">
-                <input type="text" class="search-input" id="clipsNinasSearch" placeholder="Buscar en Clips Niñas...">
+                <input type="text" class="search-input" id="clipsNinasSearch" placeholder="Buscar en Clips Niñas..." aria-label="Buscar en Clips Niñas">
             </div>
             <div class="clips-ninas-products" id="clipsNinasProducts"></div>
         </div>
     </div>
     
+    <!-- Boleta de Venta Modal -->
+ <div class="receipt-modal" id="receiptModal">
+        <div class="receipt-content">
+            <button class="close-btn" id="closeReceipt" aria-label="Cerrar boleta">×</button>
+            <h2>BOLETA DE VENTA ELECTRÓNICA</h2>
+            <div class="qr-code" id="qrCode">
+                <img src="https://via.placeholder.com/100" alt="QR Code" loading="lazy">
+            </div>
+            <p>Paga aquí con Yape</p>
+            <p id="clientName">Cliente: [Nombre]</p>
+            <p id="clientDNI">DNI: 48034572</p>
+            <p id="dateTime">FECHA: 06/06/2025 HORA: 01:45 a.m.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cant</th>
+                        <th>U.M</th>
+                        <th>Producto</th>
+                        <th>P.U.</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody id="receiptItems"></tbody>
+            </table>
+            <p id="totalAmount">TOTAL (S/): S/ 0.00</p>
+            <p id="totalInWords">SON: [Monto en letras] CON 00/100 SOLES</p>
+            <div class="buttons">
+                <button class="capture-btn" id="captureReceipt" aria-label="Capturar imagen"><i class="fas fa-camera"></i> Capturar Imagen</button>
+                <button class="confirm-btn" id="confirmPurchase" aria-label="Confirmar compra"><i class="fas fa-check"></i> Confirmar Compra</button>
+            </div>
+        </div>
+    </div>
+    
  <script>
-// Datos de productos
+        // Datos de productos
         const productsData = [
             {
                 id: 1,
@@ -982,7 +1141,8 @@
                     {color: "#145a32", title: "Verde"},
                     {color: "#d6eaf8", title: "Celeste"}
                 ],
-                featured: true
+                featured: true,
+                category: "damas"
             },
             {
                 id: 2,
@@ -997,7 +1157,8 @@
                     {color: "#fdebd0", title: "Piel"},
                     {color: "#fdfefe", title: "Crema"}
                 ],
-                featured: true
+                featured: true,
+                category: "damas"
             },
             {
                 id: 3,
@@ -1011,7 +1172,8 @@
                     {color: "#FF0000", title: "Rojo"},
                     {color: "#008000", title: "Verde"}
                 ],
-                featured: true
+                featured: true,
+                category: "damas"
             },
             {
                 id: 4,
@@ -1023,7 +1185,8 @@
                 colors: [
                     {color: "#FFD700", title: "Amarillo"}
                 ],
-                featured: true
+                featured: true,
+                category: "damas"
             },
             {
                 id: 5,
@@ -1037,7 +1200,8 @@
                     {color: "#ebf5fb", title: "Agua"},
                     {color: "#FFFFFF", title: "Blanco"}
                 ],
-                new: true
+                new: true,
+                category: "damas"
             },
             {
                 id: 6,
@@ -1050,7 +1214,8 @@
                     {color: "#8d6e63", title: "Marrón"},
                     {color: "#fef9e7", title: "Crema"}
                 ],
-                new: true
+                new: true,
+                category: "damas"
             },
             {
                 id: 7,
@@ -1060,7 +1225,8 @@
                 rating: "⭐⭐⭐⭐☆ (4.1)",
                 description: "Ganchos en forma de flor con diseño inspirado en el sol.",
                 colors: [],
-                new: true
+                new: true,
+                category: "damas"
             },
             {
                 id: 8,
@@ -1074,7 +1240,8 @@
                     {color: "#CCFF00", title: "Verde"},
                     {color: "#FF8C00", title: "Anaranjado"}
                 ],
-                new: true
+                new: true,
+                category: "ninas"
             },
             {
                 id: 9,
@@ -1133,7 +1300,8 @@
                     {color: "#FF4500", title: "Naranja"},
                     {color: "#008000", title: "Verde"}
                 ],
-                new: true
+                new: true,
+                category: "ninas"
             },
             {
                 id: 18,
@@ -1145,7 +1313,8 @@
                 colors: [
                     {color: "#000000", title: "Negro"}
                 ],
-                new: true
+                new: true,
+                category: "ninas"
             },
             {
                 id: 19,
@@ -1159,7 +1328,8 @@
                     {color: "#87CEFA", title: "Azul Pastel"},
                     {color: "#98FB98", title: "Verde Pastel"}
                 ],
-                new: true
+                new: true,
+                category: "ninas"
             }
         ];
 
@@ -1185,12 +1355,12 @@
                 
                 productElement.innerHTML = `
                     ${badge}
-                    <img src="${product.image}" alt="${product.name}" class="product-img">
+                    <img src="${product.image}" alt="${product.name}" class="product-img" loading="lazy">
                     <div class="product-info">
                         <h3 class="product-name">${product.name}</h3>
                         <div class="product-rating">${product.rating}</div>
                         <p class="product-price">S/ ${product.price.toFixed(2)}</p>
-                        <button class="add-to-cart">
+                        <button class="add-to-cart" aria-label="Agregar ${product.name} al carrito">
                             <i class="fas fa-shopping-cart"></i> Agregar al carrito
                         </button>
                     </div>
@@ -1202,7 +1372,6 @@
             // Asignar eventos a los productos
             document.querySelectorAll(`#${containerId} .product`).forEach(product => {
                 product.addEventListener('click', (e) => {
-                    // Always open the product modal on click, including for the add-to-cart button
                     openProductModal(product);
                 });
             });
@@ -1224,6 +1393,20 @@
         const cartItems = document.getElementById('cartItems');
         const cartTotal = document.getElementById('cartTotal');
         const checkoutBtn = document.getElementById('checkoutBtn');
+        
+        // Cargar carrito desde localStorage
+        function loadCart() {
+            const savedCart = localStorage.getItem('cart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCart();
+            }
+        }
+        
+        // Guardar carrito en localStorage
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
         
         // Abrir carrito
         cartIcon.addEventListener('click', () => {
@@ -1276,6 +1459,7 @@
             }
             
             updateCart();
+            saveCart();
             showAddedNotification(product.name);
         }
         
@@ -1283,7 +1467,7 @@
         function showAddedNotification(productName) {
             const notification = document.createElement('div');
             notification.innerHTML = `
-                <div style="position: fixed; bottom: 20px; right: 20px; background: #4caf50; color: white; padding: 15px 20px; border-radius: 5px; display: flex; align-items: center; gap: 10px; z-index: 3000; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                <div style="position: fixed; bottom: 20px; right: 20px; background: #4caf50; color: white; padding: 15px 20px; border-radius: 5px; display: flex; align-items: center; gap: 10px; z-index: 3000; box-shadow: 0 2px 10px rgba(0,0,0,0.1);" role="alert">
                     <i class="fas fa-check-circle"></i>
                     <span>¡${productName} añadido al carrito!</span>
                 </div>
@@ -1325,16 +1509,16 @@
                 const cartItemElement = document.createElement('div');
                 cartItemElement.classList.add('cart-item');
                 cartItemElement.innerHTML = `
-                    <img src="${item.image}" alt="${item.name}" class="cart-item-img">
+                    <img src="${item.image}" alt="${item.name}" class="cart-item-img" loading="lazy">
                     <div class="cart-item-details">
                         <h3 class="cart-item-name">${item.name}</h3>
                         ${item.color ? `<p>Color: ${item.color}</p>` : ''}
                         <p class="cart-item-price">S/ ${item.price.toFixed(2)}</p>
                         <div class="cart-item-actions">
-                            <button class="quantity-btn decrease" data-index="${index}">-</button>
+                            <button class="quantity-btn decrease" data-index="${index}" aria-label="Disminuir cantidad">-</button>
                             <span>${item.quantity}</span>
-                            <button class="quantity-btn increase" data-index="${index}">+</button>
-                            <button class="remove-item" data-index="${index}">
+                            <button class="quantity-btn increase" data-index="${index}" aria-label="Aumentar cantidad">+</button>
+                            <button class="remove-item" data-index="${index}" aria-label="Eliminar ${item.name} del carrito">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </div>
@@ -1355,6 +1539,7 @@
                         cart.splice(index, 1);
                     }
                     updateCart();
+                    saveCart();
                 });
             });
             
@@ -1363,6 +1548,7 @@
                     const index = button.getAttribute('data-index');
                     cart[index].quantity++;
                     updateCart();
+                    saveCart();
                 });
             });
             
@@ -1371,23 +1557,101 @@
                     const index = button.getAttribute('data-index');
                     cart.splice(index, 1);
                     updateCart();
+                    saveCart();
                 });
             });
         }
         
-        // Finalizar compra
+        // Finalizar compra y generar boleta
+        const receiptModal = document.getElementById('receiptModal');
+        const receiptItems = document.getElementById('receiptItems');
+        const totalAmount = document.getElementById('totalAmount');
+        const totalInWords = document.getElementById('totalInWords');
+        const clientName = document.getElementById('clientName');
+        const dateTime = document.getElementById('dateTime');
+        const closeReceipt = document.getElementById('closeReceipt');
+        const captureReceipt = document.getElementById('captureReceipt');
+        const confirmPurchase = document.getElementById('confirmPurchase');
+
         checkoutBtn.addEventListener('click', () => {
             if (cart.length === 0) return;
-            
-            alert(`¡Gracias por tu compra! Total: S/ ${cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)}`);
+
+            const total = cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2);
+            const currentDate = new Date();
+            const formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}/${(currentDate.getMonth() + 1).toString().padStart(2, '0')}/${currentDate.getFullYear()} HORA: ${currentDate.getHours().toString().padStart(2, '0')}:${currentDate.getMinutes().toString().padStart(2, '0')} ${currentDate.getHours() >= 12 ? 'p.m.' : 'a.m.'}`;
+
+            receiptItems.innerHTML = '';
+            cart.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.quantity}</td>
+                    <td>UNIDAD</td>
+                    <td>${item.name} ${item.color ? `(Color: ${item.color})` : ''}</td>
+                    <td>S/ ${item.price.toFixed(2)}</td>
+                    <td>S/ ${(item.price * item.quantity).toFixed(2)}</td>
+                `;
+                receiptItems.appendChild(row);
+            });
+
+            totalAmount.textContent = `TOTAL (S/): S/ ${total}`;
+            totalInWords.textContent = `SON: ${numberToWords(total)} CON 00/100 SOLES`;
+            clientName.textContent = `Cliente: ${localStorage.getItem('clientName') || 'ola'}`;
+            dateTime.textContent = `FECHA: ${formattedDate}`;
+
+            receiptModal.style.display = 'flex';
+        });
+
+        // Convertir número a palabras (simplificado)
+        function numberToWords(amount) {
+            const units = ['', 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve'];
+            const teens = ['diez', 'once', 'doce', 'trece', 'catorce', 'quince', 'dieciséis', 'diecisiete', 'dieciocho', 'diecinueve'];
+            const tens = ['', '', 'veinte', 'treinta', 'cuarenta', 'cincuenta', 'sesenta', 'setenta', 'ochenta', 'noventa'];
+
+            amount = Math.floor(amount);
+            if (amount === 0) return 'cero';
+            if (amount < 10) return units[amount];
+            if (amount < 20) return teens[amount - 10];
+            if (amount < 100) {
+                const unit = amount % 10;
+                return tens[Math.floor(amount / 10)] + (unit ? ' y ' + units[unit] : '');
+            }
+            return 'ciento ' + numberToWords(amount - 100); // Simplificación, mejora según necesidad
+        }
+
+        // Cerrar boleta
+        closeReceipt.addEventListener('click', () => {
+            receiptModal.style.display = 'none';
+        });
+
+        receiptModal.addEventListener('click', (e) => {
+            if (e.target === receiptModal) {
+                receiptModal.style.display = 'none';
+            }
+        });
+
+        // Capturar imagen de la boleta
+        captureReceipt.addEventListener('click', () => {
+            html2canvas(document.querySelector('#receiptContent')).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'boleta_venta.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        });
+
+        // Confirmar compra
+        confirmPurchase.addEventListener('click', () => {
+            alert('¡Compra confirmada! Gracias por tu pedido.');
             cart = [];
             updateCart();
+            saveCart();
+            receiptModal.style.display = 'none';
             cartContent.classList.remove('active');
             setTimeout(() => {
                 cartModal.style.display = 'none';
             }, 300);
         });
-        
+
         // Modal de producto
         const productModal = document.getElementById('productModal');
         const modalImage = document.getElementById('modalImage');
@@ -1429,6 +1693,8 @@
                     colorCircle.title = color.title;
                     colorCircle.setAttribute('data-color', color.color);
                     colorCircle.dataset.colorTitle = color.title;
+                    colorCircle.setAttribute('role', 'button');
+                    colorCircle.setAttribute('aria-label', `Seleccionar color ${color.title}`);
                     
                     colorCircle.addEventListener('click', () => {
                         modalColors.querySelectorAll('.color-circle').forEach(c => c.classList.remove('selected'));
@@ -1485,7 +1751,8 @@
         });
         
         quantityInput.addEventListener('input', () => {
-            if (quantityInput.value < 1) {
+            let value = parseInt(quantityInput.value);
+            if (isNaN(value) || value < 1) {
                 quantityInput.value = 1;
             }
         });
@@ -1515,6 +1782,7 @@
             }
             
             updateCart();
+            saveCart();
             showAddedNotification(selectedProduct.name);
             productModal.style.display = 'none';
         });
@@ -1537,11 +1805,15 @@
         
         viewAllModal.addEventListener('click', (e) => {
             if (e.target === viewAllModal) {
+                viewAllModal.style.display =        none';
+        });
+        
+        viewAllModal.addEventListener('click', (e) => {
+            if (e.target === viewAllModal) {
                 viewAllModal.style.display = 'none';
             }
         });
         
-        // Búsqueda de productos
         productSearch.addEventListener('input', () => {
             const searchTerm = productSearch.value.toLowerCase();
             const filteredProducts = productsData.filter(product => 
@@ -1558,7 +1830,7 @@
         const clipsDamasSearch = document.getElementById('clipsDamasSearch');
         
         clipsDamasBtn.addEventListener('click', () => {
-            const damasProducts = productsData.slice(0, 9); // Primeros 9 productos
+            const damasProducts = productsData.filter(p => p.category === 'damas');
             generateProducts(damasProducts, 'clipsDamasProducts');
             clipsDamasModal.style.display = 'flex';
         });
@@ -1575,8 +1847,10 @@
         
         clipsDamasSearch.addEventListener('input', () => {
             const searchTerm = clipsDamasSearch.value.toLowerCase();
-            const filteredProducts = productsData.slice(0, 9).filter(product => 
-                product.name.toLowerCase().includes(searchTerm));
+            const damasProducts = productsData.filter(p => p.category === 'damas');
+            const filteredProducts = damasProducts.filter(product => 
+                product.name.toLowerCase().includes(searchTerm)
+            );
             generateProducts(filteredProducts, 'clipsDamasProducts');
         });
         
@@ -1588,7 +1862,7 @@
         const clipsNinasSearch = document.getElementById('clipsNinasSearch');
         
         clipsNinasBtn.addEventListener('click', () => {
-            const ninasProducts = productsData.slice(9, 15); // Productos del 10 al 15
+            const ninasProducts = productsData.filter(p => p.category === 'ninas');
             generateProducts(ninasProducts, 'clipsNinasProducts');
             clipsNinasModal.style.display = 'flex';
         });
@@ -1605,48 +1879,67 @@
         
         clipsNinasSearch.addEventListener('input', () => {
             const searchTerm = clipsNinasSearch.value.toLowerCase();
-            const filteredProducts = productsData.slice(9, 15).filter(product => 
-                product.name.toLowerCase().includes(searchTerm));
+            const ninasProducts = productsData.filter(p => p.category === 'ninas');
+            const filteredProducts = ninasProducts.filter(product => 
+                product.name.toLowerCase().includes(searchTerm)
+            );
             generateProducts(filteredProducts, 'clipsNinasProducts');
         });
         
-        // Carrusel
-        const slides = document.querySelector('.slides');
+        // Carousel Functionality
+        const slides = document.querySelector('.carousel .slides');
         const dots = document.querySelectorAll('.carousel .dots span');
-        let currentIndex = 0;
+        const prevSlide = document.querySelector('.prev-slide');
+        const nextSlide = document.querySelector('.next-slide');
+        let currentSlide = 0;
+        const slideCount = document.querySelectorAll('.slide-container').length;
         
-        function slideShow(index) {
-            slides.style.transform = `translateX(-${index * 100}%)`;
-            dots.forEach((dot, i) => {
-                dot.classList.toggle('active', i === index);
+        function updateCarousel() {
+            const slideWidth = document.querySelector('.slide-container').clientWidth;
+            slides.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
             });
         }
         
-        dots.forEach((dot, i) => {
+        prevSlide.addEventListener('click', () => {
+            currentSlide = (currentSlide > 0) ? currentSlide - 1 : slideCount - 1;
+            updateCarousel();
+        });
+        
+        nextSlide.addEventListener('click', () => {
+            currentSlide = (currentSlide < slideCount - 1) ? currentSlide + 1 : 0;
+            updateCarousel();
+        });
+        
+        dots.forEach((dot, index) => {
             dot.addEventListener('click', () => {
-                currentIndex = i;
-                slideShow(currentIndex);
+                currentSlide = index;
+                updateCarousel();
             });
         });
         
-        setInterval(() => {
-            currentIndex = (currentIndex + 1) % dots.length;
-            slideShow(currentIndex);
-        }, 3000);
+        window.addEventListener('resize', updateCarousel);
         
-        // Hacer clicables las imágenes de la sección de modelos
-        const modelItems = document.querySelectorAll('.model-item');
-        modelItems.forEach(item => {
-            const img = item.querySelector('img');
-            const btn = item.querySelector('.model-btn');
-            img.addEventListener('click', (e) => {
-                e.preventDefault();
-                btn.click();
-            });
+        // Auto-play carousel
+        let autoPlayInterval = setInterval(() => {
+            currentSlide = (currentSlide < slideCount - 1) ? currentSlide + 1 : 0;
+            updateCarousel();
+        }, 5000);
+        
+        // Pause on hover
+        const carousel = document.querySelector('.carousel');
+        carousel.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
+        carousel.addEventListener('mouseleave', () => {
+            autoPlayInterval = setInterval(() => {
+                currentSlide = (currentSlide < slideCount - 1) ? currentSlide + 1 : 0;
+                updateCarousel();
+            }, 5000);
         });
         
-        // Inicializar el carrito
-        updateCart();
+        // Inicializar
+        loadCart();
+        updateCarousel();
     </script>
 </body>
 </html>
