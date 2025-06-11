@@ -4,7 +4,7 @@
     <b:include data='blog' name='all-head-content'/>
     <meta content='width=device-width, initial-scale=1.0' name='viewport'/>
     <title>Cervezas</title>
-    <b:skin><![CDATA[
+    <b:skin>
 html, body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -1080,7 +1080,7 @@ html, body {
         padding: 0 10px 15px 10px;
     }
 }
-    ]]></b:skin>
+    </b:skin>
     <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css' rel='stylesheet'/>
     <script src='https://code.jquery.com/jquery-3.6.0.min.js'/>
     <script src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js'/>
@@ -1620,7 +1620,7 @@ html, body {
 </div>
 </main>
 <script>
-//<![CDATA[
+
 let cart = [];
 let currentProduct = null;
 let currentCategory = 'category1';
@@ -1961,7 +1961,6 @@ document.getElementById('download-boleta').addEventListener('click', downloadBol
         }
     });
 });
-//]]>
 </script>
   <b:section class='main' id='main' maxwidgets='1' name='main' showaddelement='yes'/>
 </body>
