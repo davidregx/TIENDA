@@ -1962,6 +1962,5 @@ document.getElementById('download-boleta').addEventListener('click', downloadBol
     });
 });
 </script>
-  <b:section class='main' id='main' maxwidgets='1' name='main' showaddelement='yes'/>
 </body>
 </html>
