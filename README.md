@@ -1081,11 +1081,6 @@ html, body {
     }
 }
     </style>
-    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css' rel='stylesheet'/>
-    <script src='https://code.jquery.com/jquery-3.6.0.min.js'/>
-    <script src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js'/>
-    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'/>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js'/>
 </head>
 <body>
      <header class='header'>
