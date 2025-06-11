@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html b:css='false' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<html lang="es">
 <head>
-    <b:include data='blog' name='all-head-content'/>
-    <meta content='width=device-width, initial-scale=1.0' name='viewport'/>
-    <title>Cervezas</title>
-    <b:skin>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TodoModa - Tienda Online</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
 html, body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -1080,7 +1080,7 @@ html, body {
         padding: 0 10px 15px 10px;
     }
 }
-    </b:skin>
+    </style>
     <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css' rel='stylesheet'/>
     <script src='https://code.jquery.com/jquery-3.6.0.min.js'/>
     <script src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js'/>
