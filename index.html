@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <title>Lista de Mercado - Perú</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #121212;
+            min-height: 100vh;
+            padding: 20px;
+            color: #e0e0e0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #1e1e1e;
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header-rectangulo {
+            background-color: #1e40af;
+            border-radius: 20px;
+            padding: 24px 20px;
+            margin-bottom: 32px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 6px;
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+
+        .subtitulo {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        .categorias-container {
+            margin-bottom: 28px;
+        }
+
+        .categorias-container h3 {
+            color: #bbd7fb;
+            margin-bottom: 20px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            border-left: 4px solid #3b82f6;
+            padding-left: 14px;
+        }
+
+        .categorias-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .categoria-item {
+            background: #2a2a2a;
+            border: 1px solid #3a3a3a;
+            border-radius: 18px;
+            padding: 16px 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .categoria-item:hover {
+            background: #333;
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+        }
+
+        .categoria-item.active {
+            background: #1e3a5f;
+            border-color: #3b82f6;
+            color: white;
+            font-weight: 600;
+        }
+
+        .categoria-item::before {
+            content: attr(data-emoji);
+            font-size: 1.4rem;
+            line-height: 1;
+        }
+
+        .subcategorias-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 14px;
+            margin: 25px 0;
+            display: none;
+        }
+
+        .subcategoria-item {
+            background: #2a2a2a;
+            border: 1px solid #f1d38b;
+            border-radius: 20px;
+            padding: 16px 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            font-weight: 500;
+            color: #ffd966;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .subcategoria-item:hover {
+            background: #3a3a3a;
+            border-color: #e5b95b;
+            transform: scale(1.02);
+        }
+
+        .subcategoria-item.active {
+            background: #5f4c2b;
+            color: #fff0c0;
+            border-color: #c9971e;
+        }
+
+        .subcategoria-item::before {
+            content: attr(data-emoji);
+            font-size: 1.8rem;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .productos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 18px;
+            margin: 25px 0;
+            display: none;
+        }
+
+        .producto-item {
+            background: #2a2a2a;
+            border: 1px solid #3a6b3a;
+            border-radius: 24px;
+            padding: 18px 10px 12px;
+            transition: 0.2s;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .producto-item:hover {
+            border-color: #5fa85f;
+            background: #333;
+            transform: translateY(-3px);
+        }
+
+        .producto-nombre {
+            font-weight: 600;
+            color: #b8e0b8;
+            margin-bottom: 6px;
+            font-size: 1rem;
+        }
+
+        .producto-precio {
+            font-weight: 700;
+            color: #7fdf7f;
+            font-size: 1.25rem;
+        }
+
+        .producto-unidad {
+            color: #aaa;
+            font-size: 0.8rem;
+            margin-top: 4px;
+        }
+
+        .btn-agregar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #3b82f6;
+            color: white;
+            text-align: center;
+            padding: 8px;
+            font-size: 0.8rem;
+            border-radius: 0 0 24px 24px;
+            transform: translateY(100%);
+            transition: transform 0.2s;
+            opacity: 0;
+            cursor: pointer;
+            font-weight: 500;
+            z-index: 2;
+        }
+
+        .producto-item:hover .btn-agregar {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .btn-back {
+            background: #2a2a2a;
+            color: #bbd7fb;
+            border: 1px solid #3a3a3a;
+            padding: 12px 22px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.95rem;
+            margin: 10px 0 20px;
+            width: fit-content;
+            transition: background 0.2s;
+        }
+
+        .btn-back:hover {
+            background: #333;
+        }
+
+        .input-section {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 14px;
+            margin: 36px 0 28px;
+            background: #2a2a2a;
+            padding: 28px 24px;
+            border-radius: 48px;
+            border: 1px solid #3a3a3a;
+        }
+
+        .input-group {
+            flex: 1 1 140px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 15px 18px;
+            border: 1px solid #3a3a3a;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            background: #1e1e1e;
+            color: #e0e0e0;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+
+        select option {
+            background: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+        .btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background 0.2s, transform 0.1s;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn:hover {
+            background: #2563eb;
+            transform: scale(1.02);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-whatsapp {
+            background: #1fa855;
+            box-shadow: 0 4px 12px rgba(31, 168, 85, 0.3);
+        }
+        .btn-whatsapp:hover { background: #168c45; }
+
+        .btn-capture {
+            background: #d44f4f;
+            box-shadow: 0 4px 12px rgba(212, 79, 79, 0.3);
+        }
+        .btn-capture:hover { background: #b53e3e; }
+
+        .empty-state {
+            text-align: center;
+            padding: 44px 20px;
+            color: #888;
+            font-size: 1rem;
+            background: #2a2a2a;
+            border-radius: 30px;
+            border: 2px dashed #3a3a3a;
+            margin: 20px 0;
+        }
+
+        .empty-state::before {
+            content: "🛒";
+            font-size: 3.2rem;
+            display: block;
+            margin-bottom: 12px;
+            opacity: 0.5;
+        }
+
+        .cart-icon {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 68px;
+            height: 68px;
+            background: #3b82f6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .cart-icon:hover { transform: scale(1.08); }
+
+        .cart-icon i { font-size: 28px; color: white; }
+
+        .cart-count {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: #d44f4f;
+            color: white;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 13px;
+            border: 2px solid white;
+        }
+
+        .floating-cart {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #1e1e1e;
+            z-index: 2000;
+            transition: transform 0.3s ease-out;
+            transform: translateY(100%);
+            display: flex;
+            flex-direction: column;
+            border-radius: 30px 30px 0 0;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .floating-cart.open { transform: translateY(0); }
+
+        .cart-header {
+            background: #1e40af;
+            color: white;
+            padding: 22px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 30px 30px 0 0;
+        }
+
+        .cart-title { font-size: 1.3rem; font-weight: 600; }
+
+        .close-cart {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.6rem;
+            cursor: pointer;
+            padding: 0 10px;
+        }
+
+        .cart-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            background: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+        /* Estilo para cada ítem del carrito con botón eliminar */
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: 500;
+            color: #e0e0e0;
+            font-size: 1rem;
+        }
+
+        .cart-item-details {
+            color: #aaa;
+            font-size: 0.85rem;
+            margin-top: 4px;
+        }
+
+        .cart-item-remove {
+            background: none;
+            border: none;
+            color: #f87171;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 8px;
+            margin-left: 8px;
+            transition: color 0.2s, transform 0.1s;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-item-remove:hover {
+            color: #ef4444;
+            background: #2a2a2a;
+            transform: scale(1.1);
+        }
+
+        .cart-total {
+            background: #2a2a2a;
+            padding: 20px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: #bbd7fb;
+            border-top: 2px solid #333;
+        }
+
+        .cart-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding: 22px;
+            background: #2a2a2a;
+        }
+
+        .cart-actions .btn {
+            flex: 1;
+            padding: 14px;
+            font-size: 0.9rem;
+        }
+
+        @media (min-width: 768px) {
+            .floating-cart {
+                top: auto;
+                left: auto;
+                right: 30px;
+                bottom: 110px;
+                width: 400px;
+                max-height: 70vh;
+                border-radius: 30px;
+            }
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #3b82f6;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 40px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.5);
+            z-index: 3000;
+            font-weight: 500;
+            animation: slideInRight 0.3s;
+        }
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-rectangulo">
+            <h1>Lista de Mercado</h1>
+            <div class="subtitulo">Organiza tus compras de forma sencilla.</div>
+        </div>
+
+        <div id="categoryProductContainer" 
+             onmouseover="clearTimeout(hideTimeout);" 
+             onmouseout="hideTimeout = setTimeout(ocultarTodo, 500);">
+
+            <div class="categorias-container">
+                <h3>📋 Categorías de Productos</h3>
+                <div class="categorias-grid" id="categoriasGrid"></div>
+            </div>
+
+            <div class="subcategorias-grid" id="subcategoriasGrid"></div>
+            <div class="productos-grid" id="productosGrid"></div>
+
+            <button class="btn-back" id="btnBack" style="display: none;" onclick="volverACategorias()">← Volver a Categorías</button>
+        </div>
+
+        <div class="input-section">
+            <div class="input-group">
+                <input type="text" id="producto" placeholder="Nombre del producto" />
+            </div>
+            <div class="input-group">
+                <input type="number" id="cantidad" placeholder="1" min="1" value="1" />
+            </div>
+            <div class="input-group">
+                <select id="unidad">
+                    <option value="unidad">Unidad</option>
+                    <option value="kg">Kilogramo</option>
+                    <option value="lb">Libra</option>
+                    <option value="g">Gramo</option>
+                    <option value="L">Litro</option>
+                    <option value="ml">Mililitro</option>
+                    <option value="paquete">Paquete</option>
+                    <option value="caja">Caja</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <input type="number" id="precio" placeholder="Precio (opcional)" min="0" step="0.01" />
+            </div>
+            <button class="btn" onclick="agregarProducto()">AÑADIR</button>
+        </div>
+
+        <div class="empty-state" id="emptyState">
+            Tu lista está vacía. ¡Agrega algunos productos!
+        </div>
+    </div>
+
+    <div class="cart-icon" id="cartIcon">
+        <i class="fas fa-shopping-cart"></i>
+        <div class="cart-count" id="cartCount">0</div>
+    </div>
+
+    <div class="floating-cart" id="floatingCart">
+        <div class="cart-header">
+            <div class="cart-title">Tu Carrito de Compras</div>
+            <button class="close-cart" onclick="toggleCart()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-content" id="cartContent">
+            <!-- Los productos se renderizan acá -->
+        </div>
+        <div class="cart-total" id="cartTotal">Total estimado: S/0.00</div>
+        <div class="cart-actions">
+            <button class="btn btn-capture" onclick="capturarLista()"><i class="fas fa-camera"></i> Capturar</button>
+            <button class="btn btn-whatsapp" onclick="enviarWhatsApp()"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+            <button class="btn" onclick="limpiarLista()"><i class="fas fa-trash"></i> Limpiar</button>
+        </div>
+    </div>
+
+    <script>
+        let listaProductos = [];
+        let categoriaActual = null;
+        let subcategoriaActual = null;
+        let cartOpen = false;
+        let hideTimeout;
+
+        const productosDB = {
+            frutas: { emoji: '🍎', nombre: 'Frutas', subcategorias: {
+                manzanas: { emoji: '🍏', nombre: 'Manzanas', productos: [ { nombre: 'Manzana Roja', precio: 5.50, unidad: 'kg' }, { nombre: 'Manzana Verde', precio: 6.00, unidad: 'kg' }, { nombre: 'Manzana Amarilla', precio: 5.80, unidad: 'kg' }, { nombre: 'Manzana Gala', precio: 6.50, unidad: 'kg' }, { nombre: 'Manzana Fuji', precio: 7.00, unidad: 'kg' } ] },
+                platanos: { emoji: '🍌', nombre: 'Plátanos', productos: [ { nombre: 'Plátano Común', precio: 3.00, unidad: 'kg' }, { nombre: 'Plátano Maduro', precio: 2.80, unidad: 'kg' }, { nombre: 'Plátano Verde', precio: 3.20, unidad: 'kg' }, { nombre: 'Plátano Dominico', precio: 4.00, unidad: 'kg' } ] },
+                naranjas: { emoji: '🍊', nombre: 'Naranjas', productos: [ { nombre: 'Naranja Común', precio: 3.50, unidad: 'kg' }, { nombre: 'Naranja Valencia', precio: 4.20, unidad: 'kg' }, { nombre: 'Naranja Navel', precio: 5.00, unidad: 'kg' }, { nombre: 'Mandarina', precio: 4.80, unidad: 'kg' } ] },
+                citricos: { emoji: '🍋', nombre: 'Otros Cítricos', productos: [ { nombre: 'Limón', precio: 7.00, unidad: 'kg' }, { nombre: 'Lima', precio: 8.00, unidad: 'kg' }, { nombre: 'Toronja', precio: 4.20, unidad: 'kg' }, { nombre: 'Pomelo', precio: 6.00, unidad: 'kg' } ] }
+            } },
+            verduras: { emoji: '🥕', nombre: 'Verduras', subcategorias: {
+                hojas: { emoji: '🥬', nombre: 'Hojas Verdes', productos: [ { nombre: 'Lechuga', precio: 3.00, unidad: 'unidad' }, { nombre: 'Espinaca', precio: 5.00, unidad: 'kg' }, { nombre: 'Acelga', precio: 4.20, unidad: 'kg' }, { nombre: 'Rúcula', precio: 6.50, unidad: 'kg' }, { nombre: 'Apio', precio: 5.80, unidad: 'kg' } ] },
+                tuberculos: { emoji: '🥔', nombre: 'Tubérculos', productos: [ { nombre: 'Papa Común', precio: 3.50, unidad: 'kg' }, { nombre: 'Papa Amarilla', precio: 4.20, unidad: 'kg' }, { nombre: 'Camote', precio: 5.00, unidad: 'kg' }, { nombre: 'Yuca', precio: 4.00, unidad: 'kg' }, { nombre: 'Zanahoria', precio: 4.80, unidad: 'kg' } ] },
+                tomates: { emoji: '🍅', nombre: 'Tomates', productos: [ { nombre: 'Tomate Común', precio: 6.00, unidad: 'kg' }, { nombre: 'Tomate Cherry', precio: 10.00, unidad: 'kg' }, { nombre: 'Tomate de Árbol', precio: 8.50, unidad: 'kg' }, { nombre: 'Tomate Riñón', precio: 7.50, unidad: 'kg' } ] },
+                cebollas: { emoji: '🧅', nombre: 'Cebollas', productos: [ { nombre: 'Cebolla Blanca', precio: 4.00, unidad: 'kg' }, { nombre: 'Cebolla Morada', precio: 5.00, unidad: 'kg' }, { nombre: 'Cebolla Larga', precio: 5.80, unidad: 'kg' }, { nombre: 'Cebollín', precio: 2.00, unidad: 'paquete' } ] }
+            } },
+            carnes: { emoji: '🥩', nombre: 'Carnes', subcategorias: {
+                res: { emoji: '🐄', nombre: 'Carne de Res', productos: [ { nombre: 'Lomo Fino', precio: 28.50, unidad: 'kg' }, { nombre: 'Chuleta', precio: 24.00, unidad: 'kg' }, { nombre: 'Bistec', precio: 23.00, unidad: 'kg' }, { nombre: 'Carne Molida', precio: 20.00, unidad: 'kg' }, { nombre: 'Costilla', precio: 18.00, unidad: 'kg' } ] },
+                pollo: { emoji: '🐔', nombre: 'Pollo', productos: [ { nombre: 'Pollo Entero', precio: 12.50, unidad: 'kg' }, { nombre: 'Pechuga', precio: 16.00, unidad: 'kg' }, { nombre: 'Muslo', precio: 11.00, unidad: 'kg' }, { nombre: 'Alas', precio: 10.00, unidad: 'kg' }, { nombre: 'Pollo Desmenuzado', precio: 18.00, unidad: 'kg' } ] },
+                cerdo: { emoji: '🐖', nombre: 'Carne de Cerdo', productos: [ { nombre: 'Lomo de Cerdo', precio: 20.00, unidad: 'kg' }, { nombre: 'Chuleta de Cerdo', precio: 19.00, unidad: 'kg' }, { nombre: 'Tocino', precio: 16.00, unidad: 'kg' }, { nombre: 'Jamón', precio: 25.00, unidad: 'kg' } ] },
+                pescado: { emoji: '🐟', nombre: 'Pescados', productos: [ { nombre: 'Tilapia', precio: 15.00, unidad: 'kg' }, { nombre: 'Trucha', precio: 22.00, unidad: 'kg' }, { nombre: 'Atún', precio: 26.00, unidad: 'kg' }, { nombre: 'Salmón', precio: 40.00, unidad: 'kg' } ] }
+            } },
+            lacteos: { emoji: '🥛', nombre: 'Lácteos', subcategorias: {
+                leche: { emoji: '🥛', nombre: 'Leche', productos: [ { nombre: 'Leche Entera', precio: 4.20, unidad: 'L' }, { nombre: 'Leche Descremada', precio: 4.50, unidad: 'L' }, { nombre: 'Leche Deslactosada', precio: 5.00, unidad: 'L' }, { nombre: 'Leche de Almendra', precio: 9.00, unidad: 'L' } ] },
+                quesos: { emoji: '🧀', nombre: 'Quesos', productos: [ { nombre: 'Queso Fresco', precio: 12.00, unidad: 'kg' }, { nombre: 'Queso Mozzarella', precio: 15.00, unidad: 'kg' }, { nombre: 'Queso Cheddar', precio: 16.50, unidad: 'kg' }, { nombre: 'Queso Manchego', precio: 22.00, unidad: 'kg' } ] },
+                yogurt: { emoji: '🍶', nombre: 'Yogurt', productos: [ { nombre: 'Yogurt Natural', precio: 8.00, unidad: 'kg' }, { nombre: 'Yogurt con Frutas', precio: 9.50, unidad: 'kg' }, { nombre: 'Yogurt Griego', precio: 12.50, unidad: 'kg' }, { nombre: 'Yogurt Descremado', precio: 8.80, unidad: 'kg' } ] }
+            } },
+            granos: { emoji: '🌾', nombre: 'Granos y Cereales', subcategorias: {
+                arroz: { emoji: '🍚', nombre: 'Arroz', productos: [ { nombre: 'Arroz Blanco', precio: 4.00, unidad: 'kg' }, { nombre: 'Arroz Integral', precio: 5.80, unidad: 'kg' }, { nombre: 'Arroz Basmati', precio: 8.00, unidad: 'kg' }, { nombre: 'Arroz de Coco', precio: 6.50, unidad: 'kg' } ] },
+                frijoles: { emoji: '🫘', nombre: 'Frijoles', productos: [ { nombre: 'Frijol Negro', precio: 5.00, unidad: 'kg' }, { nombre: 'Frijol Rojo', precio: 5.20, unidad: 'kg' }, { nombre: 'Frijol Blanco', precio: 5.50, unidad: 'kg' }, { nombre: 'Lenteja', precio: 6.50, unidad: 'kg' } ] },
+                pasta: { emoji: '🍝', nombre: 'Pasta', productos: [ { nombre: 'Espaguetti', precio: 5.00, unidad: 'paquete' }, { nombre: 'Macarrones', precio: 5.20, unidad: 'paquete' }, { nombre: 'Penne', precio: 5.80, unidad: 'paquete' }, { nombre: 'Lasaña', precio: 7.20, unidad: 'paquete' } ] }
+            } },
+            bebidas: { emoji: '🥤', nombre: 'Bebidas', subcategorias: {
+                gaseosas: { emoji: '🥤', nombre: 'Gaseosas', productos: [ { nombre: 'Coca Cola', precio: 8.00, unidad: 'L' }, { nombre: 'Pepsi', precio: 7.50, unidad: 'L' }, { nombre: 'Sprite', precio: 7.80, unidad: 'L' }, { nombre: 'Fanta', precio: 7.80, unidad: 'L' } ] },
+                jugos: { emoji: '🧃', nombre: 'Jugos', productos: [ { nombre: 'Jugo de Naranja', precio: 10.00, unidad: 'L' }, { nombre: 'Jugo de Manzana', precio: 10.50, unidad: 'L' }, { nombre: 'Jugo de Uva', precio: 11.50, unidad: 'L' }, { nombre: 'Jugo Multivitamínico', precio: 13.00, unidad: 'L' } ] },
+                agua: { emoji: '💧', nombre: 'Agua', productos: [ { nombre: 'Agua Mineral', precio: 3.50, unidad: 'L' }, { nombre: 'Agua con Gas', precio: 5.00, unidad: 'L' }, { nombre: 'Agua Saborizada', precio: 6.00, unidad: 'L' } ] }
+            } }
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            generarCategorias();
+            document.getElementById('producto').focus();
+        });
+
+        function generarCategorias() {
+            const container = document.getElementById('categoriasGrid');
+            let html = '';
+            Object.keys(productosDB).forEach(categoriaKey => {
+                const categoria = productosDB[categoriaKey];
+                html += `<div class="categoria-item" data-emoji="${categoria.emoji}" data-categoria="${categoriaKey}" onmouseover="mostrarSubcategorias('${categoriaKey}')">${categoria.nombre}</div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function mostrarSubcategorias(categoriaKey) {
+            clearTimeout(hideTimeout);
+            document.querySelectorAll('.categoria-item').forEach(el => el.classList.remove('active'));
+            const activeCategory = document.querySelector(`.categoria-item[data-categoria="${categoriaKey}"]`);
+            if (activeCategory) activeCategory.classList.add('active');
+
+            document.getElementById('productosGrid').style.display = 'none';
+
+            const categoria = productosDB[categoriaKey];
+            const subcategoriasGrid = document.getElementById('subcategoriasGrid');
+            let html = '';
+            Object.keys(categoria.subcategorias).forEach(subcategoriaKey => {
+                const subcategoria = categoria.subcategorias[subcategoriaKey];
+                html += `<div class="subcategoria-item" data-emoji="${subcategoria.emoji}" data-subcategoria="${subcategoriaKey}" onmouseover="mostrarProductos('${categoriaKey}', '${subcategoriaKey}')">${subcategoria.nombre}</div>`;
+            });
+            subcategoriasGrid.innerHTML = html;
+            subcategoriasGrid.style.display = 'grid';
+            document.getElementById('btnBack').style.display = 'block';
+            categoriaActual = categoriaKey;
+            subcategoriaActual = null;
+        }
+
+        function mostrarProductos(categoriaKey, subcategoriaKey) {
+            clearTimeout(hideTimeout);
+            document.querySelectorAll('.subcategoria-item').forEach(el => el.classList.remove('active'));
+            const activeSubcategory = document.querySelector(`.subcategoria-item[data-subcategoria="${subcategoriaKey}"]`);
+            if (activeSubcategory) activeSubcategory.classList.add('active');
+
+            const subcategoria = productosDB[categoriaKey].subcategorias[subcategoriaKey];
+            const productosGrid = document.getElementById('productosGrid');
+            let html = '';
+            subcategoria.productos.forEach(producto => {
+                html += `<div class="producto-item" onclick="agregarProductoDirectamente('${producto.nombre}', ${producto.precio}, '${producto.unidad}')">
+                    <div class="producto-nombre">${producto.nombre}</div>
+                    <div class="producto-precio">S/${producto.precio.toFixed(2)}</div>
+                    <div class="producto-unidad">por ${producto.unidad}</div>
+                    <div class="btn-agregar" onclick="event.stopPropagation(); agregarProductoDirectamente('${producto.nombre}', ${producto.precio}, '${producto.unidad}')">Agregar a lista</div>
+                </div>`;
+            });
+            productosGrid.innerHTML = html;
+            productosGrid.style.display = 'grid';
+            subcategoriaActual = subcategoriaKey;
+        }
+
+        function ocultarTodo() {
+            document.getElementById('subcategoriasGrid').style.display = 'none';
+            document.getElementById('productosGrid').style.display = 'none';
+            document.querySelectorAll('.categoria-item').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.subcategoria-item').forEach(el => el.classList.remove('active'));
+            document.getElementById('btnBack').style.display = 'none';
+            categoriaActual = null;
+            subcategoriaActual = null;
+        }
+
+        function volverACategorias() { ocultarTodo(); }
+
+        function agregarProductoDirectamente(nombre, precio, unidad) {
+            listaProductos.push({ id: Date.now(), nombre, cantidad: 1, unidad, precio });
+            actualizarLista();
+            mostrarNotificacion(`${nombre} agregado a la lista`);
+        }
+
+        function agregarProducto() {
+            const producto = document.getElementById('producto').value.trim();
+            const cantidad = parseInt(document.getElementById('cantidad').value) || 1;
+            const unidad = document.getElementById('unidad').value;
+            const precio = parseFloat(document.getElementById('precio').value) || 0;
+            if (!producto) { mostrarNotificacion('Ingresa el nombre'); return; }
+            listaProductos.push({ id: Date.now(), nombre: producto, cantidad, unidad, precio });
+            actualizarLista();
+            document.getElementById('producto').value = '';
+            document.getElementById('cantidad').value = '1';
+            document.getElementById('unidad').value = 'unidad';
+            document.getElementById('precio').value = '';
+            document.getElementById('producto').focus();
+            mostrarNotificacion('Producto agregado');
+        }
+
+        function eliminarProducto(id) {
+            listaProductos = listaProductos.filter(p => p.id !== id);
+            actualizarLista();
+            mostrarNotificacion('Producto eliminado');
+        }
+
+        function actualizarLista() {
+            const emptyState = document.getElementById('emptyState');
+            const cartContent = document.getElementById('cartContent');
+            const cartTotal = document.getElementById('cartTotal');
+            const cartCount = document.getElementById('cartCount');
+
+            if (listaProductos.length === 0) {
+                emptyState.style.display = 'block';
+                cartContent.innerHTML = '<div class="empty-state">Tu lista está vacía. ¡Agrega algunos productos!</div>';
+                cartTotal.textContent = 'Total estimado: S/0.00';
+                cartCount.textContent = '0';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            let total = 0;
+            let html = '';
+
+            listaProductos.forEach(p => {
+                const subtotal = p.precio * p.cantidad;
+                total += subtotal;
+                html += `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${p.nombre}</div>
+                            <div class="cart-item-details">
+                                ${p.cantidad} ${p.unidad}${p.cantidad > 1 && p.unidad === 'unidad' ? 'es' : ''}
+                                ${p.precio > 0 ? ` - S/${subtotal.toFixed(2)}` : ''}
+                            </div>
+                        </div>
+                        <button class="cart-item-remove" onclick="eliminarProducto(${p.id})">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
+            });
+
+            cartContent.innerHTML = html;
+            cartTotal.textContent = `Total estimado: S/${total.toFixed(2)}`;
+            cartCount.textContent = listaProductos.length;
+        }
+
+        function limpiarLista() {
+            if (listaProductos.length && confirm('¿Limpiar toda la lista?')) {
+                listaProductos = [];
+                actualizarLista();
+                mostrarNotificacion('Lista limpiada');
+            }
+        }
+
+        function generarTextoLista() {
+            if (!listaProductos.length) return 'Lista vacía';
+            let texto = '🛒 *LISTA DE MERCADO*\n\n', total = 0;
+            listaProductos.forEach((p,i) => {
+                const subtotal = p.precio * p.cantidad;
+                total += subtotal;
+                texto += `${i+1}. *${p.nombre}*\n   Cantidad: ${p.cantidad} ${p.unidad}${p.cantidad>1&&p.unidad==='unidad'?'es':''}\n${p.precio>0?`   Precio: S/${subtotal.toFixed(2)}\n`:''}\n`;
+            });
+            if (total>0) texto += `💰 *TOTAL ESTIMADO: S/${total.toFixed(2)}*\n\n`;
+            texto += '📱 Lista generada desde Lista de Mercado App';
+            return texto;
+        }
+
+        function enviarWhatsApp() {
+            if (!listaProductos.length) { mostrarNotificacion('Lista vacía'); return; }
+            window.open(`https://wa.me/975842622?text=${encodeURIComponent(generarTextoLista())}`, '_blank');
+        }
+
+        function capturarLista() {
+            if (!listaProductos.length) { mostrarNotificacion('Lista vacía'); return; }
+            const canvas = document.createElement('canvas');
+            canvas.width = 600;
+            canvas.height = Math.max(400, listaProductos.length * 70 + 150);
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#1e1e1e'; ctx.fillRect(0,0,canvas.width,canvas.height);
+            ctx.fillStyle = 'white'; ctx.font = 'bold 24px Segoe UI'; ctx.textAlign = 'center'; ctx.fillText('🛒 LISTA DE MERCADO', canvas.width/2, 40);
+            ctx.strokeStyle = '#3b82f6'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(50,60); ctx.lineTo(canvas.width-50,60); ctx.stroke();
+            let y = 100, total = 0;
+            listaProductos.forEach((p,i) => {
+                const subtotal = p.precio * p.cantidad;
+                total += subtotal;
+                ctx.fillStyle = '#e0e0e0'; ctx.font = 'bold 16px Segoe UI'; ctx.textAlign = 'left'; ctx.fillText(`${i+1}.`, 50, y);
+                ctx.fillStyle = 'white'; ctx.font = 'bold 18px Segoe UI'; ctx.fillText(p.nombre, 80, y);
+                ctx.fillStyle = '#aaa'; ctx.font = '14px Segoe UI'; ctx.fillText(`${p.cantidad} ${p.unidad}`, 80, y+20);
+                if (p.precio>0) { ctx.fillStyle = '#7fdf7f'; ctx.font = 'bold 16px Segoe UI'; ctx.textAlign = 'right'; ctx.fillText(`S/${subtotal.toFixed(2)}`, canvas.width-50, y); }
+                y += 50;
+            });
+            if (total>0) {
+                y+=20; ctx.strokeStyle = '#3b82f6'; ctx.beginPath(); ctx.moveTo(50,y); ctx.lineTo(canvas.width-50,y); ctx.stroke();
+                ctx.fillStyle = '#bbd7fb'; ctx.font = 'bold 20px Segoe UI'; ctx.textAlign = 'right'; ctx.fillText(`TOTAL: S/${total.toFixed(2)}`, canvas.width-50, y+30);
+            }
+            canvas.toBlob(blob => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a'); a.href = url; a.download = 'lista_mercado.png'; a.click();
+                URL.revokeObjectURL(url);
+            });
+            mostrarNotificacion('Lista capturada');
+        }
+
+        function mostrarNotificacion(mensaje) {
+            const notif = document.createElement('div'); notif.className = 'notification'; notif.textContent = mensaje;
+            document.body.appendChild(notif);
+            setTimeout(() => notif.remove(), 2500);
+        }
+
+        function toggleCart() {
+            cartOpen = !cartOpen;
+            document.getElementById('floatingCart').classList.toggle('open', cartOpen);
+        }
+
+        document.getElementById('cartIcon').addEventListener('click', toggleCart);
+        document.getElementById('producto').addEventListener('keypress', e => { if(e.key==='Enter') agregarProducto(); });
+        document.getElementById('cantidad').addEventListener('keypress', e => { if(e.key==='Enter') agregarProducto(); });
+        document.getElementById('precio').addEventListener('keypress', e => { if(e.key==='Enter') agregarProducto(); });
+    </script>
+</body>
+</html>
