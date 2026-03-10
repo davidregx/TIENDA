@@ -6,6 +6,7 @@
     <title>Lista de Mercado - Perú</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* (todo el CSS se mantiene igual que antes) */
         * {
             margin: 0;
             padding: 0;
@@ -332,6 +333,7 @@
             opacity: 0.5;
         }
 
+        /* CARRITO FLOTANTE (estilo BOLETA) */
         .cart-icon {
             position: fixed;
             bottom: 28px;
@@ -376,34 +378,41 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: #1e1e1e;
+            background: #ffffff !important;
+            color: #333333 !important;
+            border: 1px solid #ccc;
+            font-family: 'Courier New', Courier, monospace;
             z-index: 2000;
             transition: transform 0.3s ease-out;
             transform: translateY(100%);
             display: flex;
             flex-direction: column;
             border-radius: 30px 30px 0 0;
-            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.3);
         }
 
         .floating-cart.open { transform: translateY(0); }
 
         .cart-header {
-            background: #1e40af;
-            color: white;
+            background: #f8f8f8 !important;
+            color: #333 !important;
+            border-bottom: 2px dashed #ccc;
+            border-radius: 30px 30px 0 0;
             padding: 22px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-radius: 30px 30px 0 0;
         }
 
-        .cart-title { font-size: 1.3rem; font-weight: 600; }
+        .cart-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
 
         .close-cart {
             background: none;
             border: none;
-            color: white;
+            color: #333;
             font-size: 1.6rem;
             cursor: pointer;
             padding: 0 10px;
@@ -413,66 +422,62 @@
             flex: 1;
             overflow-y: auto;
             padding: 24px;
-            background: #1e1e1e;
-            color: #e0e0e0;
+            background: #ffffff !important;
         }
 
-        /* Estilo para cada ítem del carrito con botón eliminar */
+        .qr-header {
+            text-align: center;
+            padding: 10px;
+            border-bottom: 2px dashed #ccc;
+            margin-bottom: 10px;
+        }
+
+        .qr-header img {
+            width: 120px;
+            display: block;
+            margin: 0 auto;
+            background: #f0f0f0;
+            border-radius: 12px;
+        }
+
+        .qr-header input {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            width: 100%;
+            margin-top: 5px;
+            color: #333;
+        }
+
         .cart-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 0;
-            border-bottom: 1px solid #333;
-        }
-
-        .cart-item-info {
-            flex: 1;
-        }
-
-        .cart-item-name {
-            font-weight: 500;
-            color: #e0e0e0;
-            font-size: 1rem;
-        }
-
-        .cart-item-details {
-            color: #aaa;
-            font-size: 0.85rem;
-            margin-top: 4px;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
         }
 
         .cart-item-remove {
-            background: none;
-            border: none;
-            color: #f87171;
-            font-size: 1.2rem;
+            color: red;
             cursor: pointer;
-            padding: 8px;
-            margin-left: 8px;
-            transition: color 0.2s, transform 0.1s;
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .cart-item-remove:hover {
-            color: #ef4444;
-            background: #2a2a2a;
-            transform: scale(1.1);
+            border: none;
+            background: none;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 1.2rem;
         }
 
         .cart-total {
-            background: #2a2a2a;
+            background: #f9f9f9 !important;
+            color: #000 !important;
+            border-top: 2px dashed #ccc !important;
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-align: right;
             padding: 20px;
-            text-align: center;
-            font-weight: 700;
-            font-size: 1.4rem;
-            color: #bbd7fb;
-            border-top: 2px solid #333;
         }
 
         .cart-actions {
@@ -480,13 +485,23 @@
             flex-wrap: wrap;
             gap: 12px;
             padding: 22px;
-            background: #2a2a2a;
+            background: #f1f1f1;
         }
 
         .cart-actions .btn {
             flex: 1;
             padding: 14px;
             font-size: 0.9rem;
+            background: #3b82f6;
+            color: white;
+        }
+
+        .cart-actions .btn-whatsapp {
+            background: #1fa855;
+        }
+
+        .cart-actions .btn-capture {
+            background: #d44f4f;
         }
 
         @media (min-width: 768px) {
@@ -577,23 +592,25 @@
         <div class="cart-count" id="cartCount">0</div>
     </div>
 
+    <!-- Carrito con estilo BOLETA -->
     <div class="floating-cart" id="floatingCart">
         <div class="cart-header">
-            <div class="cart-title">Tu Carrito de Compras</div>
+            <div class="cart-title">BOLETA DE VENTA</div>
             <button class="close-cart" onclick="toggleCart()"><i class="fas fa-times"></i></button>
         </div>
         <div class="cart-content" id="cartContent">
-            <!-- Los productos se renderizan acá -->
+            <!-- Se llena dinámicamente -->
         </div>
-        <div class="cart-total" id="cartTotal">Total estimado: S/0.00</div>
+        <div class="cart-total" id="cartTotal">TOTAL (S/): S/0.00</div>
         <div class="cart-actions">
-            <button class="btn btn-capture" onclick="capturarLista()"><i class="fas fa-camera"></i> Capturar</button>
+            <button class="btn btn-capture" onclick="capturarBoleta()"><i class="fas fa-camera"></i> Capturar Imagen</button>
+            <button class="btn" onclick="imprimirBoleta()"><i class="fas fa-print"></i> Imprimir</button>
             <button class="btn btn-whatsapp" onclick="enviarWhatsApp()"><i class="fab fa-whatsapp"></i> WhatsApp</button>
-            <button class="btn" onclick="limpiarLista()"><i class="fas fa-trash"></i> Limpiar</button>
         </div>
     </div>
 
     <script>
+        // ========== LÓGICA COMPLETA ==========
         let listaProductos = [];
         let categoriaActual = null;
         let subcategoriaActual = null;
@@ -735,6 +752,7 @@
             mostrarNotificacion('Producto eliminado');
         }
 
+        // Actualizar la lista del carrito con campos de cliente y DNI (sin valores por defecto)
         function actualizarLista() {
             const emptyState = document.getElementById('emptyState');
             const cartContent = document.getElementById('cartContent');
@@ -743,46 +761,231 @@
 
             if (listaProductos.length === 0) {
                 emptyState.style.display = 'block';
-                cartContent.innerHTML = '<div class="empty-state">Tu lista está vacía. ¡Agrega algunos productos!</div>';
-                cartTotal.textContent = 'Total estimado: S/0.00';
+                cartContent.innerHTML = `
+                    <div class="qr-header">
+                        <img src="https://i.ibb.co/rGSyWwJK/yape-qr.jpg" style="width:120px; display:block; margin:0 auto;" alt="Yape QR">
+                        <p>Paga aquí con Yape</p>
+                        <div style="text-align: left; font-size: 0.8rem; margin-top:10px;">
+                            <strong>CLIENTE:</strong> <input type="text" id="clienteInput" placeholder="Tu nombre (obligatorio)" style="width:100%; padding:4px; font-family:'Courier New'; border:1px solid #ccc; border-radius:12px;">
+                            <strong>DNI:</strong> <input type="text" id="dniInput" placeholder="DNI (opcional)" style="width:100%; padding:4px; font-family:'Courier New'; border:1px solid #ccc; border-radius:12px; margin-top:5px;">
+                            <br>
+                            <strong>FECHA:</strong> ${new Date().toLocaleDateString()} <strong>HORA:</strong> ${new Date().toLocaleTimeString()}
+                        </div>
+                    </div>
+                    <p style="text-align:center;">Lista vacía</p>
+                `;
+                cartTotal.textContent = 'TOTAL (S/): S/0.00';
                 cartCount.textContent = '0';
                 return;
             }
 
             emptyState.style.display = 'none';
             let total = 0;
-            let html = '';
+            let html = `
+                <div class="qr-header">
+                    <img src="https://i.ibb.co/rGSyWwJK/yape-qr.jpg" style="width:120px; display:block; margin:0 auto;" alt="Yape QR">
+                    <p>Paga aquí con Yape</p>
+                    <div style="text-align: left; font-size: 0.8rem; margin-top:10px;">
+                        <strong>CLIENTE:</strong> <input type="text" id="clienteInput" placeholder="Tu nombre (obligatorio)" style="width:100%; padding:4px; font-family:'Courier New'; border:1px solid #ccc; border-radius:12px;">
+                        <strong>DNI:</strong> <input type="text" id="dniInput" placeholder="DNI (opcional)" style="width:100%; padding:4px; font-family:'Courier New'; border:1px solid #ccc; border-radius:12px; margin-top:5px;">
+                        <br>
+                        <strong>FECHA:</strong> ${new Date().toLocaleDateString()} <strong>HORA:</strong> ${new Date().toLocaleTimeString()}
+                    </div>
+                </div>
+            `;
 
             listaProductos.forEach(p => {
                 const subtotal = p.precio * p.cantidad;
                 total += subtotal;
                 html += `
                     <div class="cart-item">
-                        <div class="cart-item-info">
-                            <div class="cart-item-name">${p.nombre}</div>
-                            <div class="cart-item-details">
-                                ${p.cantidad} ${p.unidad}${p.cantidad > 1 && p.unidad === 'unidad' ? 'es' : ''}
-                                ${p.precio > 0 ? ` - S/${subtotal.toFixed(2)}` : ''}
-                            </div>
-                        </div>
-                        <button class="cart-item-remove" onclick="eliminarProducto(${p.id})">
-                            <i class="fas fa-times"></i>
-                        </button>
+                        <button class="cart-item-remove" onclick="eliminarProducto(${p.id})">✕</button>
+                        <div style="flex:1;">${p.cantidad} ${p.unidad} - ${p.nombre}</div>
+                        <div>S/ ${subtotal.toFixed(2)}</div>
                     </div>
                 `;
             });
 
             cartContent.innerHTML = html;
-            cartTotal.textContent = `Total estimado: S/${total.toFixed(2)}`;
+            cartTotal.textContent = `TOTAL (S/): S/ ${total.toFixed(2)}`;
             cartCount.textContent = listaProductos.length;
         }
 
-        function limpiarLista() {
-            if (listaProductos.length && confirm('¿Limpiar toda la lista?')) {
-                listaProductos = [];
-                actualizarLista();
-                mostrarNotificacion('Lista limpiada');
+        // Función para validar nombre obligatorio
+        function validarNombre() {
+            const clienteInput = document.getElementById('clienteInput');
+            if (!clienteInput || clienteInput.value.trim() === '') {
+                mostrarNotificacion('Debes ingresar el nombre del cliente');
+                return false;
             }
+            return true;
+        }
+
+        // Función para capturar la boleta con validación
+        async function capturarBoleta() {
+            if (listaProductos.length === 0) {
+                mostrarNotificacion('La lista está vacía. Agrega productos primero.');
+                return;
+            }
+
+            if (!validarNombre()) return;
+
+            // Obtener valores de los inputs
+            const clienteInput = document.getElementById('clienteInput');
+            const dniInput = document.getElementById('dniInput');
+            const cliente = clienteInput.value.trim();
+            const dni = dniInput ? dniInput.value.trim() : '';
+
+            const fecha = new Date();
+            const fechaStr = fecha.toLocaleDateString();
+            const horaStr = fecha.toLocaleTimeString();
+
+            // Calcular total
+            let total = 0;
+            listaProductos.forEach(p => total += p.precio * p.cantidad);
+
+            // Crear canvas
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const width = 600;
+            let height = 280 + listaProductos.length * 30 + 120;
+            canvas.width = width;
+            canvas.height = height;
+
+            // Fondo blanco
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, width, height);
+
+            // Dibujar contenido
+            ctx.fillStyle = '#000000';
+            ctx.font = 'bold 20px "Courier New", Courier, monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText('BOLETA DE VENTA ELECTRÓNICA', width/2, 40);
+
+            // Cargar imagen QR
+            try {
+                const img = await loadImage('https://i.ibb.co/rGSyWwJK/yape-qr.jpg');
+                ctx.drawImage(img, width/2 - 60, 60, 120, 120);
+            } catch (e) {
+                ctx.fillStyle = '#f0f0f0';
+                ctx.fillRect(width/2 - 60, 60, 120, 120);
+                ctx.fillStyle = '#999';
+                ctx.font = '10px monospace';
+                ctx.fillText('QR no disponible', width/2, 120);
+            }
+
+            // Texto debajo del QR
+            ctx.font = '12px "Courier New", Courier, monospace';
+            ctx.fillStyle = '#000';
+            ctx.fillText('Paga aquí con Yape', width/2, 200);
+            ctx.font = 'bold 14px "Courier New", Courier, monospace';
+            ctx.fillText(cliente, width/2, 220);
+            
+            // Mostrar DNI solo si se ingresó
+            let lineaCliente = `CLIENTE: ${cliente}`;
+            if (dni !== '') lineaCliente += `     DNI: ${dni}`;
+            ctx.font = '12px "Courier New", Courier, monospace';
+            ctx.fillText(lineaCliente, width/2, 240);
+            ctx.fillText(`FECHA: ${fechaStr} HORA: ${horaStr}`, width/2, 260);
+
+            // Línea separadora
+            ctx.beginPath();
+            ctx.moveTo(20, 280);
+            ctx.lineTo(width-20, 280);
+            ctx.strokeStyle = '#ccc';
+            ctx.stroke();
+
+            // Encabezado de tabla
+            ctx.font = 'bold 12px "Courier New", Courier, monospace';
+            ctx.fillStyle = '#000';
+            ctx.textAlign = 'left';
+            ctx.fillText('Cant U.M', 30, 310);
+            ctx.fillText('PRODUCTO', 150, 310);
+            ctx.fillText('P.U. (S/)', 380, 310);
+            ctx.fillText('TOTAL (S/)', 480, 310);
+
+            ctx.beginPath();
+            ctx.moveTo(20, 320);
+            ctx.lineTo(width-20, 320);
+            ctx.stroke();
+
+            let y = 340;
+            listaProductos.forEach(p => {
+                const subtotal = p.precio * p.cantidad;
+                ctx.font = '12px "Courier New", Courier, monospace';
+                ctx.fillText(`${p.cantidad} ${p.unidad}`, 30, y);
+                let nombre = p.nombre.length > 20 ? p.nombre.substring(0,18)+'...' : p.nombre;
+                ctx.fillText(nombre, 150, y);
+                ctx.fillText(p.precio.toFixed(2), 380, y);
+                ctx.fillText(subtotal.toFixed(2), 480, y);
+                y += 25;
+            });
+
+            ctx.beginPath();
+            ctx.moveTo(20, y);
+            ctx.lineTo(width-20, y);
+            ctx.stroke();
+            y += 20;
+
+            ctx.font = 'bold 16px "Courier New", Courier, monospace';
+            ctx.fillStyle = '#000';
+            ctx.textAlign = 'right';
+            ctx.fillText(`TOTAL (S/)   S/ ${total.toFixed(2)}`, width-30, y);
+            y += 30;
+
+            ctx.font = '12px "Courier New", Courier, monospace';
+            ctx.textAlign = 'center';
+            const letras = numeroALetras(total);
+            ctx.fillText(`SON: ${letras} SOLES`, width/2, y);
+
+            y += 30;
+            ctx.font = 'bold 14px "Courier New", Courier, monospace';
+            ctx.fillStyle = '#3b82f6';
+            ctx.fillText('Capturar Imagen', 150, y);
+            ctx.fillStyle = '#d44f4f';
+            ctx.fillText('Imprimir', 400, y);
+
+            // Descargar imagen
+            canvas.toBlob(blob => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `boleta_${fechaStr.replace(/\//g,'-')}.png`;
+                a.click();
+                URL.revokeObjectURL(url);
+                mostrarNotificacion('Boleta capturada como imagen');
+            });
+        }
+
+        function loadImage(src) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = () => resolve(img);
+                img.onerror = reject;
+                img.src = src;
+            });
+        }
+
+        // Función para imprimir (con validación)
+        function imprimirBoleta() {
+            if (listaProductos.length === 0) {
+                mostrarNotificacion('La lista está vacía. Agrega productos primero.');
+                return;
+            }
+            if (!validarNombre()) return;
+            window.print();
+        }
+
+        // Función para enviar WhatsApp (con validación)
+        function enviarWhatsApp() {
+            if (listaProductos.length === 0) {
+                mostrarNotificacion('La lista está vacía. Agrega productos primero.');
+                return;
+            }
+            if (!validarNombre()) return;
+            const texto = generarTextoLista();
+            window.open(`https://wa.me/975842622?text=${encodeURIComponent(texto)}`, '_blank');
         }
 
         function generarTextoLista() {
@@ -798,42 +1001,6 @@
             return texto;
         }
 
-        function enviarWhatsApp() {
-            if (!listaProductos.length) { mostrarNotificacion('Lista vacía'); return; }
-            window.open(`https://wa.me/975842622?text=${encodeURIComponent(generarTextoLista())}`, '_blank');
-        }
-
-        function capturarLista() {
-            if (!listaProductos.length) { mostrarNotificacion('Lista vacía'); return; }
-            const canvas = document.createElement('canvas');
-            canvas.width = 600;
-            canvas.height = Math.max(400, listaProductos.length * 70 + 150);
-            const ctx = canvas.getContext('2d');
-            ctx.fillStyle = '#1e1e1e'; ctx.fillRect(0,0,canvas.width,canvas.height);
-            ctx.fillStyle = 'white'; ctx.font = 'bold 24px Segoe UI'; ctx.textAlign = 'center'; ctx.fillText('🛒 LISTA DE MERCADO', canvas.width/2, 40);
-            ctx.strokeStyle = '#3b82f6'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(50,60); ctx.lineTo(canvas.width-50,60); ctx.stroke();
-            let y = 100, total = 0;
-            listaProductos.forEach((p,i) => {
-                const subtotal = p.precio * p.cantidad;
-                total += subtotal;
-                ctx.fillStyle = '#e0e0e0'; ctx.font = 'bold 16px Segoe UI'; ctx.textAlign = 'left'; ctx.fillText(`${i+1}.`, 50, y);
-                ctx.fillStyle = 'white'; ctx.font = 'bold 18px Segoe UI'; ctx.fillText(p.nombre, 80, y);
-                ctx.fillStyle = '#aaa'; ctx.font = '14px Segoe UI'; ctx.fillText(`${p.cantidad} ${p.unidad}`, 80, y+20);
-                if (p.precio>0) { ctx.fillStyle = '#7fdf7f'; ctx.font = 'bold 16px Segoe UI'; ctx.textAlign = 'right'; ctx.fillText(`S/${subtotal.toFixed(2)}`, canvas.width-50, y); }
-                y += 50;
-            });
-            if (total>0) {
-                y+=20; ctx.strokeStyle = '#3b82f6'; ctx.beginPath(); ctx.moveTo(50,y); ctx.lineTo(canvas.width-50,y); ctx.stroke();
-                ctx.fillStyle = '#bbd7fb'; ctx.font = 'bold 20px Segoe UI'; ctx.textAlign = 'right'; ctx.fillText(`TOTAL: S/${total.toFixed(2)}`, canvas.width-50, y+30);
-            }
-            canvas.toBlob(blob => {
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a'); a.href = url; a.download = 'lista_mercado.png'; a.click();
-                URL.revokeObjectURL(url);
-            });
-            mostrarNotificacion('Lista capturada');
-        }
-
         function mostrarNotificacion(mensaje) {
             const notif = document.createElement('div'); notif.className = 'notification'; notif.textContent = mensaje;
             document.body.appendChild(notif);
@@ -843,6 +1010,53 @@
         function toggleCart() {
             cartOpen = !cartOpen;
             document.getElementById('floatingCart').classList.toggle('open', cartOpen);
+        }
+
+        function numeroALetras(num) {
+            // (misma función de antes)
+            const entero = Math.floor(num);
+            const decimal = Math.round((num - entero) * 100);
+            const unidades = ['', 'UNO', 'DOS', 'TRES', 'CUATRO', 'CINCO', 'SEIS', 'SIETE', 'OCHO', 'NUEVE'];
+            const especiales = ['DIEZ', 'ONCE', 'DOCE', 'TRECE', 'CATORCE', 'QUINCE', 'DIECISÉIS', 'DIECISIETE', 'DIECIOCHO', 'DIECINUEVE'];
+            const decenas = ['', 'DIEZ', 'VEINTE', 'TREINTA', 'CUARENTA', 'CINCUENTA', 'SESENTA', 'SETENTA', 'OCHENTA', 'NOVENTA'];
+            const centenas = ['', 'CIENTO', 'DOSCIENTOS', 'TRESCIENTOS', 'CUATROCIENTOS', 'QUINIENTOS', 'SEISCIENTOS', 'SETECIENTOS', 'OCHOCIENTOS', 'NOVECIENTOS'];
+
+            if (entero === 0) return 'CERO';
+            let letras = '';
+            if (entero >= 1000) {
+                let miles = Math.floor(entero / 1000);
+                if (miles === 1) letras += 'MIL ';
+                else letras += unidades[miles] + ' MIL ';
+                entero %= 1000;
+            }
+            if (entero >= 100) {
+                let centena = Math.floor(entero / 100);
+                if (centena === 1 && entero % 100 === 0) letras += 'CIEN ';
+                else letras += centenas[centena] + ' ';
+                entero %= 100;
+            }
+            if (entero >= 10 && entero <= 19) {
+                letras += especiales[entero - 10] + ' ';
+            } else {
+                let decena = Math.floor(entero / 10);
+                if (decena > 0) {
+                    if (decena === 2 && entero % 10 === 0) letras += 'VEINTE ';
+                    else if (decena === 2) letras += 'VEINTI';
+                    else letras += decenas[decena] + ' ';
+                }
+                entero %= 10;
+                if (entero > 0) {
+                    if (decena === 2) letras += unidades[entero].toLowerCase() + ' ';
+                    else letras += unidades[entero] + ' ';
+                }
+            }
+            letras = letras.trim();
+            if (decimal > 0) {
+                letras += ` CON ${decimal}⁄100`;
+            } else {
+                letras += ' CON 00⁄100';
+            }
+            return letras;
         }
 
         document.getElementById('cartIcon').addEventListener('click', toggleCart);
