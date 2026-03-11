@@ -20,6 +20,7 @@
             color: #e0e0e0;
         }
 
+        /* WRAPPER para escritorio flex */
         .main-wrapper {
             width: 100%;
             max-width: 1400px;
@@ -650,7 +651,7 @@
     </div>
 
     <script>
-        // ========== LÓGICA COMPLETA (con mejora para GitHub) ==========
+        // ========== LÓGICA COMPLETA (exactamente como en funcionaindex.html) ==========
         let listaProductos = [];
         let categoriaActual = null;
         let subcategoriaActual = null;
@@ -792,6 +793,7 @@
             mostrarNotificacion('Producto eliminado');
         }
 
+        // Actualizar la lista del carrito con campos de cliente y DNI
         function actualizarLista() {
             const emptyState = document.getElementById('emptyState');
             const cartContent = document.getElementById('cartContent');
@@ -850,6 +852,7 @@
             cartCount.textContent = listaProductos.length;
         }
 
+        // Función para validar nombre obligatorio
         function validarDatosCliente() {
             const clienteInput = document.getElementById('clienteInput');
             if (!clienteInput) return true;
@@ -861,7 +864,7 @@
             return true;
         }
 
-        // VERSIÓN MEJORADA CON TIMEOUT PARA GITHUB PAGES
+        // Función para capturar la boleta (VERSIÓN ROBUSTA ORIGINAL)
         function capturarBoleta() {
             if (listaProductos.length === 0) {
                 mostrarNotificacion('La lista está vacía. Agrega productos primero.');
@@ -899,20 +902,34 @@
             ctx.textAlign = 'center';
             ctx.fillText('BOLETA DE VENTA ELECTRÓNICA', width/2, 40);
 
-            let dibujoCompletado = false; // Para evitar doble llamado
-
-            function finalizarConPlaceholder() {
-                if (dibujoCompletado) return;
-                dibujoCompletado = true;
+            try {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = function() {
+                    ctx.drawImage(img, width/2 - 60, 60, 120, 120);
+                    dibujarResto(ctx, width, height, cliente, dni, fechaStr, horaStr, total);
+                };
+                img.onerror = function() {
+                    console.warn('Error cargando QR, se usa placeholder');
+                    ctx.fillStyle = '#f0f0f0';
+                    ctx.fillRect(width/2 - 60, 60, 120, 120);
+                    ctx.fillStyle = '#999';
+                    ctx.font = '10px monospace';
+                    ctx.fillText('QR no disponible', width/2, 120);
+                    dibujarResto(ctx, width, height, cliente, dni, fechaStr, horaStr, total);
+                };
+                img.src = 'https://i.ibb.co/rGSyWwJK/yape-qr.jpg';
+            } catch (e) {
+                console.error('Error al crear imagen:', e);
                 ctx.fillStyle = '#f0f0f0';
                 ctx.fillRect(width/2 - 60, 60, 120, 120);
                 ctx.fillStyle = '#999';
                 ctx.font = '10px monospace';
                 ctx.fillText('QR no disponible', width/2, 120);
-                dibujarResto();
+                dibujarResto(ctx, width, height, cliente, dni, fechaStr, horaStr, total);
             }
 
-            function dibujarResto() {
+            function dibujarResto(ctx, width, height, cliente, dni, fechaStr, horaStr, total) {
                 ctx.font = '12px "Courier New", Courier, monospace';
                 ctx.fillStyle = '#000';
                 ctx.fillText('Paga aquí con Yape', width/2, 200);
@@ -978,7 +995,6 @@
                 ctx.fillStyle = '#d44f4f';
                 ctx.fillText('Imprimir', 400, y);
 
-                // Descargar imagen
                 try {
                     const dataURL = canvas.toDataURL('image/png');
                     const link = document.createElement('a');
@@ -990,36 +1006,6 @@
                     console.error('Error al descargar:', err);
                     mostrarNotificacion('Error al generar la imagen');
                 }
-            }
-
-            try {
-                const img = new Image();
-                img.crossOrigin = 'anonymous';
-                let timeout = setTimeout(finalizarConPlaceholder, 2000); // 2 segundos de espera
-
-                img.onload = function() {
-                    clearTimeout(timeout);
-                    if (dibujoCompletado) return;
-                    dibujoCompletado = true;
-                    ctx.drawImage(img, width/2 - 60, 60, 120, 120);
-                    dibujarResto();
-                };
-                img.onerror = function() {
-                    clearTimeout(timeout);
-                    if (dibujoCompletado) return;
-                    dibujoCompletado = true;
-                    console.warn('Error cargando QR, se usa placeholder');
-                    ctx.fillStyle = '#f0f0f0';
-                    ctx.fillRect(width/2 - 60, 60, 120, 120);
-                    ctx.fillStyle = '#999';
-                    ctx.font = '10px monospace';
-                    ctx.fillText('QR no disponible', width/2, 120);
-                    dibujarResto();
-                };
-                img.src = 'https://i.ibb.co/rGSyWwJK/yape-qr.jpg';
-            } catch (e) {
-                console.error('Error al crear imagen:', e);
-                finalizarConPlaceholder();
             }
         }
 
