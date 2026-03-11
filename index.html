@@ -823,8 +823,9 @@
             return true;
         }
 
-        // Función para capturar la boleta (CORREGIDA con timeout y validación)
-        async function capturarBoleta() {
+        // Función para capturar la boleta (VERSIÓN ROBUSTA)
+        function capturarBoleta() {
+            // Validar lista no vacía
             if (listaProductos.length === 0) {
                 mostrarNotificacion('La lista está vacía. Agrega productos primero.');
                 return;
@@ -832,6 +833,9 @@
 
             // Validar nombre obligatorio
             if (!validarDatosCliente()) return;
+
+            // Mostrar notificación de proceso (opcional)
+            mostrarNotificacion('Generando imagen...');
 
             // Obtener valores de los inputs
             const clienteInput = document.getElementById('clienteInput');
@@ -851,6 +855,7 @@
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             const width = 600;
+            // Altura dinámica: 280 fijo + 30 por cada producto + 120 extra
             let height = 280 + listaProductos.length * 30 + 120;
             canvas.width = width;
             canvas.height = height;
@@ -859,141 +864,130 @@
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, width, height);
 
-            // Dibujar contenido
+            // Dibujar contenido base
             ctx.fillStyle = '#000000';
             ctx.font = 'bold 20px "Courier New", Courier, monospace';
             ctx.textAlign = 'center';
             ctx.fillText('BOLETA DE VENTA ELECTRÓNICA', width/2, 40);
 
-            // Cargar la imagen del QR con timeout (3 segundos)
-            let img = null;
+            // Intento de cargar la imagen QR (si falla, placeholder)
             try {
-                img = await loadImageWithTimeout('https://i.ibb.co/rGSyWwJK/yape-qr.jpg', 3000);
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = function() {
+                    // Imagen cargada, dibujar y luego continuar con el resto
+                    ctx.drawImage(img, width/2 - 60, 60, 120, 120);
+                    dibujarResto(ctx, width, height, cliente, dni, fechaStr, horaStr, total);
+                };
+                img.onerror = function() {
+                    console.warn('Error cargando QR, se usa placeholder');
+                    // Placeholder
+                    ctx.fillStyle = '#f0f0f0';
+                    ctx.fillRect(width/2 - 60, 60, 120, 120);
+                    ctx.fillStyle = '#999';
+                    ctx.font = '10px monospace';
+                    ctx.fillText('QR no disponible', width/2, 120);
+                    dibujarResto(ctx, width, height, cliente, dni, fechaStr, horaStr, total);
+                };
+                img.src = 'https://i.ibb.co/rGSyWwJK/yape-qr.jpg';
             } catch (e) {
-                console.warn('Error cargando QR, se usa placeholder');
-            }
-
-            if (img) {
-                ctx.drawImage(img, width/2 - 60, 60, 120, 120);
-            } else {
+                console.error('Error al crear imagen:', e);
                 // Placeholder
                 ctx.fillStyle = '#f0f0f0';
                 ctx.fillRect(width/2 - 60, 60, 120, 120);
                 ctx.fillStyle = '#999';
                 ctx.font = '10px monospace';
                 ctx.fillText('QR no disponible', width/2, 120);
+                dibujarResto(ctx, width, height, cliente, dni, fechaStr, horaStr, total);
             }
 
-            // Texto debajo del QR
-            ctx.font = '12px "Courier New", Courier, monospace';
-            ctx.fillStyle = '#000';
-            ctx.fillText('Paga aquí con Yape', width/2, 200);
-            ctx.font = 'bold 14px "Courier New", Courier, monospace';
-            ctx.fillText(cliente, width/2, 220);
-            ctx.font = '12px "Courier New", Courier, monospace';
-            const lineaCliente = `CLIENTE: ${cliente}` + (dni ? `     DNI: ${dni}` : '');
-            ctx.fillText(lineaCliente, width/2, 240);
-            ctx.fillText(`FECHA: ${fechaStr} HORA: ${horaStr}`, width/2, 260);
-
-            // Línea separadora
-            ctx.beginPath();
-            ctx.moveTo(20, 280);
-            ctx.lineTo(width-20, 280);
-            ctx.strokeStyle = '#ccc';
-            ctx.stroke();
-
-            // Encabezado de tabla
-            ctx.font = 'bold 12px "Courier New", Courier, monospace';
-            ctx.fillStyle = '#000';
-            ctx.textAlign = 'left';
-            ctx.fillText('Cant U.M', 30, 310);
-            ctx.fillText('PRODUCTO', 150, 310);
-            ctx.fillText('P.U. (S/)', 380, 310);
-            ctx.fillText('TOTAL (S/)', 480, 310);
-
-            // Línea debajo del encabezado
-            ctx.beginPath();
-            ctx.moveTo(20, 320);
-            ctx.lineTo(width-20, 320);
-            ctx.stroke();
-
-            let y = 340;
-            listaProductos.forEach(p => {
-                const subtotal = p.precio * p.cantidad;
+            function dibujarResto(ctx, width, height, cliente, dni, fechaStr, horaStr, total) {
+                // Texto debajo del QR
                 ctx.font = '12px "Courier New", Courier, monospace';
-                ctx.fillText(`${p.cantidad} ${p.unidad}`, 30, y);
-                let nombre = p.nombre.length > 20 ? p.nombre.substring(0,18)+'...' : p.nombre;
-                ctx.fillText(nombre, 150, y);
-                ctx.fillText(p.precio.toFixed(2), 380, y);
-                ctx.fillText(subtotal.toFixed(2), 480, y);
-                y += 25;
-            });
+                ctx.fillStyle = '#000';
+                ctx.fillText('Paga aquí con Yape', width/2, 200);
+                ctx.font = 'bold 14px "Courier New", Courier, monospace';
+                ctx.fillText(cliente, width/2, 220);
+                ctx.font = '12px "Courier New", Courier, monospace';
+                const lineaCliente = `CLIENTE: ${cliente}` + (dni ? `     DNI: ${dni}` : '');
+                ctx.fillText(lineaCliente, width/2, 240);
+                ctx.fillText(`FECHA: ${fechaStr} HORA: ${horaStr}`, width/2, 260);
 
-            // Línea final
-            ctx.beginPath();
-            ctx.moveTo(20, y);
-            ctx.lineTo(width-20, y);
-            ctx.stroke();
-            y += 20;
+                // Línea separadora
+                ctx.beginPath();
+                ctx.moveTo(20, 280);
+                ctx.lineTo(width-20, 280);
+                ctx.strokeStyle = '#ccc';
+                ctx.stroke();
 
-            // Total
-            ctx.font = 'bold 16px "Courier New", Courier, monospace';
-            ctx.fillStyle = '#000';
-            ctx.textAlign = 'right';
-            ctx.fillText(`TOTAL (S/)   S/ ${total.toFixed(2)}`, width-30, y);
-            y += 30;
+                // Encabezado de tabla
+                ctx.font = 'bold 12px "Courier New", Courier, monospace';
+                ctx.fillStyle = '#000';
+                ctx.textAlign = 'left';
+                ctx.fillText('Cant U.M', 30, 310);
+                ctx.fillText('PRODUCTO', 150, 310);
+                ctx.fillText('P.U. (S/)', 380, 310);
+                ctx.fillText('TOTAL (S/)', 480, 310);
 
-            // Monto en letras
-            ctx.font = '12px "Courier New", Courier, monospace';
-            ctx.textAlign = 'center';
-            const letras = numeroALetras(total);
-            ctx.fillText(`SON: ${letras} SOLES`, width/2, y);
+                // Línea debajo del encabezado
+                ctx.beginPath();
+                ctx.moveTo(20, 320);
+                ctx.lineTo(width-20, 320);
+                ctx.stroke();
 
-            // Botones simulados (opcional)
-            y += 30;
-            ctx.font = 'bold 14px "Courier New", Courier, monospace';
-            ctx.fillStyle = '#3b82f6';
-            ctx.fillText('Capturar Imagen', 150, y);
-            ctx.fillStyle = '#d44f4f';
-            ctx.fillText('Imprimir', 400, y);
+                let y = 340;
+                listaProductos.forEach(p => {
+                    const subtotal = p.precio * p.cantidad;
+                    ctx.font = '12px "Courier New", Courier, monospace';
+                    ctx.fillText(`${p.cantidad} ${p.unidad}`, 30, y);
+                    let nombre = p.nombre.length > 20 ? p.nombre.substring(0,18)+'...' : p.nombre;
+                    ctx.fillText(nombre, 150, y);
+                    ctx.fillText(p.precio.toFixed(2), 380, y);
+                    ctx.fillText(subtotal.toFixed(2), 480, y);
+                    y += 25;
+                });
 
-            // Descargar imagen
-            canvas.toBlob(blob => {
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `boleta_${fechaStr.replace(/\//g,'-')}.png`;
-                a.click();
-                URL.revokeObjectURL(url);
-                mostrarNotificacion('Boleta capturada como imagen');
-            });
-        }
+                // Línea final
+                ctx.beginPath();
+                ctx.moveTo(20, y);
+                ctx.lineTo(width-20, y);
+                ctx.stroke();
+                y += 20;
 
-        // Función para cargar imagen con timeout
-        function loadImageWithTimeout(src, timeoutMs) {
-            return new Promise((resolve, reject) => {
-                const img = new Image();
-                let timedOut = false;
-                const timer = setTimeout(() => {
-                    timedOut = true;
-                    reject(new Error('Timeout'));
-                }, timeoutMs);
+                // Total
+                ctx.font = 'bold 16px "Courier New", Courier, monospace';
+                ctx.fillStyle = '#000';
+                ctx.textAlign = 'right';
+                ctx.fillText(`TOTAL (S/)   S/ ${total.toFixed(2)}`, width-30, y);
+                y += 30;
 
-                img.crossOrigin = 'anonymous';
-                img.onload = () => {
-                    if (!timedOut) {
-                        clearTimeout(timer);
-                        resolve(img);
-                    }
-                };
-                img.onerror = () => {
-                    if (!timedOut) {
-                        clearTimeout(timer);
-                        reject(new Error('Error loading image'));
-                    }
-                };
-                img.src = src;
-            });
+                // Monto en letras
+                ctx.font = '12px "Courier New", Courier, monospace';
+                ctx.textAlign = 'center';
+                const letras = numeroALetras(total);
+                ctx.fillText(`SON: ${letras} SOLES`, width/2, y);
+
+                // Botones simulados (opcional)
+                y += 30;
+                ctx.font = 'bold 14px "Courier New", Courier, monospace';
+                ctx.fillStyle = '#3b82f6';
+                ctx.fillText('Capturar Imagen', 150, y);
+                ctx.fillStyle = '#d44f4f';
+                ctx.fillText('Imprimir', 400, y);
+
+                // Descargar imagen usando toDataURL (más compatible)
+                try {
+                    const dataURL = canvas.toDataURL('image/png');
+                    const link = document.createElement('a');
+                    link.download = `boleta_${fechaStr.replace(/\//g,'-')}.png`;
+                    link.href = dataURL;
+                    link.click();
+                    mostrarNotificacion('Boleta capturada como imagen');
+                } catch (err) {
+                    console.error('Error al descargar:', err);
+                    mostrarNotificacion('Error al generar la imagen');
+                }
+            }
         }
 
         // Función auxiliar para convertir número a letras (simplificada)
@@ -1069,7 +1063,6 @@
                 mostrarNotificacion('Lista vacía');
                 return;
             }
-            // Validar nombre obligatorio antes de enviar
             if (!validarDatosCliente()) return;
             window.open(`https://wa.me/975842622?text=${encodeURIComponent(generarTextoLista())}`, '_blank');
         }
