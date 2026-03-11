@@ -6,7 +6,7 @@
     <title>Lista de Mercado - Perú</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* (todo el CSS se mantiene igual que antes) */
+        /* (Mantén todo tu CSS exactamente igual) */
         * {
             margin: 0;
             padding: 0;
@@ -604,7 +604,7 @@
         <div class="cart-total" id="cartTotal">TOTAL (S/): S/0.00</div>
         <div class="cart-actions">
             <button class="btn btn-capture" onclick="capturarBoleta()"><i class="fas fa-camera"></i> Capturar Imagen</button>
-            <button class="btn" onclick="imprimirBoleta()"><i class="fas fa-print"></i> Imprimir</button>
+            <button class="btn" onclick="window.print()"><i class="fas fa-print"></i> Imprimir</button>
             <button class="btn btn-whatsapp" onclick="enviarWhatsApp()"><i class="fab fa-whatsapp"></i> WhatsApp</button>
         </div>
     </div>
@@ -752,7 +752,7 @@
             mostrarNotificacion('Producto eliminado');
         }
 
-        // Actualizar la lista del carrito con campos de cliente y DNI (sin valores por defecto)
+        // Actualizar la lista del carrito con campos de cliente y DNI
         function actualizarLista() {
             const emptyState = document.getElementById('emptyState');
             const cartContent = document.getElementById('cartContent');
@@ -812,28 +812,31 @@
         }
 
         // Función para validar nombre obligatorio
-        function validarNombre() {
+        function validarDatosCliente() {
             const clienteInput = document.getElementById('clienteInput');
-            if (!clienteInput || clienteInput.value.trim() === '') {
-                mostrarNotificacion('Debes ingresar el nombre del cliente');
+            if (!clienteInput) return true; // No hay campo, se omite validación (caso raro)
+            const nombre = clienteInput.value.trim();
+            if (nombre === '') {
+                mostrarNotificacion('El nombre del cliente es obligatorio');
                 return false;
             }
             return true;
         }
 
-        // Función para capturar la boleta con validación
+        // Función para capturar la boleta (CORREGIDA con timeout y validación)
         async function capturarBoleta() {
             if (listaProductos.length === 0) {
                 mostrarNotificacion('La lista está vacía. Agrega productos primero.');
                 return;
             }
 
-            if (!validarNombre()) return;
+            // Validar nombre obligatorio
+            if (!validarDatosCliente()) return;
 
             // Obtener valores de los inputs
             const clienteInput = document.getElementById('clienteInput');
             const dniInput = document.getElementById('dniInput');
-            const cliente = clienteInput.value.trim();
+            const cliente = clienteInput ? clienteInput.value.trim() || 'CLIENTE' : 'CLIENTE';
             const dni = dniInput ? dniInput.value.trim() : '';
 
             const fecha = new Date();
@@ -862,11 +865,18 @@
             ctx.textAlign = 'center';
             ctx.fillText('BOLETA DE VENTA ELECTRÓNICA', width/2, 40);
 
-            // Cargar imagen QR
+            // Cargar la imagen del QR con timeout (3 segundos)
+            let img = null;
             try {
-                const img = await loadImage('https://i.ibb.co/rGSyWwJK/yape-qr.jpg');
-                ctx.drawImage(img, width/2 - 60, 60, 120, 120);
+                img = await loadImageWithTimeout('https://i.ibb.co/rGSyWwJK/yape-qr.jpg', 3000);
             } catch (e) {
+                console.warn('Error cargando QR, se usa placeholder');
+            }
+
+            if (img) {
+                ctx.drawImage(img, width/2 - 60, 60, 120, 120);
+            } else {
+                // Placeholder
                 ctx.fillStyle = '#f0f0f0';
                 ctx.fillRect(width/2 - 60, 60, 120, 120);
                 ctx.fillStyle = '#999';
@@ -880,11 +890,8 @@
             ctx.fillText('Paga aquí con Yape', width/2, 200);
             ctx.font = 'bold 14px "Courier New", Courier, monospace';
             ctx.fillText(cliente, width/2, 220);
-            
-            // Mostrar DNI solo si se ingresó
-            let lineaCliente = `CLIENTE: ${cliente}`;
-            if (dni !== '') lineaCliente += `     DNI: ${dni}`;
             ctx.font = '12px "Courier New", Courier, monospace';
+            const lineaCliente = `CLIENTE: ${cliente}` + (dni ? `     DNI: ${dni}` : '');
             ctx.fillText(lineaCliente, width/2, 240);
             ctx.fillText(`FECHA: ${fechaStr} HORA: ${horaStr}`, width/2, 260);
 
@@ -904,6 +911,7 @@
             ctx.fillText('P.U. (S/)', 380, 310);
             ctx.fillText('TOTAL (S/)', 480, 310);
 
+            // Línea debajo del encabezado
             ctx.beginPath();
             ctx.moveTo(20, 320);
             ctx.lineTo(width-20, 320);
@@ -921,23 +929,27 @@
                 y += 25;
             });
 
+            // Línea final
             ctx.beginPath();
             ctx.moveTo(20, y);
             ctx.lineTo(width-20, y);
             ctx.stroke();
             y += 20;
 
+            // Total
             ctx.font = 'bold 16px "Courier New", Courier, monospace';
             ctx.fillStyle = '#000';
             ctx.textAlign = 'right';
             ctx.fillText(`TOTAL (S/)   S/ ${total.toFixed(2)}`, width-30, y);
             y += 30;
 
+            // Monto en letras
             ctx.font = '12px "Courier New", Courier, monospace';
             ctx.textAlign = 'center';
             const letras = numeroALetras(total);
             ctx.fillText(`SON: ${letras} SOLES`, width/2, y);
 
+            // Botones simulados (opcional)
             y += 30;
             ctx.font = 'bold 14px "Courier New", Courier, monospace';
             ctx.fillStyle = '#3b82f6';
@@ -957,63 +969,35 @@
             });
         }
 
-        function loadImage(src) {
+        // Función para cargar imagen con timeout
+        function loadImageWithTimeout(src, timeoutMs) {
             return new Promise((resolve, reject) => {
                 const img = new Image();
+                let timedOut = false;
+                const timer = setTimeout(() => {
+                    timedOut = true;
+                    reject(new Error('Timeout'));
+                }, timeoutMs);
+
                 img.crossOrigin = 'anonymous';
-                img.onload = () => resolve(img);
-                img.onerror = reject;
+                img.onload = () => {
+                    if (!timedOut) {
+                        clearTimeout(timer);
+                        resolve(img);
+                    }
+                };
+                img.onerror = () => {
+                    if (!timedOut) {
+                        clearTimeout(timer);
+                        reject(new Error('Error loading image'));
+                    }
+                };
                 img.src = src;
             });
         }
 
-        // Función para imprimir (con validación)
-        function imprimirBoleta() {
-            if (listaProductos.length === 0) {
-                mostrarNotificacion('La lista está vacía. Agrega productos primero.');
-                return;
-            }
-            if (!validarNombre()) return;
-            window.print();
-        }
-
-        // Función para enviar WhatsApp (con validación)
-        function enviarWhatsApp() {
-            if (listaProductos.length === 0) {
-                mostrarNotificacion('La lista está vacía. Agrega productos primero.');
-                return;
-            }
-            if (!validarNombre()) return;
-            const texto = generarTextoLista();
-            window.open(`https://wa.me/975842622?text=${encodeURIComponent(texto)}`, '_blank');
-        }
-
-        function generarTextoLista() {
-            if (!listaProductos.length) return 'Lista vacía';
-            let texto = '🛒 *LISTA DE MERCADO*\n\n', total = 0;
-            listaProductos.forEach((p,i) => {
-                const subtotal = p.precio * p.cantidad;
-                total += subtotal;
-                texto += `${i+1}. *${p.nombre}*\n   Cantidad: ${p.cantidad} ${p.unidad}${p.cantidad>1&&p.unidad==='unidad'?'es':''}\n${p.precio>0?`   Precio: S/${subtotal.toFixed(2)}\n`:''}\n`;
-            });
-            if (total>0) texto += `💰 *TOTAL ESTIMADO: S/${total.toFixed(2)}*\n\n`;
-            texto += '📱 Lista generada desde Lista de Mercado App';
-            return texto;
-        }
-
-        function mostrarNotificacion(mensaje) {
-            const notif = document.createElement('div'); notif.className = 'notification'; notif.textContent = mensaje;
-            document.body.appendChild(notif);
-            setTimeout(() => notif.remove(), 2500);
-        }
-
-        function toggleCart() {
-            cartOpen = !cartOpen;
-            document.getElementById('floatingCart').classList.toggle('open', cartOpen);
-        }
-
+        // Función auxiliar para convertir número a letras (simplificada)
         function numeroALetras(num) {
-            // (misma función de antes)
             const entero = Math.floor(num);
             const decimal = Math.round((num - entero) * 100);
             const unidades = ['', 'UNO', 'DOS', 'TRES', 'CUATRO', 'CINCO', 'SEIS', 'SIETE', 'OCHO', 'NUEVE'];
@@ -1057,6 +1041,48 @@
                 letras += ' CON 00⁄100';
             }
             return letras;
+        }
+
+        function limpiarLista() {
+            if (listaProductos.length && confirm('¿Limpiar toda la lista?')) {
+                listaProductos = [];
+                actualizarLista();
+                mostrarNotificacion('Lista limpiada');
+            }
+        }
+
+        function generarTextoLista() {
+            if (!listaProductos.length) return 'Lista vacía';
+            let texto = '🛒 *LISTA DE MERCADO*\n\n', total = 0;
+            listaProductos.forEach((p,i) => {
+                const subtotal = p.precio * p.cantidad;
+                total += subtotal;
+                texto += `${i+1}. *${p.nombre}*\n   Cantidad: ${p.cantidad} ${p.unidad}${p.cantidad>1&&p.unidad==='unidad'?'es':''}\n${p.precio>0?`   Precio: S/${subtotal.toFixed(2)}\n`:''}\n`;
+            });
+            if (total>0) texto += `💰 *TOTAL ESTIMADO: S/${total.toFixed(2)}*\n\n`;
+            texto += '📱 Lista generada desde Lista de Mercado App';
+            return texto;
+        }
+
+        function enviarWhatsApp() {
+            if (listaProductos.length === 0) {
+                mostrarNotificacion('Lista vacía');
+                return;
+            }
+            // Validar nombre obligatorio antes de enviar
+            if (!validarDatosCliente()) return;
+            window.open(`https://wa.me/975842622?text=${encodeURIComponent(generarTextoLista())}`, '_blank');
+        }
+
+        function mostrarNotificacion(mensaje) {
+            const notif = document.createElement('div'); notif.className = 'notification'; notif.textContent = mensaje;
+            document.body.appendChild(notif);
+            setTimeout(() => notif.remove(), 2500);
+        }
+
+        function toggleCart() {
+            cartOpen = !cartOpen;
+            document.getElementById('floatingCart').classList.toggle('open', cartOpen);
         }
 
         document.getElementById('cartIcon').addEventListener('click', toggleCart);
