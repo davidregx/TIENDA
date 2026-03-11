@@ -6,7 +6,6 @@
     <title>Lista de Mercado - Perú</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* (Mantén todo tu CSS exactamente igual) */
         * {
             margin: 0;
             padding: 0;
@@ -19,6 +18,12 @@
             min-height: 100vh;
             padding: 20px;
             color: #e0e0e0;
+        }
+
+        .main-wrapper {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         .container {
@@ -504,15 +509,48 @@
             background: #d44f4f;
         }
 
-        @media (min-width: 768px) {
+        /* ===== ESCRITORIO: pantallas grandes ===== */
+        @media (min-width: 1024px) {
+            body {
+                display: flex;
+                align-items: flex-start;
+                justify-content: center;
+                gap: 30px;
+                padding: 30px;
+            }
+            .main-wrapper {
+                display: flex;
+                gap: 30px;
+                max-width: 1400px;
+                width: 100%;
+            }
+            .container {
+                flex: 1;
+                max-width: 700px;
+                margin: 0;
+            }
             .floating-cart {
-                top: auto;
-                left: auto;
-                right: 30px;
-                bottom: 110px;
+                position: static !important;
+                transform: none !important;
                 width: 400px;
-                max-height: 70vh;
+                max-height: 90vh;
                 border-radius: 30px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                visibility: visible !important;
+                opacity: 1 !important;
+                margin: 0;
+            }
+            .floating-cart.open {
+                transform: none !important;
+            }
+            .cart-icon {
+                display: none !important;
+            }
+            .close-cart {
+                display: none !important;
+            }
+            .cart-header {
+                border-radius: 30px 30px 0 0;
             }
         }
 
@@ -536,54 +574,73 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header-rectangulo">
-            <h1>Lista de Mercado</h1>
-            <div class="subtitulo">Organiza tus compras de forma sencilla.</div>
+    <div class="main-wrapper">
+        <div class="container">
+            <div class="header-rectangulo">
+                <h1>Lista de Mercado</h1>
+                <div class="subtitulo">Organiza tus compras de forma sencilla.</div>
+            </div>
+
+            <div id="categoryProductContainer" 
+                 onmouseover="clearTimeout(hideTimeout);" 
+                 onmouseout="hideTimeout = setTimeout(ocultarTodo, 500);">
+
+                <div class="categorias-container">
+                    <h3>📋 Categorías de Productos</h3>
+                    <div class="categorias-grid" id="categoriasGrid"></div>
+                </div>
+
+                <div class="subcategorias-grid" id="subcategoriasGrid"></div>
+                <div class="productos-grid" id="productosGrid"></div>
+
+                <button class="btn-back" id="btnBack" style="display: none;" onclick="volverACategorias()">← Volver a Categorías</button>
+            </div>
+
+            <div class="input-section">
+                <div class="input-group">
+                    <input type="text" id="producto" placeholder="Nombre del producto" />
+                </div>
+                <div class="input-group">
+                    <input type="number" id="cantidad" placeholder="1" min="1" value="1" />
+                </div>
+                <div class="input-group">
+                    <select id="unidad">
+                        <option value="unidad">Unidad</option>
+                        <option value="kg">Kilogramo</option>
+                        <option value="lb">Libra</option>
+                        <option value="g">Gramo</option>
+                        <option value="L">Litro</option>
+                        <option value="ml">Mililitro</option>
+                        <option value="paquete">Paquete</option>
+                        <option value="caja">Caja</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <input type="number" id="precio" placeholder="Precio (opcional)" min="0" step="0.01" />
+                </div>
+                <button class="btn" onclick="agregarProducto()">AÑADIR</button>
+            </div>
+
+            <div class="empty-state" id="emptyState">
+                Tu lista está vacía. ¡Agrega algunos productos!
+            </div>
         </div>
 
-        <div id="categoryProductContainer" 
-             onmouseover="clearTimeout(hideTimeout);" 
-             onmouseout="hideTimeout = setTimeout(ocultarTodo, 500);">
-
-            <div class="categorias-container">
-                <h3>📋 Categorías de Productos</h3>
-                <div class="categorias-grid" id="categoriasGrid"></div>
+        <!-- Carrito con estilo BOLETA -->
+        <div class="floating-cart" id="floatingCart">
+            <div class="cart-header">
+                <div class="cart-title">BOLETA DE VENTA</div>
+                <button class="close-cart" onclick="toggleCart()"><i class="fas fa-times"></i></button>
             </div>
-
-            <div class="subcategorias-grid" id="subcategoriasGrid"></div>
-            <div class="productos-grid" id="productosGrid"></div>
-
-            <button class="btn-back" id="btnBack" style="display: none;" onclick="volverACategorias()">← Volver a Categorías</button>
-        </div>
-
-        <div class="input-section">
-            <div class="input-group">
-                <input type="text" id="producto" placeholder="Nombre del producto" />
+            <div class="cart-content" id="cartContent">
+                <!-- Se llena dinámicamente -->
             </div>
-            <div class="input-group">
-                <input type="number" id="cantidad" placeholder="1" min="1" value="1" />
+            <div class="cart-total" id="cartTotal">TOTAL (S/): S/0.00</div>
+            <div class="cart-actions">
+                <button class="btn btn-capture" onclick="capturarBoleta()"><i class="fas fa-camera"></i> Capturar Imagen</button>
+                <button class="btn" onclick="window.print()"><i class="fas fa-print"></i> Imprimir</button>
+                <button class="btn btn-whatsapp" onclick="enviarWhatsApp()"><i class="fab fa-whatsapp"></i> WhatsApp</button>
             </div>
-            <div class="input-group">
-                <select id="unidad">
-                    <option value="unidad">Unidad</option>
-                    <option value="kg">Kilogramo</option>
-                    <option value="lb">Libra</option>
-                    <option value="g">Gramo</option>
-                    <option value="L">Litro</option>
-                    <option value="ml">Mililitro</option>
-                    <option value="paquete">Paquete</option>
-                    <option value="caja">Caja</option>
-                </select>
-            </div>
-            <div class="input-group">
-                <input type="number" id="precio" placeholder="Precio (opcional)" min="0" step="0.01" />
-            </div>
-            <button class="btn" onclick="agregarProducto()">AÑADIR</button>
-        </div>
-
-        <div class="empty-state" id="emptyState">
-            Tu lista está vacía. ¡Agrega algunos productos!
         </div>
     </div>
 
@@ -592,25 +649,8 @@
         <div class="cart-count" id="cartCount">0</div>
     </div>
 
-    <!-- Carrito con estilo BOLETA -->
-    <div class="floating-cart" id="floatingCart">
-        <div class="cart-header">
-            <div class="cart-title">BOLETA DE VENTA</div>
-            <button class="close-cart" onclick="toggleCart()"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="cart-content" id="cartContent">
-            <!-- Se llena dinámicamente -->
-        </div>
-        <div class="cart-total" id="cartTotal">TOTAL (S/): S/0.00</div>
-        <div class="cart-actions">
-            <button class="btn btn-capture" onclick="capturarBoleta()"><i class="fas fa-camera"></i> Capturar Imagen</button>
-            <button class="btn" onclick="window.print()"><i class="fas fa-print"></i> Imprimir</button>
-            <button class="btn btn-whatsapp" onclick="enviarWhatsApp()"><i class="fab fa-whatsapp"></i> WhatsApp</button>
-        </div>
-    </div>
-
     <script>
-        // ========== LÓGICA COMPLETA ==========
+        // ========== LÓGICA COMPLETA (con mejora para GitHub) ==========
         let listaProductos = [];
         let categoriaActual = null;
         let subcategoriaActual = null;
@@ -752,7 +792,6 @@
             mostrarNotificacion('Producto eliminado');
         }
 
-        // Actualizar la lista del carrito con campos de cliente y DNI
         function actualizarLista() {
             const emptyState = document.getElementById('emptyState');
             const cartContent = document.getElementById('cartContent');
@@ -811,10 +850,9 @@
             cartCount.textContent = listaProductos.length;
         }
 
-        // Función para validar nombre obligatorio
         function validarDatosCliente() {
             const clienteInput = document.getElementById('clienteInput');
-            if (!clienteInput) return true; // No hay campo, se omite validación (caso raro)
+            if (!clienteInput) return true;
             const nombre = clienteInput.value.trim();
             if (nombre === '') {
                 mostrarNotificacion('El nombre del cliente es obligatorio');
@@ -823,21 +861,17 @@
             return true;
         }
 
-        // Función para capturar la boleta (VERSIÓN ROBUSTA)
+        // VERSIÓN MEJORADA CON TIMEOUT PARA GITHUB PAGES
         function capturarBoleta() {
-            // Validar lista no vacía
             if (listaProductos.length === 0) {
                 mostrarNotificacion('La lista está vacía. Agrega productos primero.');
                 return;
             }
 
-            // Validar nombre obligatorio
             if (!validarDatosCliente()) return;
 
-            // Mostrar notificación de proceso (opcional)
             mostrarNotificacion('Generando imagen...');
 
-            // Obtener valores de los inputs
             const clienteInput = document.getElementById('clienteInput');
             const dniInput = document.getElementById('dniInput');
             const cliente = clienteInput ? clienteInput.value.trim() || 'CLIENTE' : 'CLIENTE';
@@ -847,62 +881,38 @@
             const fechaStr = fecha.toLocaleDateString();
             const horaStr = fecha.toLocaleTimeString();
 
-            // Calcular total
             let total = 0;
             listaProductos.forEach(p => total += p.precio * p.cantidad);
 
-            // Crear canvas
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             const width = 600;
-            // Altura dinámica: 280 fijo + 30 por cada producto + 120 extra
             let height = 280 + listaProductos.length * 30 + 120;
             canvas.width = width;
             canvas.height = height;
 
-            // Fondo blanco
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, width, height);
 
-            // Dibujar contenido base
             ctx.fillStyle = '#000000';
             ctx.font = 'bold 20px "Courier New", Courier, monospace';
             ctx.textAlign = 'center';
             ctx.fillText('BOLETA DE VENTA ELECTRÓNICA', width/2, 40);
 
-            // Intento de cargar la imagen QR (si falla, placeholder)
-            try {
-                const img = new Image();
-                img.crossOrigin = 'anonymous';
-                img.onload = function() {
-                    // Imagen cargada, dibujar y luego continuar con el resto
-                    ctx.drawImage(img, width/2 - 60, 60, 120, 120);
-                    dibujarResto(ctx, width, height, cliente, dni, fechaStr, horaStr, total);
-                };
-                img.onerror = function() {
-                    console.warn('Error cargando QR, se usa placeholder');
-                    // Placeholder
-                    ctx.fillStyle = '#f0f0f0';
-                    ctx.fillRect(width/2 - 60, 60, 120, 120);
-                    ctx.fillStyle = '#999';
-                    ctx.font = '10px monospace';
-                    ctx.fillText('QR no disponible', width/2, 120);
-                    dibujarResto(ctx, width, height, cliente, dni, fechaStr, horaStr, total);
-                };
-                img.src = 'https://i.ibb.co/rGSyWwJK/yape-qr.jpg';
-            } catch (e) {
-                console.error('Error al crear imagen:', e);
-                // Placeholder
+            let dibujoCompletado = false; // Para evitar doble llamado
+
+            function finalizarConPlaceholder() {
+                if (dibujoCompletado) return;
+                dibujoCompletado = true;
                 ctx.fillStyle = '#f0f0f0';
                 ctx.fillRect(width/2 - 60, 60, 120, 120);
                 ctx.fillStyle = '#999';
                 ctx.font = '10px monospace';
                 ctx.fillText('QR no disponible', width/2, 120);
-                dibujarResto(ctx, width, height, cliente, dni, fechaStr, horaStr, total);
+                dibujarResto();
             }
 
-            function dibujarResto(ctx, width, height, cliente, dni, fechaStr, horaStr, total) {
-                // Texto debajo del QR
+            function dibujarResto() {
                 ctx.font = '12px "Courier New", Courier, monospace';
                 ctx.fillStyle = '#000';
                 ctx.fillText('Paga aquí con Yape', width/2, 200);
@@ -913,14 +923,12 @@
                 ctx.fillText(lineaCliente, width/2, 240);
                 ctx.fillText(`FECHA: ${fechaStr} HORA: ${horaStr}`, width/2, 260);
 
-                // Línea separadora
                 ctx.beginPath();
                 ctx.moveTo(20, 280);
                 ctx.lineTo(width-20, 280);
                 ctx.strokeStyle = '#ccc';
                 ctx.stroke();
 
-                // Encabezado de tabla
                 ctx.font = 'bold 12px "Courier New", Courier, monospace';
                 ctx.fillStyle = '#000';
                 ctx.textAlign = 'left';
@@ -929,7 +937,6 @@
                 ctx.fillText('P.U. (S/)', 380, 310);
                 ctx.fillText('TOTAL (S/)', 480, 310);
 
-                // Línea debajo del encabezado
                 ctx.beginPath();
                 ctx.moveTo(20, 320);
                 ctx.lineTo(width-20, 320);
@@ -947,27 +954,23 @@
                     y += 25;
                 });
 
-                // Línea final
                 ctx.beginPath();
                 ctx.moveTo(20, y);
                 ctx.lineTo(width-20, y);
                 ctx.stroke();
                 y += 20;
 
-                // Total
                 ctx.font = 'bold 16px "Courier New", Courier, monospace';
                 ctx.fillStyle = '#000';
                 ctx.textAlign = 'right';
                 ctx.fillText(`TOTAL (S/)   S/ ${total.toFixed(2)}`, width-30, y);
                 y += 30;
 
-                // Monto en letras
                 ctx.font = '12px "Courier New", Courier, monospace';
                 ctx.textAlign = 'center';
                 const letras = numeroALetras(total);
                 ctx.fillText(`SON: ${letras} SOLES`, width/2, y);
 
-                // Botones simulados (opcional)
                 y += 30;
                 ctx.font = 'bold 14px "Courier New", Courier, monospace';
                 ctx.fillStyle = '#3b82f6';
@@ -975,7 +978,7 @@
                 ctx.fillStyle = '#d44f4f';
                 ctx.fillText('Imprimir', 400, y);
 
-                // Descargar imagen usando toDataURL (más compatible)
+                // Descargar imagen
                 try {
                     const dataURL = canvas.toDataURL('image/png');
                     const link = document.createElement('a');
@@ -988,9 +991,38 @@
                     mostrarNotificacion('Error al generar la imagen');
                 }
             }
+
+            try {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                let timeout = setTimeout(finalizarConPlaceholder, 2000); // 2 segundos de espera
+
+                img.onload = function() {
+                    clearTimeout(timeout);
+                    if (dibujoCompletado) return;
+                    dibujoCompletado = true;
+                    ctx.drawImage(img, width/2 - 60, 60, 120, 120);
+                    dibujarResto();
+                };
+                img.onerror = function() {
+                    clearTimeout(timeout);
+                    if (dibujoCompletado) return;
+                    dibujoCompletado = true;
+                    console.warn('Error cargando QR, se usa placeholder');
+                    ctx.fillStyle = '#f0f0f0';
+                    ctx.fillRect(width/2 - 60, 60, 120, 120);
+                    ctx.fillStyle = '#999';
+                    ctx.font = '10px monospace';
+                    ctx.fillText('QR no disponible', width/2, 120);
+                    dibujarResto();
+                };
+                img.src = 'https://i.ibb.co/rGSyWwJK/yape-qr.jpg';
+            } catch (e) {
+                console.error('Error al crear imagen:', e);
+                finalizarConPlaceholder();
+            }
         }
 
-        // Función auxiliar para convertir número a letras (simplificada)
         function numeroALetras(num) {
             const entero = Math.floor(num);
             const decimal = Math.round((num - entero) * 100);
