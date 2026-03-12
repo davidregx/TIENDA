@@ -20,7 +20,6 @@
             color: #e0e0e0;
         }
 
-        /* WRAPPER para escritorio flex */
         .main-wrapper {
             width: 100%;
             max-width: 1400px;
@@ -510,7 +509,7 @@
             background: #d44f4f;
         }
 
-        /* ===== ESCRITORIO: pantallas grandes ===== */
+        /* ===== ESCRITORIO ===== */
         @media (min-width: 1024px) {
             body {
                 display: flex;
@@ -651,7 +650,7 @@
     </div>
 
     <script>
-        // ========== LÓGICA COMPLETA (exactamente como en funcionaindex.html) ==========
+        // ========== LÓGICA COMPLETA (CORREGIDA) ==========
         let listaProductos = [];
         let categoriaActual = null;
         let subcategoriaActual = null;
@@ -864,7 +863,7 @@
             return true;
         }
 
-        // Función para capturar la boleta (VERSIÓN ROBUSTA ORIGINAL)
+        // Función para capturar la boleta (VERSIÓN ROBUSTA)
         function capturarBoleta() {
             if (listaProductos.length === 0) {
                 mostrarNotificacion('La lista está vacía. Agrega productos primero.');
@@ -1009,8 +1008,9 @@
             }
         }
 
+        // Función auxiliar para convertir número a letras (CORREGIDA: entero como let)
         function numeroALetras(num) {
-            const entero = Math.floor(num);
+            let entero = Math.floor(num);
             const decimal = Math.round((num - entero) * 100);
             const unidades = ['', 'UNO', 'DOS', 'TRES', 'CUATRO', 'CINCO', 'SEIS', 'SIETE', 'OCHO', 'NUEVE'];
             const especiales = ['DIEZ', 'ONCE', 'DOCE', 'TRECE', 'CATORCE', 'QUINCE', 'DIECISÉIS', 'DIECISIETE', 'DIECIOCHO', 'DIECINUEVE'];
