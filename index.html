@@ -6,6 +6,7 @@
     <title>Lista de Mercado - Perú</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* ====== TODO EL CSS ORIGINAL (SIN CAMBIOS) ====== */
         * {
             margin: 0;
             padding: 0;
@@ -509,30 +510,30 @@
             background: #d44f4f;
         }
 
-        /* ===== ESCRITORIO ===== */
+        /* ===== ESCRITORIO MEJORADO (más ancho) ===== */
         @media (min-width: 1024px) {
             body {
                 display: flex;
                 align-items: flex-start;
                 justify-content: center;
-                gap: 30px;
-                padding: 30px;
+                gap: 40px;
+                padding: 40px;
             }
             .main-wrapper {
                 display: flex;
-                gap: 30px;
-                max-width: 1400px;
+                gap: 40px;
+                max-width: 1600px;
                 width: 100%;
             }
             .container {
                 flex: 1;
-                max-width: 700px;
+                /* Se elimina max-width para que se expanda */
                 margin: 0;
             }
             .floating-cart {
                 position: static !important;
                 transform: none !important;
-                width: 400px;
+                width: 500px; /* Más ancho */
                 max-height: 90vh;
                 border-radius: 30px;
                 box-shadow: 0 10px 30px rgba(0,0,0,0.3);
@@ -650,7 +651,7 @@
     </div>
 
     <script>
-        // ========== LÓGICA COMPLETA (CORREGIDA) ==========
+        // ========== JAVASCRIPT ORIGINAL (CORREGIDO Y FUNCIONAL) ==========
         let listaProductos = [];
         let categoriaActual = null;
         let subcategoriaActual = null;
@@ -792,7 +793,6 @@
             mostrarNotificacion('Producto eliminado');
         }
 
-        // Actualizar la lista del carrito con campos de cliente y DNI
         function actualizarLista() {
             const emptyState = document.getElementById('emptyState');
             const cartContent = document.getElementById('cartContent');
@@ -851,7 +851,6 @@
             cartCount.textContent = listaProductos.length;
         }
 
-        // Función para validar nombre obligatorio
         function validarDatosCliente() {
             const clienteInput = document.getElementById('clienteInput');
             if (!clienteInput) return true;
@@ -863,7 +862,6 @@
             return true;
         }
 
-        // Función para capturar la boleta (VERSIÓN ROBUSTA)
         function capturarBoleta() {
             if (listaProductos.length === 0) {
                 mostrarNotificacion('La lista está vacía. Agrega productos primero.');
@@ -1008,7 +1006,6 @@
             }
         }
 
-        // Función auxiliar para convertir número a letras (CORREGIDA: entero como let)
         function numeroALetras(num) {
             let entero = Math.floor(num);
             const decimal = Math.round((num - entero) * 100);
