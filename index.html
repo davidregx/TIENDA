@@ -659,18 +659,251 @@
         let hideTimeout;
 
         const productosDB = {
-            frutas: { emoji: '🍎', nombre: 'Frutas', subcategorias: {
-                manzanas: { emoji: '🍏', nombre: 'Manzanas', productos: [ { nombre: 'Manzana Roja', precio: 5.50, unidad: 'kg' }, { nombre: 'Manzana Verde', precio: 6.00, unidad: 'kg' }, { nombre: 'Manzana Amarilla', precio: 5.80, unidad: 'kg' }, { nombre: 'Manzana Gala', precio: 6.50, unidad: 'kg' }, { nombre: 'Manzana Fuji', precio: 7.00, unidad: 'kg' } ] },
-                platanos: { emoji: '🍌', nombre: 'Plátanos', productos: [ { nombre: 'Plátano Común', precio: 3.00, unidad: 'kg' }, { nombre: 'Plátano Maduro', precio: 2.80, unidad: 'kg' }, { nombre: 'Plátano Verde', precio: 3.20, unidad: 'kg' }, { nombre: 'Plátano Dominico', precio: 4.00, unidad: 'kg' } ] },
-                naranjas: { emoji: '🍊', nombre: 'Naranjas', productos: [ { nombre: 'Naranja Común', precio: 3.50, unidad: 'kg' }, { nombre: 'Naranja Valencia', precio: 4.20, unidad: 'kg' }, { nombre: 'Naranja Navel', precio: 5.00, unidad: 'kg' }, { nombre: 'Mandarina', precio: 4.80, unidad: 'kg' } ] },
-                citricos: { emoji: '🍋', nombre: 'Otros Cítricos', productos: [ { nombre: 'Limón', precio: 7.00, unidad: 'kg' }, { nombre: 'Lima', precio: 8.00, unidad: 'kg' }, { nombre: 'Toronja', precio: 4.20, unidad: 'kg' }, { nombre: 'Pomelo', precio: 6.00, unidad: 'kg' } ] }
-            } },
-            verduras: { emoji: '🥕', nombre: 'Verduras', subcategorias: {
-                hojas: { emoji: '🥬', nombre: 'Hojas Verdes', productos: [ { nombre: 'Lechuga', precio: 3.00, unidad: 'unidad' }, { nombre: 'Espinaca', precio: 5.00, unidad: 'kg' }, { nombre: 'Acelga', precio: 4.20, unidad: 'kg' }, { nombre: 'Rúcula', precio: 6.50, unidad: 'kg' }, { nombre: 'Apio', precio: 5.80, unidad: 'kg' } ] },
-                tuberculos: { emoji: '🥔', nombre: 'Tubérculos', productos: [ { nombre: 'Papa Común', precio: 3.50, unidad: 'kg' }, { nombre: 'Papa Amarilla', precio: 4.20, unidad: 'kg' }, { nombre: 'Camote', precio: 5.00, unidad: 'kg' }, { nombre: 'Yuca', precio: 4.00, unidad: 'kg' }, { nombre: 'Zanahoria', precio: 4.80, unidad: 'kg' } ] },
-                tomates: { emoji: '🍅', nombre: 'Tomates', productos: [ { nombre: 'Tomate Común', precio: 6.00, unidad: 'kg' }, { nombre: 'Tomate Cherry', precio: 10.00, unidad: 'kg' }, { nombre: 'Tomate de Árbol', precio: 8.50, unidad: 'kg' }, { nombre: 'Tomate Riñón', precio: 7.50, unidad: 'kg' } ] },
-                cebollas: { emoji: '🧅', nombre: 'Cebollas', productos: [ { nombre: 'Cebolla Blanca', precio: 4.00, unidad: 'kg' }, { nombre: 'Cebolla Morada', precio: 5.00, unidad: 'kg' }, { nombre: 'Cebolla Larga', precio: 5.80, unidad: 'kg' }, { nombre: 'Cebollín', precio: 2.00, unidad: 'paquete' } ] }
-            } },
+            frutas: {
+    emoji: '🍎',
+    nombre: 'Frutas',
+    subcategorias: {
+        platano: {
+            emoji: '🍌',
+            nombre: 'Plátano',
+            productos: [
+                { nombre: 'Plátano de seda', precio: 3.00, unidad: 'kg' },
+                { nombre: 'Plátano de isla', precio: 2.50, unidad: 'kg' },
+                { nombre: 'Plátano bellaco', precio: 2.10, unidad: 'kg' },
+                { nombre: 'Plátano maduro', precio: 3.00, unidad: 'kg' },
+                { nombre: 'Plátano bizcocho', precio: 3.50, unidad: 'kg' },
+                { nombre: 'Plátano manzano', precio: 4.00, unidad: 'kg' }
+            ]
+        },
+        manzana: {
+            emoji: '🍎',
+            nombre: 'Manzana',
+            productos: [
+                { nombre: 'Manzana israel', precio: 4.00, unidad: 'kg' },
+                { nombre: 'Manzana delicia', precio: 3.50, unidad: 'kg' },
+                { nombre: 'Manzana verde', precio: 5.00, unidad: 'kg' },
+                { nombre: 'Manzana roja importada', precio: 5.50, unidad: 'kg' }
+            ]
+        },
+        pera: {
+            emoji: '🍐',
+            nombre: 'Pera',
+            productos: [
+                { nombre: 'Pera packham', precio: 4.75, unidad: 'kg' },
+                { nombre: 'Pera conferencia', precio: 5.50, unidad: 'kg' },
+                { nombre: 'Pera importada', precio: 5.75, unidad: 'kg' }
+            ]
+        },
+        naranja: {
+            emoji: '🍊',
+            nombre: 'Naranja',
+            productos: [
+                { nombre: 'Naranja valencia', precio: 2.25, unidad: 'kg' },
+                { nombre: 'Naranja de jugo', precio: 1.85, unidad: 'kg' },
+                { nombre: 'Naranja ombligo', precio: 3.00, unidad: 'kg' }
+            ]
+        },
+        mandarina: {
+            emoji: '🍊',
+            nombre: 'Mandarina',
+            productos: [
+                { nombre: 'Mandarina satsuma', precio: 3.00, unidad: 'kg' },
+                { nombre: 'Mandarina murcott', precio: 4.00, unidad: 'kg' },
+                { nombre: 'Mandarina clemenules', precio: 4.25, unidad: 'kg' }
+            ]
+        },
+        uva: {
+            emoji: '🍇',
+            nombre: 'Uva',
+            productos: [
+                { nombre: 'Uva red globe', precio: 6.00, unidad: 'kg' },
+                { nombre: 'Uva negra', precio: 7.00, unidad: 'kg' },
+                { nombre: 'Uva verde', precio: 7.00, unidad: 'kg' },
+                { nombre: 'Uva sin pepa', precio: 8.00, unidad: 'kg' }
+            ]
+        },
+        pina: {
+            emoji: '🍍',
+            nombre: 'Piña',
+            productos: [
+                { nombre: 'Piña golden', precio: 4.50, unidad: 'unidad' },
+                { nombre: 'Piña selva', precio: 3.75, unidad: 'unidad' }
+            ]
+        },
+        mango: {
+            emoji: '🥭',
+            nombre: 'Mango',
+            productos: [
+                { nombre: 'Mango kent', precio: 3.75, unidad: 'kg' },
+                { nombre: 'Mango criollo', precio: 2.50, unidad: 'kg' },
+                { nombre: 'Mango ciruelo', precio: 3.00, unidad: 'kg' }
+            ]
+        },
+        melon: {
+            emoji: '🍈',
+            nombre: 'Melón',
+            productos: [
+                { nombre: 'Melón coquito', precio: 3.00, unidad: 'kg' },
+                { nombre: 'Melón honeydew', precio: 3.50, unidad: 'kg' }
+            ]
+        },
+        sandia: {
+            emoji: '🍉',
+            nombre: 'Sandía',
+            productos: [
+                { nombre: 'Sandía rayada', precio: 1.40, unidad: 'kg' },
+                { nombre: 'Sandía negra', precio: 1.60, unidad: 'kg' }
+            ]
+        },
+        durazno: {
+            emoji: '🍑',
+            nombre: 'Durazno',
+            productos: [
+                { nombre: 'Durazno nacional', precio: 4.00, unidad: 'kg' },
+                { nombre: 'Durazno importado', precio: 5.50, unidad: 'kg' }
+            ]
+        },
+        palta: {
+            emoji: '🥑',
+            nombre: 'Palta',
+            productos: [
+                { nombre: 'Palta fuerte', precio: 4.50, unidad: 'kg' },
+                { nombre: 'Palta hass', precio: 6.50, unidad: 'kg' },
+                { nombre: 'Palta punta', precio: 4.00, unidad: 'kg' }
+            ]
+        },
+        limon: {
+            emoji: '🍋',
+            nombre: 'Limón',
+            productos: [
+                { nombre: 'Limón sutil', precio: 3.00, unidad: 'kg' },
+                { nombre: 'Limón tahití', precio: 3.75, unidad: 'kg' }
+            ]
+        },
+        otras: {
+            emoji: '🍓',
+            nombre: 'Otras Frutas',
+            productos: [
+                { nombre: 'Papaya', precio: 2.50, unidad: 'kg' },
+                { nombre: 'Fresa', precio: 6.00, unidad: 'kg' },
+                { nombre: 'Arándano', precio: 11.50, unidad: 'kg' },
+                { nombre: 'Maracuyá', precio: 3.75, unidad: 'kg' },
+                { nombre: 'Granadilla', precio: 6.50, unidad: 'kg' },
+                { nombre: 'Guayaba', precio: 3.75, unidad: 'kg' },
+                { nombre: 'Ciruela', precio: 4.50, unidad: 'kg' },
+                { nombre: 'Higo', precio: 5.50, unidad: 'kg' },
+                { nombre: 'Coco', precio: 6.00, unidad: 'unidad' }
+            ]
+        }
+    }
+},
+            verduras: {
+    emoji: '🥦',
+    nombre: 'Verduras',
+    subcategorias: {
+        tuberculos: {
+            emoji: '🥔',
+            nombre: 'Tubérculos y raíces',
+            productos: [
+                { nombre: 'Papa blanca', precio: 1.75, unidad: 'kg' },
+                { nombre: 'Papa yungay', precio: 2.00, unidad: 'kg' },
+                { nombre: 'Papa huayro', precio: 2.75, unidad: 'kg' },
+                { nombre: 'Papa amarilla', precio: 3.25, unidad: 'kg' },
+                { nombre: 'Camote amarillo', precio: 2.25, unidad: 'kg' },
+                { nombre: 'Camote morado', precio: 3.00, unidad: 'kg' },
+                { nombre: 'Yuca amarilla', precio: 1.75, unidad: 'kg' },
+                { nombre: 'Zanahoria', precio: 1.75, unidad: 'kg' },
+                { nombre: 'Betarraga', precio: 2.50, unidad: 'kg' },
+                { nombre: 'Rabanito', precio: 1.75, unidad: 'atado' },
+                { nombre: 'Nabo', precio: 2.25, unidad: 'kg' },
+                { nombre: 'Olluco', precio: 3.00, unidad: 'kg' }
+            ]
+        },
+        legumbres: {
+            emoji: '🌽',
+            nombre: 'Legumbres frescas',
+            productos: [
+                { nombre: 'Arveja serrana', precio: 4.50, unidad: 'kg' },
+                { nombre: 'Arveja americana', precio: 3.25, unidad: 'kg' },
+                { nombre: 'Vainita americana', precio: 3.25, unidad: 'kg' },
+                { nombre: 'Choclo Cusco', precio: 3.50, unidad: 'kg' },
+                { nombre: 'Habas', precio: 3.00, unidad: 'kg' }
+            ]
+        },
+        hortalizas: {
+            emoji: '🎃',
+            nombre: 'Hortalizas (fruto)',
+            productos: [
+                { nombre: 'Tomate katia', precio: 2.50, unidad: 'kg' },
+                { nombre: 'Tomate italiano', precio: 3.50, unidad: 'kg' },
+                { nombre: 'Pepino largo', precio: 2.25, unidad: 'kg' },
+                { nombre: 'Pepinillo', precio: 3.00, unidad: 'kg' },
+                { nombre: 'Berenjena', precio: 3.75, unidad: 'kg' },
+                { nombre: 'Zapallo macre', precio: 1.50, unidad: 'kg' },
+                { nombre: 'Zapallo loche', precio: 3.50, unidad: 'kg' },
+                { nombre: 'Zapallito italiano', precio: 3.00, unidad: 'kg' },
+                { nombre: 'Pimiento rojo', precio: 5.00, unidad: 'kg' },
+                { nombre: 'Pimiento verde', precio: 4.00, unidad: 'kg' },
+                { nombre: 'Ají dulce', precio: 4.50, unidad: 'kg' }
+            ]
+        },
+        hojas: {
+            emoji: '🥬',
+            nombre: 'Verduras de hoja',
+            productos: [
+                { nombre: 'Lechuga americana', precio: 2.75, unidad: 'unidad' },
+                { nombre: 'Lechuga crespa', precio: 2.25, unidad: 'unidad' },
+                { nombre: 'Espinaca', precio: 2.25, unidad: 'atado' },
+                { nombre: 'Acelga', precio: 2.25, unidad: 'atado' },
+                { nombre: 'Col verde', precio: 2.75, unidad: 'unidad' },
+                { nombre: 'Col morado', precio: 3.50, unidad: 'unidad' },
+                { nombre: 'Brócoli', precio: 3.50, unidad: 'unidad' },
+                { nombre: 'Coliflor', precio: 3.75, unidad: 'unidad' }
+            ]
+        },
+        aromaticas: {
+            emoji: '🌿',
+            nombre: 'Hierbas aromáticas',
+            productos: [
+                { nombre: 'Culantro', precio: 1.00, unidad: 'atado' },
+                { nombre: 'Apio', precio: 3.00, unidad: 'atado' },
+                { nombre: 'Cebolla china', precio: 1.75, unidad: 'atado' },
+                { nombre: 'Perejil', precio: 1.00, unidad: 'atado' },
+                { nombre: 'Hierbabuena', precio: 1.00, unidad: 'atado' }
+            ]
+        },
+        sazon: {
+            emoji: '🌶️',
+            nombre: 'Verduras de sazón',
+            productos: [
+                { nombre: 'Ají amarillo', precio: 5.50, unidad: 'kg' },
+                { nombre: 'Ají limo', precio: 9.00, unidad: 'kg' },
+                { nombre: 'Ají panca', precio: 7.00, unidad: 'kg' },
+                { nombre: 'Rocoto', precio: 5.50, unidad: 'kg' },
+                { nombre: 'Ajo criollo', precio: 6.50, unidad: 'kg' },
+                { nombre: 'Ajo importado', precio: 4.50, unidad: 'kg' },
+                { nombre: 'Kion (jengibre)', precio: 7.00, unidad: 'kg' }
+            ]
+        },
+        bulbos: {
+            emoji: '🧅',
+            nombre: 'Bulbos',
+            productos: [
+                { nombre: 'Cebolla roja', precio: 1.85, unidad: 'kg' },
+                { nombre: 'Cebolla blanca', precio: 2.25, unidad: 'kg' }
+            ]
+        },
+        otros: {
+            emoji: '🥑',
+            nombre: 'Otros (uso mixto)',
+            productos: [
+                { nombre: 'Palta fuerte', precio: 4.50, unidad: 'kg' },
+                { nombre: 'Palta hass', precio: 6.50, unidad: 'kg' },
+                { nombre: 'Limón sutil', precio: 3.00, unidad: 'kg' }
+            ]
+        }
+    }
+},
             carnes: { emoji: '🥩', nombre: 'Carnes', subcategorias: {
                 res: { emoji: '🐄', nombre: 'Carne de Res', productos: [ { nombre: 'Lomo Fino', precio: 28.50, unidad: 'kg' }, { nombre: 'Chuleta', precio: 24.00, unidad: 'kg' }, { nombre: 'Bistec', precio: 23.00, unidad: 'kg' }, { nombre: 'Carne Molida', precio: 20.00, unidad: 'kg' }, { nombre: 'Costilla', precio: 18.00, unidad: 'kg' } ] },
                 pollo: { emoji: '🐔', nombre: 'Pollo', productos: [ { nombre: 'Pollo Entero', precio: 12.50, unidad: 'kg' }, { nombre: 'Pechuga', precio: 16.00, unidad: 'kg' }, { nombre: 'Muslo', precio: 11.00, unidad: 'kg' }, { nombre: 'Alas', precio: 10.00, unidad: 'kg' }, { nombre: 'Pollo Desmenuzado', precio: 18.00, unidad: 'kg' } ] },
@@ -1062,13 +1295,21 @@
 
         function generarTextoLista() {
             if (!listaProductos.length) return 'Lista vacía';
-            let texto = '🛒 *LISTA DE MERCADO*\n\n', total = 0;
-            listaProductos.forEach((p,i) => {
+            let texto = '🛒 *LISTA DE MERCADO*\n\n';
+            let total = 0;
+            listaProductos.forEach((p, i) => {
                 const subtotal = p.precio * p.cantidad;
                 total += subtotal;
-                texto += `${i+1}. *${p.nombre}*\n   Cantidad: ${p.cantidad} ${p.unidad}${p.cantidad>1&&p.unidad==='unidad'?'es':''}\n${p.precio>0?`   Precio: S/${subtotal.toFixed(2)}\n`:''}\n`;
+                texto += `${i + 1}. *${p.nombre}*\n`;
+                texto += `   Cantidad: ${p.cantidad} ${p.unidad}${p.cantidad > 1 && p.unidad === 'unidad' ? 'es' : ''}\n`;
+                if (p.precio > 0) {
+                    texto += `   Precio: S/${subtotal.toFixed(2)}\n`;
+                }
+                texto += '\n';
             });
-            if (total>0) texto += `💰 *TOTAL ESTIMADO: S/${total.toFixed(2)}*\n\n`;
+            if (total > 0) {
+                texto += `💰 *TOTAL ESTIMADO: S/${total.toFixed(2)}*\n\n`;
+            }
             texto += '📱 Lista generada desde Lista de Mercado App';
             return texto;
         }
