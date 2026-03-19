@@ -6,7 +6,7 @@
     <title>Lista de Mercado - Perú</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ====== TODO EL CSS ORIGINAL (SIN CAMBIOS) ====== */
+        /* ====== TODAS LAS TARJETAS CON EL MISMO TAMAÑO ====== */
         * {
             margin: 0;
             padding: 0;
@@ -78,32 +78,104 @@
             padding-left: 14px;
         }
 
-        .categorias-grid {
+        /* Todas las cuadrículas con el mismo ancho mínimo de columna */
+        .categorias-grid,
+        .subcategorias-grid,
+        .productos-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 12px;
             margin-bottom: 16px;
         }
 
-        .categoria-item {
+        /* Estilo base para todas las tarjetas */
+        .categoria-item,
+        .subcategoria-item,
+        .producto-item,
+        .subcategoria-detalle-item {
             background: #2a2a2a;
-            border: 1px solid #3a3a3a;
-            border-radius: 18px;
-            padding: 16px 12px;
+            border-radius: 24px;
+            padding: 12px 10px;
             cursor: pointer;
             transition: all 0.2s ease;
             font-weight: 500;
             color: #e0e0e0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            height: 120px;
+            display: flex;
+            text-align: center;
+        }
+
+        /* Variantes específicas */
+        .categoria-item {
+            border: 1px solid #3a3a3a;
+            align-items: center;
+            gap: 8px;
+            justify-content: flex-start;
+        }
+
+        .subcategoria-item {
+            border: 1px solid #f1d38b;
+            color: #ffd966;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .producto-item {
+            border: 1px solid #3a6b3a;
+            color: #b8e0b8;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Estilo para la subcategoría en vista detallada (más grande, ocupa todo el ancho) */
+        .subcategoria-detalle-item {
+            border: 2px solid #f1d38b;
+            color: #ffd966;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: auto;
+            min-height: 120px;
+            margin-bottom: 20px;
+            cursor: default; /* No es clickeable */
+            background: #3a3a3a;
+        }
+
+        .subcategoria-detalle-item::before {
+            content: attr(data-emoji);
+            font-size: 2rem;
+            line-height: 1;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .subcategoria-detalle-item .nombre {
+            font-size: 1.2rem;
+            font-weight: 600;
         }
 
         .categoria-item:hover {
             background: #333;
             border-color: #3b82f6;
             transform: translateY(-2px);
+        }
+
+        .subcategoria-item:hover {
+            background: #3a3a3a;
+            border-color: #e5b95b;
+            transform: scale(1.02);
+        }
+
+        .producto-item:hover {
+            border-color: #5fa85f;
+            background: #333;
+            transform: translateY(-3px);
         }
 
         .categoria-item.active {
@@ -113,96 +185,51 @@
             font-weight: 600;
         }
 
-        .categoria-item::before {
-            content: attr(data-emoji);
-            font-size: 1.4rem;
-            line-height: 1;
-        }
-
-        .subcategorias-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 14px;
-            margin: 25px 0;
-            display: none;
-        }
-
-        .subcategoria-item {
-            background: #2a2a2a;
-            border: 1px solid #f1d38b;
-            border-radius: 20px;
-            padding: 16px 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-align: center;
-            font-weight: 500;
-            color: #ffd966;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        .subcategoria-item:hover {
-            background: #3a3a3a;
-            border-color: #e5b95b;
-            transform: scale(1.02);
-        }
-
         .subcategoria-item.active {
             background: #5f4c2b;
             color: #fff0c0;
             border-color: #c9971e;
         }
 
+        /* Emojis con tamaño uniforme */
+        .categoria-item::before {
+            content: attr(data-emoji);
+            font-size: 1.4rem;
+            line-height: 1;
+        }
+
         .subcategoria-item::before {
             content: attr(data-emoji);
-            font-size: 1.8rem;
+            font-size: 1.4rem;
+            line-height: 1;
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
-        .productos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 18px;
-            margin: 25px 0;
-            display: none;
-        }
-
-        .producto-item {
-            background: #2a2a2a;
-            border: 1px solid #3a6b3a;
-            border-radius: 24px;
-            padding: 18px 10px 12px;
-            transition: 0.2s;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            text-align: center;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        .producto-item:hover {
-            border-color: #5fa85f;
-            background: #333;
-            transform: translateY(-3px);
-        }
-
+        /* Textos dentro de productos */
         .producto-nombre {
             font-weight: 600;
-            color: #b8e0b8;
-            margin-bottom: 6px;
-            font-size: 1rem;
+            margin-bottom: 4px;
+            font-size: 0.95rem;
+            line-height: 1.2;
+            max-height: 2.4em;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
         }
 
         .producto-precio {
             font-weight: 700;
             color: #7fdf7f;
-            font-size: 1.25rem;
+            font-size: 1.1rem;
+            line-height: 1.2;
         }
 
         .producto-unidad {
             color: #aaa;
-            font-size: 0.8rem;
-            margin-top: 4px;
+            font-size: 0.75rem;
+            line-height: 1.2;
         }
 
         .btn-agregar {
@@ -213,8 +240,8 @@
             background: #3b82f6;
             color: white;
             text-align: center;
-            padding: 8px;
-            font-size: 0.8rem;
+            padding: 6px;
+            font-size: 0.75rem;
             border-radius: 0 0 24px 24px;
             transform: translateY(100%);
             transition: transform 0.2s;
@@ -227,24 +254,6 @@
         .producto-item:hover .btn-agregar {
             transform: translateY(0);
             opacity: 1;
-        }
-
-        .btn-back {
-            background: #2a2a2a;
-            color: #bbd7fb;
-            border: 1px solid #3a3a3a;
-            padding: 12px 22px;
-            border-radius: 40px;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 0.95rem;
-            margin: 10px 0 20px;
-            width: fit-content;
-            transition: background 0.2s;
-        }
-
-        .btn-back:hover {
-            background: #333;
         }
 
         .input-section {
@@ -339,7 +348,13 @@
             opacity: 0.5;
         }
 
-        /* CARRITO FLOTANTE (estilo BOLETA) */
+        /* Contenedor para vista detallada de subcategoría */
+        .subcategoria-detalle-container {
+            display: none;
+            margin-bottom: 20px;
+        }
+
+        /* CARRITO FLOTANTE (estilo BOLETA) - sin cambios */
         .cart-icon {
             position: fixed;
             bottom: 28px;
@@ -510,7 +525,7 @@
             background: #d44f4f;
         }
 
-        /* ===== ESCRITORIO MEJORADO (más ancho) ===== */
+        /* ===== ESCRITORIO MEJORADO ===== */
         @media (min-width: 1024px) {
             body {
                 display: flex;
@@ -527,13 +542,12 @@
             }
             .container {
                 flex: 1;
-                /* Se elimina max-width para que se expanda */
                 margin: 0;
             }
             .floating-cart {
                 position: static !important;
                 transform: none !important;
-                width: 500px; /* Más ancho */
+                width: 500px;
                 max-height: 90vh;
                 border-radius: 30px;
                 box-shadow: 0 10px 30px rgba(0,0,0,0.3);
@@ -582,19 +596,23 @@
                 <div class="subtitulo">Organiza tus compras de forma sencilla.</div>
             </div>
 
-            <div id="categoryProductContainer" 
-                 onmouseover="clearTimeout(hideTimeout);" 
-                 onmouseout="hideTimeout = setTimeout(ocultarTodo, 500);">
+            <div id="categoryProductContainer">
 
                 <div class="categorias-container">
                     <h3>📋 Categorías de Productos</h3>
                     <div class="categorias-grid" id="categoriasGrid"></div>
                 </div>
 
+                <!-- Cuadrícula de subcategorías (visible cuando se elige categoría) -->
                 <div class="subcategorias-grid" id="subcategoriasGrid"></div>
-                <div class="productos-grid" id="productosGrid"></div>
 
-                <button class="btn-back" id="btnBack" style="display: none;" onclick="volverACategorias()">← Volver a Categorías</button>
+                <!-- Vista detallada de una subcategoría (se muestra en lugar de la cuadrícula) -->
+                <div class="subcategoria-detalle-container" id="subcategoriaDetalle">
+                    <div class="subcategoria-detalle-item" id="subcategoriaDetalleItem">
+                        <!-- El contenido se llena dinámicamente -->
+                    </div>
+                    <div class="productos-grid" id="productosGrid"></div>
+                </div>
             </div>
 
             <div class="input-section">
@@ -651,280 +669,295 @@
     </div>
 
     <script>
-        // ========== JAVASCRIPT ORIGINAL (CORREGIDO Y FUNCIONAL) ==========
+        // ========== JAVASCRIPT SIN BOTONES DE NAVEGACIÓN ==========
         let listaProductos = [];
         let categoriaActual = null;
         let subcategoriaActual = null;
         let cartOpen = false;
-        let hideTimeout;
 
         const productosDB = {
             frutas: {
-    emoji: '🍎',
-    nombre: 'Frutas',
-    subcategorias: {
-        platano: {
-            emoji: '🍌',
-            nombre: 'Plátano',
-            productos: [
-                { nombre: 'Plátano de seda', precio: 3.00, unidad: 'kg' },
-                { nombre: 'Plátano de isla', precio: 2.50, unidad: 'kg' },
-                { nombre: 'Plátano bellaco', precio: 2.10, unidad: 'kg' },
-                { nombre: 'Plátano maduro', precio: 3.00, unidad: 'kg' },
-                { nombre: 'Plátano bizcocho', precio: 3.50, unidad: 'kg' },
-                { nombre: 'Plátano manzano', precio: 4.00, unidad: 'kg' }
-            ]
-        },
-        manzana: {
-            emoji: '🍎',
-            nombre: 'Manzana',
-            productos: [
-                { nombre: 'Manzana israel', precio: 4.00, unidad: 'kg' },
-                { nombre: 'Manzana delicia', precio: 3.50, unidad: 'kg' },
-                { nombre: 'Manzana verde', precio: 5.00, unidad: 'kg' },
-                { nombre: 'Manzana roja importada', precio: 5.50, unidad: 'kg' }
-            ]
-        },
-        pera: {
-            emoji: '🍐',
-            nombre: 'Pera',
-            productos: [
-                { nombre: 'Pera packham', precio: 4.75, unidad: 'kg' },
-                { nombre: 'Pera conferencia', precio: 5.50, unidad: 'kg' },
-                { nombre: 'Pera importada', precio: 5.75, unidad: 'kg' }
-            ]
-        },
-        naranja: {
-            emoji: '🍊',
-            nombre: 'Naranja',
-            productos: [
-                { nombre: 'Naranja valencia', precio: 2.25, unidad: 'kg' },
-                { nombre: 'Naranja de jugo', precio: 1.85, unidad: 'kg' },
-                { nombre: 'Naranja ombligo', precio: 3.00, unidad: 'kg' }
-            ]
-        },
-        mandarina: {
-            emoji: '🍊',
-            nombre: 'Mandarina',
-            productos: [
-                { nombre: 'Mandarina satsuma', precio: 3.00, unidad: 'kg' },
-                { nombre: 'Mandarina murcott', precio: 4.00, unidad: 'kg' },
-                { nombre: 'Mandarina clemenules', precio: 4.25, unidad: 'kg' }
-            ]
-        },
-        uva: {
-            emoji: '🍇',
-            nombre: 'Uva',
-            productos: [
-                { nombre: 'Uva red globe', precio: 6.00, unidad: 'kg' },
-                { nombre: 'Uva negra', precio: 7.00, unidad: 'kg' },
-                { nombre: 'Uva verde', precio: 7.00, unidad: 'kg' },
-                { nombre: 'Uva sin pepa', precio: 8.00, unidad: 'kg' }
-            ]
-        },
-        pina: {
-            emoji: '🍍',
-            nombre: 'Piña',
-            productos: [
-                { nombre: 'Piña golden', precio: 4.50, unidad: 'unidad' },
-                { nombre: 'Piña selva', precio: 3.75, unidad: 'unidad' }
-            ]
-        },
-        mango: {
-            emoji: '🥭',
-            nombre: 'Mango',
-            productos: [
-                { nombre: 'Mango kent', precio: 3.75, unidad: 'kg' },
-                { nombre: 'Mango criollo', precio: 2.50, unidad: 'kg' },
-                { nombre: 'Mango ciruelo', precio: 3.00, unidad: 'kg' }
-            ]
-        },
-        melon: {
-            emoji: '🍈',
-            nombre: 'Melón',
-            productos: [
-                { nombre: 'Melón coquito', precio: 3.00, unidad: 'kg' },
-                { nombre: 'Melón honeydew', precio: 3.50, unidad: 'kg' }
-            ]
-        },
-        sandia: {
-            emoji: '🍉',
-            nombre: 'Sandía',
-            productos: [
-                { nombre: 'Sandía rayada', precio: 1.40, unidad: 'kg' },
-                { nombre: 'Sandía negra', precio: 1.60, unidad: 'kg' }
-            ]
-        },
-        durazno: {
-            emoji: '🍑',
-            nombre: 'Durazno',
-            productos: [
-                { nombre: 'Durazno nacional', precio: 4.00, unidad: 'kg' },
-                { nombre: 'Durazno importado', precio: 5.50, unidad: 'kg' }
-            ]
-        },
-        palta: {
-            emoji: '🥑',
-            nombre: 'Palta',
-            productos: [
-                { nombre: 'Palta fuerte', precio: 4.50, unidad: 'kg' },
-                { nombre: 'Palta hass', precio: 6.50, unidad: 'kg' },
-                { nombre: 'Palta punta', precio: 4.00, unidad: 'kg' }
-            ]
-        },
-        limon: {
-            emoji: '🍋',
-            nombre: 'Limón',
-            productos: [
-                { nombre: 'Limón sutil', precio: 3.00, unidad: 'kg' },
-                { nombre: 'Limón tahití', precio: 3.75, unidad: 'kg' }
-            ]
-        },
-        otras: {
-            emoji: '🍓',
-            nombre: 'Otras Frutas',
-            productos: [
-                { nombre: 'Papaya', precio: 2.50, unidad: 'kg' },
-                { nombre: 'Fresa', precio: 6.00, unidad: 'kg' },
-                { nombre: 'Arándano', precio: 11.50, unidad: 'kg' },
-                { nombre: 'Maracuyá', precio: 3.75, unidad: 'kg' },
-                { nombre: 'Granadilla', precio: 6.50, unidad: 'kg' },
-                { nombre: 'Guayaba', precio: 3.75, unidad: 'kg' },
-                { nombre: 'Ciruela', precio: 4.50, unidad: 'kg' },
-                { nombre: 'Higo', precio: 5.50, unidad: 'kg' },
-                { nombre: 'Coco', precio: 6.00, unidad: 'unidad' }
-            ]
-        }
-    }
-},
+                emoji: '🍎',
+                nombre: 'Frutas',
+                subcategorias: {
+                    platano: {
+                        emoji: '🍌',
+                        nombre: 'Plátano',
+                        productos: [
+                            { nombre: 'Plátano de seda', precio: 3.00, unidad: 'kg' },
+                            { nombre: 'Plátano de isla', precio: 2.50, unidad: 'kg' },
+                            { nombre: 'Plátano bellaco', precio: 2.10, unidad: 'kg' },
+                            { nombre: 'Plátano maduro', precio: 3.00, unidad: 'kg' },
+                            { nombre: 'Plátano bizcocho', precio: 3.50, unidad: 'kg' },
+                            { nombre: 'Plátano manzano', precio: 4.00, unidad: 'kg' }
+                        ]
+                    },
+                    manzana: {
+                        emoji: '🍎',
+                        nombre: 'Manzana',
+                        productos: [
+                            { nombre: 'Manzana israel', precio: 4.00, unidad: 'kg' },
+                            { nombre: 'Manzana delicia', precio: 3.50, unidad: 'kg' },
+                            { nombre: 'Manzana verde', precio: 5.00, unidad: 'kg' },
+                            { nombre: 'Manzana roja importada', precio: 5.50, unidad: 'kg' }
+                        ]
+                    },
+                    pera: {
+                        emoji: '🍐',
+                        nombre: 'Pera',
+                        productos: [
+                            { nombre: 'Pera packham', precio: 4.75, unidad: 'kg' },
+                            { nombre: 'Pera conferencia', precio: 5.50, unidad: 'kg' },
+                            { nombre: 'Pera importada', precio: 5.75, unidad: 'kg' }
+                        ]
+                    },
+                    naranja: {
+                        emoji: '🍊',
+                        nombre: 'Naranja',
+                        productos: [
+                            { nombre: 'Naranja valencia', precio: 2.25, unidad: 'kg' },
+                            { nombre: 'Naranja de jugo', precio: 1.85, unidad: 'kg' },
+                            { nombre: 'Naranja ombligo', precio: 3.00, unidad: 'kg' }
+                        ]
+                    },
+                    mandarina: {
+                        emoji: '🍊',
+                        nombre: 'Mandarina',
+                        productos: [
+                            { nombre: 'Mandarina satsuma', precio: 3.00, unidad: 'kg' },
+                            { nombre: 'Mandarina murcott', precio: 4.00, unidad: 'kg' },
+                            { nombre: 'Mandarina clemenules', precio: 4.25, unidad: 'kg' }
+                        ]
+                    },
+                    uva: {
+                        emoji: '🍇',
+                        nombre: 'Uva',
+                        productos: [
+                            { nombre: 'Uva red globe', precio: 6.00, unidad: 'kg' },
+                            { nombre: 'Uva negra', precio: 7.00, unidad: 'kg' },
+                            { nombre: 'Uva verde', precio: 7.00, unidad: 'kg' },
+                            { nombre: 'Uva sin pepa', precio: 8.00, unidad: 'kg' }
+                        ]
+                    },
+                    pina: {
+                        emoji: '🍍',
+                        nombre: 'Piña',
+                        productos: [
+                            { nombre: 'Piña golden', precio: 4.50, unidad: 'unidad' },
+                            { nombre: 'Piña selva', precio: 3.75, unidad: 'unidad' }
+                        ]
+                    },
+                    mango: {
+                        emoji: '🥭',
+                        nombre: 'Mango',
+                        productos: [
+                            { nombre: 'Mango kent', precio: 3.75, unidad: 'kg' },
+                            { nombre: 'Mango criollo', precio: 2.50, unidad: 'kg' },
+                            { nombre: 'Mango ciruelo', precio: 3.00, unidad: 'kg' }
+                        ]
+                    },
+                    melon: {
+                        emoji: '🍈',
+                        nombre: 'Melón',
+                        productos: [
+                            { nombre: 'Melón coquito', precio: 3.00, unidad: 'kg' },
+                            { nombre: 'Melón honeydew', precio: 3.50, unidad: 'kg' }
+                        ]
+                    },
+                    sandia: {
+                        emoji: '🍉',
+                        nombre: 'Sandía',
+                        productos: [
+                            { nombre: 'Sandía rayada', precio: 1.40, unidad: 'kg' },
+                            { nombre: 'Sandía negra', precio: 1.60, unidad: 'kg' }
+                        ]
+                    },
+                    durazno: {
+                        emoji: '🍑',
+                        nombre: 'Durazno',
+                        productos: [
+                            { nombre: 'Durazno nacional', precio: 4.00, unidad: 'kg' },
+                            { nombre: 'Durazno importado', precio: 5.50, unidad: 'kg' }
+                        ]
+                    },
+                    palta: {
+                        emoji: '🥑',
+                        nombre: 'Palta',
+                        productos: [
+                            { nombre: 'Palta fuerte', precio: 4.50, unidad: 'kg' },
+                            { nombre: 'Palta hass', precio: 6.50, unidad: 'kg' },
+                            { nombre: 'Palta punta', precio: 4.00, unidad: 'kg' }
+                        ]
+                    },
+                    limon: {
+                        emoji: '🍋',
+                        nombre: 'Limón',
+                        productos: [
+                            { nombre: 'Limón sutil', precio: 3.00, unidad: 'kg' },
+                            { nombre: 'Limón tahití', precio: 3.75, unidad: 'kg' }
+                        ]
+                    },
+                    otras: {
+                        emoji: '🍓',
+                        nombre: 'Otras Frutas',
+                        productos: [
+                            { nombre: 'Papaya', precio: 2.50, unidad: 'kg' },
+                            { nombre: 'Fresa', precio: 6.00, unidad: 'kg' },
+                            { nombre: 'Arándano', precio: 11.50, unidad: 'kg' },
+                            { nombre: 'Maracuyá', precio: 3.75, unidad: 'kg' },
+                            { nombre: 'Granadilla', precio: 6.50, unidad: 'kg' },
+                            { nombre: 'Guayaba', precio: 3.75, unidad: 'kg' },
+                            { nombre: 'Ciruela', precio: 4.50, unidad: 'kg' },
+                            { nombre: 'Higo', precio: 5.50, unidad: 'kg' },
+                            { nombre: 'Coco', precio: 6.00, unidad: 'unidad' }
+                        ]
+                    }
+                }
+            },
             verduras: {
-    emoji: '🥦',
-    nombre: 'Verduras',
-    subcategorias: {
-        tuberculos: {
-            emoji: '🥔',
-            nombre: 'Tubérculos y raíces',
-            productos: [
-                { nombre: 'Papa blanca', precio: 1.75, unidad: 'kg' },
-                { nombre: 'Papa yungay', precio: 2.00, unidad: 'kg' },
-                { nombre: 'Papa huayro', precio: 2.75, unidad: 'kg' },
-                { nombre: 'Papa amarilla', precio: 3.25, unidad: 'kg' },
-                { nombre: 'Camote amarillo', precio: 2.25, unidad: 'kg' },
-                { nombre: 'Camote morado', precio: 3.00, unidad: 'kg' },
-                { nombre: 'Yuca amarilla', precio: 1.75, unidad: 'kg' },
-                { nombre: 'Zanahoria', precio: 1.75, unidad: 'kg' },
-                { nombre: 'Betarraga', precio: 2.50, unidad: 'kg' },
-                { nombre: 'Rabanito', precio: 1.75, unidad: 'atado' },
-                { nombre: 'Nabo', precio: 2.25, unidad: 'kg' },
-                { nombre: 'Olluco', precio: 3.00, unidad: 'kg' }
-            ]
-        },
-        legumbres: {
-            emoji: '🌽',
-            nombre: 'Legumbres frescas',
-            productos: [
-                { nombre: 'Arveja serrana', precio: 4.50, unidad: 'kg' },
-                { nombre: 'Arveja americana', precio: 3.25, unidad: 'kg' },
-                { nombre: 'Vainita americana', precio: 3.25, unidad: 'kg' },
-                { nombre: 'Choclo Cusco', precio: 3.50, unidad: 'kg' },
-                { nombre: 'Habas', precio: 3.00, unidad: 'kg' }
-            ]
-        },
-        hortalizas: {
-            emoji: '🎃',
-            nombre: 'Hortalizas (fruto)',
-            productos: [
-                { nombre: 'Tomate katia', precio: 2.50, unidad: 'kg' },
-                { nombre: 'Tomate italiano', precio: 3.50, unidad: 'kg' },
-                { nombre: 'Pepino largo', precio: 2.25, unidad: 'kg' },
-                { nombre: 'Pepinillo', precio: 3.00, unidad: 'kg' },
-                { nombre: 'Berenjena', precio: 3.75, unidad: 'kg' },
-                { nombre: 'Zapallo macre', precio: 1.50, unidad: 'kg' },
-                { nombre: 'Zapallo loche', precio: 3.50, unidad: 'kg' },
-                { nombre: 'Zapallito italiano', precio: 3.00, unidad: 'kg' },
-                { nombre: 'Pimiento rojo', precio: 5.00, unidad: 'kg' },
-                { nombre: 'Pimiento verde', precio: 4.00, unidad: 'kg' },
-                { nombre: 'Ají dulce', precio: 4.50, unidad: 'kg' }
-            ]
-        },
-        hojas: {
-            emoji: '🥬',
-            nombre: 'Verduras de hoja',
-            productos: [
-                { nombre: 'Lechuga americana', precio: 2.75, unidad: 'unidad' },
-                { nombre: 'Lechuga crespa', precio: 2.25, unidad: 'unidad' },
-                { nombre: 'Espinaca', precio: 2.25, unidad: 'atado' },
-                { nombre: 'Acelga', precio: 2.25, unidad: 'atado' },
-                { nombre: 'Col verde', precio: 2.75, unidad: 'unidad' },
-                { nombre: 'Col morado', precio: 3.50, unidad: 'unidad' },
-                { nombre: 'Brócoli', precio: 3.50, unidad: 'unidad' },
-                { nombre: 'Coliflor', precio: 3.75, unidad: 'unidad' }
-            ]
-        },
-        aromaticas: {
-            emoji: '🌿',
-            nombre: 'Hierbas aromáticas',
-            productos: [
-                { nombre: 'Culantro', precio: 1.00, unidad: 'atado' },
-                { nombre: 'Apio', precio: 3.00, unidad: 'atado' },
-                { nombre: 'Cebolla china', precio: 1.75, unidad: 'atado' },
-                { nombre: 'Perejil', precio: 1.00, unidad: 'atado' },
-                { nombre: 'Hierbabuena', precio: 1.00, unidad: 'atado' }
-            ]
-        },
-        sazon: {
-            emoji: '🌶️',
-            nombre: 'Verduras de sazón',
-            productos: [
-                { nombre: 'Ají amarillo', precio: 5.50, unidad: 'kg' },
-                { nombre: 'Ají limo', precio: 9.00, unidad: 'kg' },
-                { nombre: 'Ají panca', precio: 7.00, unidad: 'kg' },
-                { nombre: 'Rocoto', precio: 5.50, unidad: 'kg' },
-                { nombre: 'Ajo criollo', precio: 6.50, unidad: 'kg' },
-                { nombre: 'Ajo importado', precio: 4.50, unidad: 'kg' },
-                { nombre: 'Kion (jengibre)', precio: 7.00, unidad: 'kg' }
-            ]
-        },
-        bulbos: {
-            emoji: '🧅',
-            nombre: 'Bulbos',
-            productos: [
-                { nombre: 'Cebolla roja', precio: 1.85, unidad: 'kg' },
-                { nombre: 'Cebolla blanca', precio: 2.25, unidad: 'kg' }
-            ]
-        },
-        otros: {
-            emoji: '🥑',
-            nombre: 'Otros (uso mixto)',
-            productos: [
-                { nombre: 'Palta fuerte', precio: 4.50, unidad: 'kg' },
-                { nombre: 'Palta hass', precio: 6.50, unidad: 'kg' },
-                { nombre: 'Limón sutil', precio: 3.00, unidad: 'kg' }
-            ]
-        }
-    }
-},
-            carnes: { emoji: '🥩', nombre: 'Carnes', subcategorias: {
-                res: { emoji: '🐄', nombre: 'Carne de Res', productos: [ { nombre: 'Lomo Fino', precio: 28.50, unidad: 'kg' }, { nombre: 'Chuleta', precio: 24.00, unidad: 'kg' }, { nombre: 'Bistec', precio: 23.00, unidad: 'kg' }, { nombre: 'Carne Molida', precio: 20.00, unidad: 'kg' }, { nombre: 'Costilla', precio: 18.00, unidad: 'kg' } ] },
-                pollo: { emoji: '🐔', nombre: 'Pollo', productos: [ { nombre: 'Pollo Entero', precio: 12.50, unidad: 'kg' }, { nombre: 'Pechuga', precio: 16.00, unidad: 'kg' }, { nombre: 'Muslo', precio: 11.00, unidad: 'kg' }, { nombre: 'Alas', precio: 10.00, unidad: 'kg' }, { nombre: 'Pollo Desmenuzado', precio: 18.00, unidad: 'kg' } ] },
-                cerdo: { emoji: '🐖', nombre: 'Carne de Cerdo', productos: [ { nombre: 'Lomo de Cerdo', precio: 20.00, unidad: 'kg' }, { nombre: 'Chuleta de Cerdo', precio: 19.00, unidad: 'kg' }, { nombre: 'Tocino', precio: 16.00, unidad: 'kg' }, { nombre: 'Jamón', precio: 25.00, unidad: 'kg' } ] },
-                pescado: { emoji: '🐟', nombre: 'Pescados', productos: [ { nombre: 'Tilapia', precio: 15.00, unidad: 'kg' }, { nombre: 'Trucha', precio: 22.00, unidad: 'kg' }, { nombre: 'Atún', precio: 26.00, unidad: 'kg' }, { nombre: 'Salmón', precio: 40.00, unidad: 'kg' } ] }
-            } },
-            lacteos: { emoji: '🥛', nombre: 'Lácteos', subcategorias: {
-                leche: { emoji: '🥛', nombre: 'Leche', productos: [ { nombre: 'Leche Entera', precio: 4.20, unidad: 'L' }, { nombre: 'Leche Descremada', precio: 4.50, unidad: 'L' }, { nombre: 'Leche Deslactosada', precio: 5.00, unidad: 'L' }, { nombre: 'Leche de Almendra', precio: 9.00, unidad: 'L' } ] },
-                quesos: { emoji: '🧀', nombre: 'Quesos', productos: [ { nombre: 'Queso Fresco', precio: 12.00, unidad: 'kg' }, { nombre: 'Queso Mozzarella', precio: 15.00, unidad: 'kg' }, { nombre: 'Queso Cheddar', precio: 16.50, unidad: 'kg' }, { nombre: 'Queso Manchego', precio: 22.00, unidad: 'kg' } ] },
-                yogurt: { emoji: '🍶', nombre: 'Yogurt', productos: [ { nombre: 'Yogurt Natural', precio: 8.00, unidad: 'kg' }, { nombre: 'Yogurt con Frutas', precio: 9.50, unidad: 'kg' }, { nombre: 'Yogurt Griego', precio: 12.50, unidad: 'kg' }, { nombre: 'Yogurt Descremado', precio: 8.80, unidad: 'kg' } ] }
-            } },
-            granos: { emoji: '🌾', nombre: 'Granos y Cereales', subcategorias: {
-                arroz: { emoji: '🍚', nombre: 'Arroz', productos: [ { nombre: 'Arroz Blanco', precio: 4.00, unidad: 'kg' }, { nombre: 'Arroz Integral', precio: 5.80, unidad: 'kg' }, { nombre: 'Arroz Basmati', precio: 8.00, unidad: 'kg' }, { nombre: 'Arroz de Coco', precio: 6.50, unidad: 'kg' } ] },
-                frijoles: { emoji: '🫘', nombre: 'Frijoles', productos: [ { nombre: 'Frijol Negro', precio: 5.00, unidad: 'kg' }, { nombre: 'Frijol Rojo', precio: 5.20, unidad: 'kg' }, { nombre: 'Frijol Blanco', precio: 5.50, unidad: 'kg' }, { nombre: 'Lenteja', precio: 6.50, unidad: 'kg' } ] },
-                pasta: { emoji: '🍝', nombre: 'Pasta', productos: [ { nombre: 'Espaguetti', precio: 5.00, unidad: 'paquete' }, { nombre: 'Macarrones', precio: 5.20, unidad: 'paquete' }, { nombre: 'Penne', precio: 5.80, unidad: 'paquete' }, { nombre: 'Lasaña', precio: 7.20, unidad: 'paquete' } ] }
-            } },
-            bebidas: { emoji: '🥤', nombre: 'Bebidas', subcategorias: {
-                gaseosas: { emoji: '🥤', nombre: 'Gaseosas', productos: [ { nombre: 'Coca Cola', precio: 8.00, unidad: 'L' }, { nombre: 'Pepsi', precio: 7.50, unidad: 'L' }, { nombre: 'Sprite', precio: 7.80, unidad: 'L' }, { nombre: 'Fanta', precio: 7.80, unidad: 'L' } ] },
-                jugos: { emoji: '🧃', nombre: 'Jugos', productos: [ { nombre: 'Jugo de Naranja', precio: 10.00, unidad: 'L' }, { nombre: 'Jugo de Manzana', precio: 10.50, unidad: 'L' }, { nombre: 'Jugo de Uva', precio: 11.50, unidad: 'L' }, { nombre: 'Jugo Multivitamínico', precio: 13.00, unidad: 'L' } ] },
-                agua: { emoji: '💧', nombre: 'Agua', productos: [ { nombre: 'Agua Mineral', precio: 3.50, unidad: 'L' }, { nombre: 'Agua con Gas', precio: 5.00, unidad: 'L' }, { nombre: 'Agua Saborizada', precio: 6.00, unidad: 'L' } ] }
-            } }
+                emoji: '🥦',
+                nombre: 'Verduras',
+                subcategorias: {
+                    tuberculos: {
+                        emoji: '🥔',
+                        nombre: 'Tubérculos y raíces',
+                        productos: [
+                            { nombre: 'Papa blanca', precio: 1.75, unidad: 'kg' },
+                            { nombre: 'Papa yungay', precio: 2.00, unidad: 'kg' },
+                            { nombre: 'Papa huayro', precio: 2.75, unidad: 'kg' },
+                            { nombre: 'Papa amarilla', precio: 3.25, unidad: 'kg' },
+                            { nombre: 'Camote amarillo', precio: 2.25, unidad: 'kg' },
+                            { nombre: 'Camote morado', precio: 3.00, unidad: 'kg' },
+                            { nombre: 'Yuca amarilla', precio: 1.75, unidad: 'kg' },
+                            { nombre: 'Zanahoria', precio: 1.75, unidad: 'kg' },
+                            { nombre: 'Betarraga', precio: 2.50, unidad: 'kg' },
+                            { nombre: 'Rabanito', precio: 1.75, unidad: 'atado' },
+                            { nombre: 'Nabo', precio: 2.25, unidad: 'kg' },
+                            { nombre: 'Olluco', precio: 3.00, unidad: 'kg' }
+                        ]
+                    },
+                    legumbres: {
+                        emoji: '🌽',
+                        nombre: 'Legumbres frescas',
+                        productos: [
+                            { nombre: 'Arveja serrana', precio: 4.50, unidad: 'kg' },
+                            { nombre: 'Arveja americana', precio: 3.25, unidad: 'kg' },
+                            { nombre: 'Vainita americana', precio: 3.25, unidad: 'kg' },
+                            { nombre: 'Choclo Cusco', precio: 3.50, unidad: 'kg' },
+                            { nombre: 'Habas', precio: 3.00, unidad: 'kg' }
+                        ]
+                    },
+                    hortalizas: {
+                        emoji: '🎃',
+                        nombre: 'Hortalizas (fruto)',
+                        productos: [
+                            { nombre: 'Tomate katia', precio: 2.50, unidad: 'kg' },
+                            { nombre: 'Tomate italiano', precio: 3.50, unidad: 'kg' },
+                            { nombre: 'Pepino largo', precio: 2.25, unidad: 'kg' },
+                            { nombre: 'Pepinillo', precio: 3.00, unidad: 'kg' },
+                            { nombre: 'Berenjena', precio: 3.75, unidad: 'kg' },
+                            { nombre: 'Zapallo macre', precio: 1.50, unidad: 'kg' },
+                            { nombre: 'Zapallo loche', precio: 3.50, unidad: 'kg' },
+                            { nombre: 'Zapallito italiano', precio: 3.00, unidad: 'kg' },
+                            { nombre: 'Pimiento rojo', precio: 5.00, unidad: 'kg' },
+                            { nombre: 'Pimiento verde', precio: 4.00, unidad: 'kg' },
+                            { nombre: 'Ají dulce', precio: 4.50, unidad: 'kg' }
+                        ]
+                    },
+                    hojas: {
+                        emoji: '🥬',
+                        nombre: 'Verduras de hoja',
+                        productos: [
+                            { nombre: 'Lechuga americana', precio: 2.75, unidad: 'unidad' },
+                            { nombre: 'Lechuga crespa', precio: 2.25, unidad: 'unidad' },
+                            { nombre: 'Espinaca', precio: 2.25, unidad: 'atado' },
+                            { nombre: 'Acelga', precio: 2.25, unidad: 'atado' },
+                            { nombre: 'Col verde', precio: 2.75, unidad: 'unidad' },
+                            { nombre: 'Col morado', precio: 3.50, unidad: 'unidad' },
+                            { nombre: 'Brócoli', precio: 3.50, unidad: 'unidad' },
+                            { nombre: 'Coliflor', precio: 3.75, unidad: 'unidad' }
+                        ]
+                    },
+                    aromaticas: {
+                        emoji: '🌿',
+                        nombre: 'Hierbas aromáticas',
+                        productos: [
+                            { nombre: 'Culantro', precio: 1.00, unidad: 'atado' },
+                            { nombre: 'Apio', precio: 3.00, unidad: 'atado' },
+                            { nombre: 'Cebolla china', precio: 1.75, unidad: 'atado' },
+                            { nombre: 'Perejil', precio: 1.00, unidad: 'atado' },
+                            { nombre: 'Hierbabuena', precio: 1.00, unidad: 'atado' }
+                        ]
+                    },
+                    sazon: {
+                        emoji: '🌶️',
+                        nombre: 'Verduras de sazón',
+                        productos: [
+                            { nombre: 'Ají amarillo', precio: 5.50, unidad: 'kg' },
+                            { nombre: 'Ají limo', precio: 9.00, unidad: 'kg' },
+                            { nombre: 'Ají panca', precio: 7.00, unidad: 'kg' },
+                            { nombre: 'Rocoto', precio: 5.50, unidad: 'kg' },
+                            { nombre: 'Ajo criollo', precio: 6.50, unidad: 'kg' },
+                            { nombre: 'Ajo importado', precio: 4.50, unidad: 'kg' },
+                            { nombre: 'Kion (jengibre)', precio: 7.00, unidad: 'kg' }
+                        ]
+                    },
+                    bulbos: {
+                        emoji: '🧅',
+                        nombre: 'Bulbos',
+                        productos: [
+                            { nombre: 'Cebolla roja', precio: 1.85, unidad: 'kg' },
+                            { nombre: 'Cebolla blanca', precio: 2.25, unidad: 'kg' }
+                        ]
+                    },
+                    otros: {
+                        emoji: '🥑',
+                        nombre: 'Otros (uso mixto)',
+                        productos: [
+                            { nombre: 'Palta fuerte', precio: 4.50, unidad: 'kg' },
+                            { nombre: 'Palta hass', precio: 6.50, unidad: 'kg' },
+                            { nombre: 'Limón sutil', precio: 3.00, unidad: 'kg' }
+                        ]
+                    }
+                }
+            },
+            carnes: {
+                emoji: '🥩',
+                nombre: 'Carnes',
+                subcategorias: {
+                    res: { emoji: '🐄', nombre: 'Carne de Res', productos: [ { nombre: 'Lomo Fino', precio: 28.50, unidad: 'kg' }, { nombre: 'Chuleta', precio: 24.00, unidad: 'kg' }, { nombre: 'Bistec', precio: 23.00, unidad: 'kg' }, { nombre: 'Carne Molida', precio: 20.00, unidad: 'kg' }, { nombre: 'Costilla', precio: 18.00, unidad: 'kg' } ] },
+                    pollo: { emoji: '🐔', nombre: 'Pollo', productos: [ { nombre: 'Pollo Entero', precio: 12.50, unidad: 'kg' }, { nombre: 'Pechuga', precio: 16.00, unidad: 'kg' }, { nombre: 'Muslo', precio: 11.00, unidad: 'kg' }, { nombre: 'Alas', precio: 10.00, unidad: 'kg' }, { nombre: 'Pollo Desmenuzado', precio: 18.00, unidad: 'kg' } ] },
+                    cerdo: { emoji: '🐖', nombre: 'Carne de Cerdo', productos: [ { nombre: 'Lomo de Cerdo', precio: 20.00, unidad: 'kg' }, { nombre: 'Chuleta de Cerdo', precio: 19.00, unidad: 'kg' }, { nombre: 'Tocino', precio: 16.00, unidad: 'kg' }, { nombre: 'Jamón', precio: 25.00, unidad: 'kg' } ] },
+                    pescado: { emoji: '🐟', nombre: 'Pescados', productos: [ { nombre: 'Tilapia', precio: 15.00, unidad: 'kg' }, { nombre: 'Trucha', precio: 22.00, unidad: 'kg' }, { nombre: 'Atún', precio: 26.00, unidad: 'kg' }, { nombre: 'Salmón', precio: 40.00, unidad: 'kg' } ] }
+                }
+            },
+            lacteos: {
+                emoji: '🥛',
+                nombre: 'Lácteos',
+                subcategorias: {
+                    leche: { emoji: '🥛', nombre: 'Leche', productos: [ { nombre: 'Leche Entera', precio: 4.20, unidad: 'L' }, { nombre: 'Leche Descremada', precio: 4.50, unidad: 'L' }, { nombre: 'Leche Deslactosada', precio: 5.00, unidad: 'L' }, { nombre: 'Leche de Almendra', precio: 9.00, unidad: 'L' } ] },
+                    quesos: { emoji: '🧀', nombre: 'Quesos', productos: [ { nombre: 'Queso Fresco', precio: 12.00, unidad: 'kg' }, { nombre: 'Queso Mozzarella', precio: 15.00, unidad: 'kg' }, { nombre: 'Queso Cheddar', precio: 16.50, unidad: 'kg' }, { nombre: 'Queso Manchego', precio: 22.00, unidad: 'kg' } ] },
+                    yogurt: { emoji: '🍶', nombre: 'Yogurt', productos: [ { nombre: 'Yogurt Natural', precio: 8.00, unidad: 'kg' }, { nombre: 'Yogurt con Frutas', precio: 9.50, unidad: 'kg' }, { nombre: 'Yogurt Griego', precio: 12.50, unidad: 'kg' }, { nombre: 'Yogurt Descremado', precio: 8.80, unidad: 'kg' } ] }
+                }
+            },
+            granos: {
+                emoji: '🌾',
+                nombre: 'Granos y Cereales',
+                subcategorias: {
+                    arroz: { emoji: '🍚', nombre: 'Arroz', productos: [ { nombre: 'Arroz Blanco', precio: 4.00, unidad: 'kg' }, { nombre: 'Arroz Integral', precio: 5.80, unidad: 'kg' }, { nombre: 'Arroz Basmati', precio: 8.00, unidad: 'kg' }, { nombre: 'Arroz de Coco', precio: 6.50, unidad: 'kg' } ] },
+                    frijoles: { emoji: '🫘', nombre: 'Frijoles', productos: [ { nombre: 'Frijol Negro', precio: 5.00, unidad: 'kg' }, { nombre: 'Frijol Rojo', precio: 5.20, unidad: 'kg' }, { nombre: 'Frijol Blanco', precio: 5.50, unidad: 'kg' }, { nombre: 'Lenteja', precio: 6.50, unidad: 'kg' } ] },
+                    pasta: { emoji: '🍝', nombre: 'Pasta', productos: [ { nombre: 'Espaguetti', precio: 5.00, unidad: 'paquete' }, { nombre: 'Macarrones', precio: 5.20, unidad: 'paquete' }, { nombre: 'Penne', precio: 5.80, unidad: 'paquete' }, { nombre: 'Lasaña', precio: 7.20, unidad: 'paquete' } ] }
+                }
+            },
+            bebidas: {
+                emoji: '🥤',
+                nombre: 'Bebidas',
+                subcategorias: {
+                    gaseosas: { emoji: '🥤', nombre: 'Gaseosas', productos: [ { nombre: 'Coca Cola', precio: 8.00, unidad: 'L' }, { nombre: 'Pepsi', precio: 7.50, unidad: 'L' }, { nombre: 'Sprite', precio: 7.80, unidad: 'L' }, { nombre: 'Fanta', precio: 7.80, unidad: 'L' } ] },
+                    jugos: { emoji: '🧃', nombre: 'Jugos', productos: [ { nombre: 'Jugo de Naranja', precio: 10.00, unidad: 'L' }, { nombre: 'Jugo de Manzana', precio: 10.50, unidad: 'L' }, { nombre: 'Jugo de Uva', precio: 11.50, unidad: 'L' }, { nombre: 'Jugo Multivitamínico', precio: 13.00, unidad: 'L' } ] },
+                    agua: { emoji: '💧', nombre: 'Agua', productos: [ { nombre: 'Agua Mineral', precio: 3.50, unidad: 'L' }, { nombre: 'Agua con Gas', precio: 5.00, unidad: 'L' }, { nombre: 'Agua Saborizada', precio: 6.00, unidad: 'L' } ] }
+                }
+            }
         };
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -937,40 +970,58 @@
             let html = '';
             Object.keys(productosDB).forEach(categoriaKey => {
                 const categoria = productosDB[categoriaKey];
-                html += `<div class="categoria-item" data-emoji="${categoria.emoji}" data-categoria="${categoriaKey}" onmouseover="mostrarSubcategorias('${categoriaKey}')">${categoria.nombre}</div>`;
+                html += `<div class="categoria-item" data-emoji="${categoria.emoji}" data-categoria="${categoriaKey}" onclick="seleccionarCategoria('${categoriaKey}')">${categoria.nombre}</div>`;
             });
             container.innerHTML = html;
         }
 
-        function mostrarSubcategorias(categoriaKey) {
-            clearTimeout(hideTimeout);
+        function seleccionarCategoria(categoriaKey) {
+            // Remover active de todas las categorías
             document.querySelectorAll('.categoria-item').forEach(el => el.classList.remove('active'));
+            // Activar la categoría clickeada
             const activeCategory = document.querySelector(`.categoria-item[data-categoria="${categoriaKey}"]`);
             if (activeCategory) activeCategory.classList.add('active');
 
-            document.getElementById('productosGrid').style.display = 'none';
+            // Ocultar vista detallada de subcategoría y mostrar la cuadrícula de subcategorías
+            document.getElementById('subcategoriaDetalle').style.display = 'none';
+            document.getElementById('subcategoriasGrid').style.display = 'grid';
 
+            // Mostrar subcategorías de esta categoría
             const categoria = productosDB[categoriaKey];
             const subcategoriasGrid = document.getElementById('subcategoriasGrid');
             let html = '';
             Object.keys(categoria.subcategorias).forEach(subcategoriaKey => {
                 const subcategoria = categoria.subcategorias[subcategoriaKey];
-                html += `<div class="subcategoria-item" data-emoji="${subcategoria.emoji}" data-subcategoria="${subcategoriaKey}" onmouseover="mostrarProductos('${categoriaKey}', '${subcategoriaKey}')">${subcategoria.nombre}</div>`;
+                html += `<div class="subcategoria-item" data-emoji="${subcategoria.emoji}" data-subcategoria="${subcategoriaKey}" onclick="seleccionarSubcategoria('${categoriaKey}', '${subcategoriaKey}')">${subcategoria.nombre}</div>`;
             });
             subcategoriasGrid.innerHTML = html;
             subcategoriasGrid.style.display = 'grid';
-            document.getElementById('btnBack').style.display = 'block';
+
             categoriaActual = categoriaKey;
-            subcategoriaActual = null;
+            subcategoriaActual = null; // Reiniciamos subcategoría seleccionada
         }
 
-        function mostrarProductos(categoriaKey, subcategoriaKey) {
-            clearTimeout(hideTimeout);
-            document.querySelectorAll('.subcategoria-item').forEach(el => el.classList.remove('active'));
-            const activeSubcategory = document.querySelector(`.subcategoria-item[data-subcategoria="${subcategoriaKey}"]`);
-            if (activeSubcategory) activeSubcategory.classList.add('active');
+        function seleccionarSubcategoria(categoriaKey, subcategoriaKey) {
+            // Guardar la subcategoría seleccionada
+            subcategoriaActual = subcategoriaKey;
 
+            // Remover active de todas las subcategorías (en la cuadrícula)
+            document.querySelectorAll('.subcategoria-item').forEach(el => el.classList.remove('active'));
+            // Activar la subcategoría clickeada en la cuadrícula (aunque esté oculta)
+            const activeSub = document.querySelector(`.subcategoria-item[data-subcategoria="${subcategoriaKey}"]`);
+            if (activeSub) activeSub.classList.add('active');
+
+            // Ocultar la cuadrícula de subcategorías y mostrar la vista detallada
+            document.getElementById('subcategoriasGrid').style.display = 'none';
+            document.getElementById('subcategoriaDetalle').style.display = 'block';
+
+            // Mostrar la subcategoría en detalle
             const subcategoria = productosDB[categoriaKey].subcategorias[subcategoriaKey];
+            const detalleItem = document.getElementById('subcategoriaDetalleItem');
+            detalleItem.setAttribute('data-emoji', subcategoria.emoji);
+            detalleItem.innerHTML = `<span class="nombre">${subcategoria.nombre}</span>`; // El emoji ya se muestra con ::before
+
+            // Mostrar productos de esta subcategoría dentro del detalle
             const productosGrid = document.getElementById('productosGrid');
             let html = '';
             subcategoria.productos.forEach(producto => {
@@ -983,21 +1034,9 @@
             });
             productosGrid.innerHTML = html;
             productosGrid.style.display = 'grid';
-            subcategoriaActual = subcategoriaKey;
         }
 
-        function ocultarTodo() {
-            document.getElementById('subcategoriasGrid').style.display = 'none';
-            document.getElementById('productosGrid').style.display = 'none';
-            document.querySelectorAll('.categoria-item').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.subcategoria-item').forEach(el => el.classList.remove('active'));
-            document.getElementById('btnBack').style.display = 'none';
-            categoriaActual = null;
-            subcategoriaActual = null;
-        }
-
-        function volverACategorias() { ocultarTodo(); }
-
+        // Funciones de agregar productos, carrito, etc. (sin cambios)
         function agregarProductoDirectamente(nombre, precio, unidad) {
             listaProductos.push({ id: Date.now(), nombre, cantidad: 1, unidad, precio });
             actualizarLista();
