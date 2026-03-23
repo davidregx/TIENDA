@@ -63,7 +63,8 @@
         .categoria-item,
         .subcategoria-item,
         .producto-item {
-            transition: opacity 0.3s ease, transform 0.3s ease;
+            transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            will-change: transform, opacity;
             opacity: 1;
             transform: scale(1);
         }
@@ -79,6 +80,8 @@
             gap: 8px;
             font-size: 1rem;
             white-space: nowrap;
+            position: relative;
+            overflow: hidden;
         }
         .categoria-item {
             border: 1px solid #3a3a3a;
@@ -88,6 +91,12 @@
             content: attr(data-emoji);
             font-size: 1.3rem;
             line-height: 1;
+        }
+        .categoria-item:hover,
+        .subcategoria-item:hover {
+            transform: scale(1.02);
+            background: #3a3a3a;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         .categoria-item.active {
             background: #1e3a5f;
@@ -120,6 +129,13 @@
             padding: 16px;
             border: 1px solid #3a3a3a;
             display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        }
+        .subcategorias-panel.show {
+            opacity: 1;
+            transform: translateY(0);
         }
         .subcategorias-grid {
             display: flex;
@@ -142,6 +158,13 @@
             flex: 1 0 140px;
             cursor: pointer;
             position: relative;
+            overflow: hidden;
+            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+        .producto-item:hover {
+            transform: scale(1.02);
+            border-color: #6b8c6b;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
         }
         .producto-nombre {
             font-weight: bold;
@@ -165,6 +188,12 @@
             margin-top: 8px;
             font-size: 0.75rem;
             cursor: pointer;
+            transition: background 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-agregar:hover {
+            background: #2563eb;
         }
         .input-section {
             display: flex;
@@ -185,6 +214,11 @@
             background: #1e1e1e;
             border: 1px solid #3a3a3a;
             color: white;
+            transition: border 0.2s;
+        }
+        input:focus, select:focus {
+            border-color: #3b82f6;
+            outline: none;
         }
         .btn {
             background: #3b82f6;
@@ -194,6 +228,13 @@
             color: white;
             font-weight: bold;
             cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn:hover {
+            background: #2563eb;
+            transform: scale(1.02);
         }
         .empty-state {
             text-align: center;
@@ -223,6 +264,18 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.5);
             z-index: 1000;
             cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .cart-icon:hover {
+            transform: scale(1.05);
+        }
+        .cart-icon.pulse {
+            animation: pulse 0.4s ease-in-out;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); background: #ff9800; }
+            100% { transform: scale(1); }
         }
         .cart-count {
             position: absolute;
@@ -250,7 +303,7 @@
             font-family: 'Courier New', Courier, monospace;
             z-index: 2000;
             transform: translateY(100%);
-            transition: transform 0.3s;
+            transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             display: flex;
             flex-direction: column;
             border-radius: 30px 30px 0 0;
@@ -299,6 +352,7 @@
             align-items: center;
             padding: 8px 0;
             border-bottom: 1px solid #eee;
+            transition: background 0.2s;
         }
         .cart-item-remove {
             color: red;
@@ -308,6 +362,10 @@
             font-size: 1.2rem;
             cursor: pointer;
             margin-right: 10px;
+            transition: transform 0.2s;
+        }
+        .cart-item-remove:hover {
+            transform: scale(1.1);
         }
         .cart-total {
             padding: 16px;
@@ -340,11 +398,26 @@
             padding: 12px 20px;
             border-radius: 40px;
             z-index: 3000;
-            animation: slideIn 0.3s;
+            animation: slideIn 0.3s ease-out;
         }
         @keyframes slideIn {
             from { transform: translateX(100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
+        }
+        /* Ripple effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.6);
+            transform: scale(0);
+            animation: rippleAnim 0.5s linear;
+            pointer-events: none;
+        }
+        @keyframes rippleAnim {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
         }
         @media (min-width: 1024px) {
             body {
@@ -415,7 +488,7 @@
                 </select>
             </div>
             <div class="input-group"><input type="number" id="precio" placeholder="Precio (S/)"></div>
-            <button class="btn" onclick="agregarProducto()">AÑADIR</button>
+            <button class="btn" id="btnAddProducto">AÑADIR</button>
         </div>
 
         <div class="empty-state" id="emptyState">Tu lista está vacía. ¡Agrega algunos productos!</div>
@@ -731,40 +804,58 @@
         let categoriaActiva = null;
         let subcategoriaActiva = null;
         let cartOpen = false;
+        let animationInProgress = false;
+        let closingPanel = false;           // Nueva bandera para evitar múltiples cierres
+        let activeTimeouts = [];
+        let activeTransitionHandlers = new Map();
 
-        // ========== FUNCIONES DE ANIMACIÓN (solo las últimas 3 con efecto) ==========
-        function animateStaggered(elements, show, delayMs = 80, maxAnimated = 3, callback) {
+        // ========== FUNCIONES DE ANIMACIÓN MEJORADAS ==========
+        function cancelPendingAnimations() {
+            activeTimeouts.forEach(timeout => clearTimeout(timeout));
+            activeTimeouts = [];
+            activeTransitionHandlers.forEach((handler, el) => {
+                el.removeEventListener('transitionend', handler);
+            });
+            activeTransitionHandlers.clear();
+            animationInProgress = false;
+        }
+
+        function animateStaggered(elements, show, delayMs = 25, maxAnimated = 8, callback) {
             if (!elements.length) {
                 if (callback) callback();
                 return;
             }
 
-            const count = elements.length;
-            const animatedCount = Math.min(maxAnimated, count);
-            const startIndex = show ? count - animatedCount : count - animatedCount; // para hide/show siempre animamos los últimos
+            cancelPendingAnimations();
+            animationInProgress = true;
 
-            // Función para mostrar/ocultar instantáneamente sin animación
-            function setImmediate(index) {
-                const el = elements[index];
+            const count = elements.length;
+            let animatedCount = count;
+            let startIndex = 0;
+            if (count > maxAnimated) {
+                animatedCount = maxAnimated;
+                startIndex = count - maxAnimated;
+            } else {
+                animatedCount = count;
+                startIndex = 0;
+            }
+
+            // Aplicar inmediato a los no animados
+            for (let i = 0; i < startIndex; i++) {
+                const el = elements[i];
                 if (show) {
-                    // Mostrar instantáneamente
-                    el.style.display = '';      // restaurar CSS
+                    el.style.display = '';
                     el.style.opacity = '1';
                     el.style.transform = 'scale(1)';
                 } else {
-                    // Ocultar instantáneamente
                     el.style.display = 'none';
                     el.style.opacity = '0';
                     el.style.transform = 'scale(0.9)';
                 }
             }
 
-            // Aplicar a los primeros (no animados)
-            for (let i = 0; i < startIndex; i++) {
-                setImmediate(i);
-            }
-
             if (animatedCount === 0) {
+                animationInProgress = false;
                 if (callback) callback();
                 return;
             }
@@ -772,58 +863,115 @@
             let remaining = animatedCount;
             const onAnimateComplete = () => {
                 remaining--;
-                if (remaining === 0 && callback) callback();
+                if (remaining === 0) {
+                    animationInProgress = false;
+                    if (callback) callback();
+                }
             };
 
-            // Animamos los últimos animatedCount elementos
+            // Animación en cascada
             for (let i = 0; i < animatedCount; i++) {
                 const idx = startIndex + i;
                 const el = elements[idx];
-                if (show) {
-                    // Para mostrar: primero aseguramos que esté oculto, luego lo animamos a visible
-                    el.style.display = '';
-                    el.style.opacity = '0';
-                    el.style.transform = 'scale(0.9)';
-                    // Forzar reflow para que la transición se aplique
-                    void el.offsetWidth;
-                    el.style.opacity = '1';
-                    el.style.transform = 'scale(1)';
-                    el.addEventListener('transitionend', onAnimateComplete, { once: true });
-                } else {
-                    // Para ocultar: animamos y al final ocultamos
-                    el.style.opacity = '0';
-                    el.style.transform = 'scale(0.9)';
-                    const onFinish = () => {
-                        el.removeEventListener('transitionend', onFinish);
-                        el.style.display = 'none';
-                        onAnimateComplete();
-                    };
-                    el.addEventListener('transitionend', onFinish, { once: true });
-                    // Fallback por si la transición no se dispara
-                    setTimeout(() => {
-                        if (el.style.display !== 'none') {
-                            el.removeEventListener('transitionend', onFinish);
+                const timeout = setTimeout(() => {
+                    if (show) {
+                        el.style.display = '';
+                        el.style.opacity = '0';
+                        el.style.transform = 'scale(0.9)';
+                        void el.offsetWidth;
+                        const transitionHandler = () => {
+                            el.removeEventListener('transitionend', transitionHandler);
+                            activeTransitionHandlers.delete(el);
+                            onAnimateComplete();
+                        };
+                        el.addEventListener('transitionend', transitionHandler);
+                        activeTransitionHandlers.set(el, transitionHandler);
+                        el.style.opacity = '1';
+                        el.style.transform = 'scale(1)';
+                        const fallback = setTimeout(() => {
+                            if (el.style.display !== 'none') transitionHandler();
+                        }, 350);
+                        activeTimeouts.push(fallback);
+                    } else {
+                        const transitionHandler = () => {
+                            el.removeEventListener('transitionend', transitionHandler);
+                            activeTransitionHandlers.delete(el);
                             el.style.display = 'none';
                             onAnimateComplete();
-                        }
-                    }, 350);
-                }
-                // Pequeño retraso entre cada uno (solo si hay más de uno)
-                if (i < animatedCount - 1) {
-                    setTimeout(() => {}, delayMs);
-                }
+                        };
+                        el.addEventListener('transitionend', transitionHandler);
+                        activeTransitionHandlers.set(el, transitionHandler);
+                        el.style.opacity = '0';
+                        el.style.transform = 'scale(0.9)';
+                        const fallback = setTimeout(() => {
+                            if (el.style.display !== 'none') transitionHandler();
+                        }, 350);
+                        activeTimeouts.push(fallback);
+                    }
+                }, i * delayMs);
+                activeTimeouts.push(timeout);
             }
         }
 
         function hideElementWithStaggered(elements, callback) {
-            animateStaggered(elements, false, 80, 3, callback);
+            if (animationInProgress) {
+                let attempts = 0;
+                const wait = () => {
+                    if (animationInProgress && attempts < 3) {
+                        attempts++;
+                        setTimeout(wait, 100);
+                    } else {
+                        animateStaggered(elements, false, 25, 8, callback);
+                    }
+                };
+                wait();
+            } else {
+                animateStaggered(elements, false, 25, 8, callback);
+            }
         }
 
         function showElementWithStaggered(elements, callback) {
-            animateStaggered(elements, true, 80, 3, callback);
+            if (animationInProgress) {
+                let attempts = 0;
+                const wait = () => {
+                    if (animationInProgress && attempts < 3) {
+                        attempts++;
+                        setTimeout(wait, 100);
+                    } else {
+                        animateStaggered(elements, true, 25, 8, callback);
+                    }
+                };
+                wait();
+            } else {
+                animateStaggered(elements, true, 25, 8, callback);
+            }
         }
 
-        // ========== NAVEGACIÓN COMPACTA CON ANIMACIONES MEJORADAS ==========
+        // ========== RIPPLE ==========
+        function createRipple(event, element) {
+            const rect = element.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = event.clientX - rect.left - size / 2;
+            const y = event.clientY - rect.top - size / 2;
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple';
+            ripple.style.width = ripple.style.height = `${size}px`;
+            ripple.style.left = `${x}px`;
+            ripple.style.top = `${y}px`;
+            element.style.position = 'relative';
+            element.style.overflow = 'hidden';
+            element.appendChild(ripple);
+            ripple.addEventListener('animationend', () => ripple.remove());
+        }
+
+        // ========== PULSO CARRITO ==========
+        function pulseCart() {
+            const cartIcon = document.getElementById('cartIcon');
+            cartIcon.classList.add('pulse');
+            setTimeout(() => cartIcon.classList.remove('pulse'), 400);
+        }
+
+        // ========== NAVEGACIÓN CORREGIDA ==========
         function generarCategorias() {
             const grid = document.getElementById('categoriasGrid');
             grid.innerHTML = '';
@@ -836,24 +984,31 @@
                 div.textContent = cat.nombre;
                 div.style.opacity = '1';
                 div.style.transform = 'scale(1)';
-                div.addEventListener('click', () => seleccionarCategoria(key));
+                div.addEventListener('click', (e) => {
+                    createRipple(e, div);
+                    seleccionarCategoria(key);
+                });
                 grid.appendChild(div);
             });
         }
 
         function cerrarPanelConAnimacion(callback) {
-            if (!categoriaActiva) {
+            if (!categoriaActiva || closingPanel) {
                 if (callback) callback();
                 return;
             }
+            closingPanel = true;
+
             const panel = document.getElementById('subPanel');
             const subItems = Array.from(document.querySelectorAll('.subcategoria-item'));
             const prodItems = Array.from(document.querySelectorAll('.producto-item'));
             const allItems = [...subItems, ...prodItems];
-            if (allItems.length) {
-                hideElementWithStaggered(allItems, () => {
+
+            const finishClose = () => {
+                panel.classList.remove('show');
+                setTimeout(() => {
                     panel.style.display = 'none';
-                    // mostrar todas las categorías nuevamente
+                    // Mostrar todas las categorías de nuevo
                     const categories = Array.from(document.querySelectorAll('.categoria-item'));
                     categories.forEach(cat => {
                         cat.style.display = 'flex';
@@ -864,27 +1019,21 @@
                         document.querySelectorAll('.categoria-item').forEach(el => el.classList.remove('active'));
                         categoriaActiva = null;
                         subcategoriaActiva = null;
+                        closingPanel = false;
                         if (callback) callback();
                     });
-                });
+                }, 300); // esperar a que termine la animación de salida del panel
+            };
+
+            if (allItems.length) {
+                hideElementWithStaggered(allItems, finishClose);
             } else {
-                panel.style.display = 'none';
-                const categories = Array.from(document.querySelectorAll('.categoria-item'));
-                categories.forEach(cat => {
-                    cat.style.display = 'flex';
-                    cat.style.opacity = '0';
-                    cat.style.transform = 'scale(0.9)';
-                });
-                showElementWithStaggered(categories, () => {
-                    document.querySelectorAll('.categoria-item').forEach(el => el.classList.remove('active'));
-                    categoriaActiva = null;
-                    subcategoriaActiva = null;
-                    if (callback) callback();
-                });
+                finishClose();
             }
         }
 
         function seleccionarCategoria(key) {
+            if (animationInProgress || closingPanel) return;
             if (categoriaActiva === key && document.getElementById('subPanel').style.display === 'block') {
                 cerrarPanelConAnimacion();
                 return;
@@ -899,6 +1048,7 @@
         }
 
         function abrirNuevaCategoria(key) {
+            if (animationInProgress || closingPanel) return;
             const categories = Array.from(document.querySelectorAll('.categoria-item'));
             const selectedCat = categories.find(cat => cat.dataset.categoria === key);
             const otherCats = categories.filter(cat => cat !== selectedCat);
@@ -910,11 +1060,12 @@
 
                 const panel = document.getElementById('subPanel');
                 panel.style.display = 'block';
+                void panel.offsetWidth; // fuerza reflow
+                panel.classList.add('show');
 
                 const categoria = productosDB[key];
                 const subGrid = document.getElementById('subcategoriasGrid');
                 subGrid.innerHTML = '';
-                subGrid.classList.remove('hide-others');
                 const subKeys = Object.keys(categoria.subcategorias);
                 subKeys.forEach(subKey => {
                     const sub = categoria.subcategorias[subKey];
@@ -926,7 +1077,7 @@
                     subDiv.style.opacity = '0';
                     subDiv.style.transform = 'scale(0.9)';
                     subDiv.addEventListener('click', (e) => {
-                        e.stopPropagation();
+                        createRipple(e, subDiv);
                         seleccionarSubcategoria(key, subKey);
                     });
                     subGrid.appendChild(subDiv);
@@ -938,6 +1089,7 @@
         }
 
         function seleccionarSubcategoria(catKey, subKey) {
+            if (animationInProgress || closingPanel) return;
             if (subcategoriaActiva === subKey) {
                 volverASubcategorias();
                 return;
@@ -966,6 +1118,7 @@
                         <div class="btn-agregar">Agregar a lista</div>
                     `;
                     prodDiv.addEventListener('click', (e) => {
+                        createRipple(e, prodDiv);
                         if (e.target.classList.contains('btn-agregar')) e.stopPropagation();
                         agregarProductoDirectamente(p.nombre, p.precio, p.unidad);
                     });
@@ -977,6 +1130,7 @@
         }
 
         function volverASubcategorias() {
+            if (animationInProgress || closingPanel) return;
             if (!categoriaActiva) return;
             const prodGrid = document.getElementById('productosGrid');
             const products = Array.from(prodGrid.children);
@@ -1008,11 +1162,12 @@
             }
         }
 
-        // ========== FUNCIONES DE LISTA Y CARRITO (ORIGINALES) ==========
+        // ========== FUNCIONES DE LISTA Y CARRITO (sin cambios) ==========
         function agregarProductoDirectamente(nombre, precio, unidad) {
             listaProductos.push({ id: Date.now(), nombre, cantidad: 1, unidad, precio });
             actualizarLista();
             mostrarNotificacion(`${nombre} agregado a la lista`);
+            pulseCart();
         }
 
         function agregarProducto() {
@@ -1028,6 +1183,7 @@
             document.getElementById('precio').value = '';
             document.getElementById('producto').focus();
             mostrarNotificacion('Producto agregado');
+            pulseCart();
         }
 
         function eliminarProducto(id) {
@@ -1290,14 +1446,6 @@
             return letras;
         }
 
-        function limpiarLista() {
-            if (listaProductos.length && confirm('¿Limpiar toda la lista?')) {
-                listaProductos = [];
-                actualizarLista();
-                mostrarNotificacion('Lista limpiada');
-            }
-        }
-
         function generarTextoLista() {
             if (!listaProductos.length) return 'Lista vacía';
             let texto = '🛒 *LISTA DE MERCADO*\n\n';
@@ -1346,6 +1494,11 @@
         document.getElementById('producto').addEventListener('keypress', e => { if(e.key==='Enter') agregarProducto(); });
         document.getElementById('cantidad').addEventListener('keypress', e => { if(e.key==='Enter') agregarProducto(); });
         document.getElementById('precio').addEventListener('keypress', e => { if(e.key==='Enter') agregarProducto(); });
+        const btnAdd = document.getElementById('btnAddProducto');
+        btnAdd.addEventListener('click', (e) => {
+            createRipple(e, btnAdd);
+            agregarProducto();
+        });
 
         generarCategorias();
         actualizarLista();
