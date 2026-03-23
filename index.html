@@ -58,15 +58,11 @@
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
-            transition: all 0.2s;
         }
         .categoria-item,
         .subcategoria-item,
         .producto-item {
-            transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            will-change: transform, opacity;
-            opacity: 1;
-            transform: scale(1);
+            transition: all 0.2s ease;
         }
         .categoria-item,
         .subcategoria-item {
@@ -80,8 +76,6 @@
             gap: 8px;
             font-size: 1rem;
             white-space: nowrap;
-            position: relative;
-            overflow: hidden;
         }
         .categoria-item {
             border: 1px solid #3a3a3a;
@@ -96,7 +90,6 @@
         .subcategoria-item:hover {
             transform: scale(1.02);
             background: #3a3a3a;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         .categoria-item.active {
             background: #1e3a5f;
@@ -129,13 +122,6 @@
             padding: 16px;
             border: 1px solid #3a3a3a;
             display: none;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-        }
-        .subcategorias-panel.show {
-            opacity: 1;
-            transform: translateY(0);
         }
         .subcategorias-grid {
             display: flex;
@@ -157,14 +143,11 @@
             text-align: center;
             flex: 1 0 140px;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transition: transform 0.2s;
         }
         .producto-item:hover {
             transform: scale(1.02);
             border-color: #6b8c6b;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
         }
         .producto-nombre {
             font-weight: bold;
@@ -189,8 +172,6 @@
             font-size: 0.75rem;
             cursor: pointer;
             transition: background 0.2s;
-            position: relative;
-            overflow: hidden;
         }
         .btn-agregar:hover {
             background: #2563eb;
@@ -214,7 +195,6 @@
             background: #1e1e1e;
             border: 1px solid #3a3a3a;
             color: white;
-            transition: border 0.2s;
         }
         input:focus, select:focus {
             border-color: #3b82f6;
@@ -229,8 +209,6 @@
             font-weight: bold;
             cursor: pointer;
             transition: transform 0.2s, background 0.2s;
-            position: relative;
-            overflow: hidden;
         }
         .btn:hover {
             background: #2563eb;
@@ -269,14 +247,6 @@
         .cart-icon:hover {
             transform: scale(1.05);
         }
-        .cart-icon.pulse {
-            animation: pulse 0.4s ease-in-out;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); background: #ff9800; }
-            100% { transform: scale(1); }
-        }
         .cart-count {
             position: absolute;
             top: -4px;
@@ -303,7 +273,7 @@
             font-family: 'Courier New', Courier, monospace;
             z-index: 2000;
             transform: translateY(100%);
-            transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transition: transform 0.3s;
             display: flex;
             flex-direction: column;
             border-radius: 30px 30px 0 0;
@@ -352,7 +322,6 @@
             align-items: center;
             padding: 8px 0;
             border-bottom: 1px solid #eee;
-            transition: background 0.2s;
         }
         .cart-item-remove {
             color: red;
@@ -362,10 +331,6 @@
             font-size: 1.2rem;
             cursor: pointer;
             margin-right: 10px;
-            transition: transform 0.2s;
-        }
-        .cart-item-remove:hover {
-            transform: scale(1.1);
         }
         .cart-total {
             padding: 16px;
@@ -398,26 +363,11 @@
             padding: 12px 20px;
             border-radius: 40px;
             z-index: 3000;
-            animation: slideIn 0.3s ease-out;
+            animation: slideIn 0.3s;
         }
         @keyframes slideIn {
             from { transform: translateX(100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
-        }
-        /* Ripple effect */
-        .ripple {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.6);
-            transform: scale(0);
-            animation: rippleAnim 0.5s linear;
-            pointer-events: none;
-        }
-        @keyframes rippleAnim {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
         }
         @media (min-width: 1024px) {
             body {
@@ -488,7 +438,7 @@
                 </select>
             </div>
             <div class="input-group"><input type="number" id="precio" placeholder="Precio (S/)"></div>
-            <button class="btn" id="btnAddProducto">AÑADIR</button>
+            <button class="btn" onclick="agregarProducto()">AÑADIR</button>
         </div>
 
         <div class="empty-state" id="emptyState">Tu lista está vacía. ¡Agrega algunos productos!</div>
@@ -513,7 +463,7 @@
     </div>
 
     <script>
-        // ========== PRODUCTOS COMPLETOS (ORIGINAL) ==========
+        // ========== PRODUCTOS COMPLETOS (TODAS LAS CATEGORÍAS) ==========
         const productosDB = {
             frutas: {
                 emoji: '🍎',
@@ -764,37 +714,487 @@
                 emoji: '🥩',
                 nombre: 'Carnes',
                 subcategorias: {
-                    res: { emoji: '🐄', nombre: 'Carne de Res', productos: [ { nombre: 'Lomo Fino', precio: 28.50, unidad: 'kg' }, { nombre: 'Chuleta', precio: 24.00, unidad: 'kg' }, { nombre: 'Bistec', precio: 23.00, unidad: 'kg' }, { nombre: 'Carne Molida', precio: 20.00, unidad: 'kg' }, { nombre: 'Costilla', precio: 18.00, unidad: 'kg' } ] },
-                    pollo: { emoji: '🐔', nombre: 'Pollo', productos: [ { nombre: 'Pollo Entero', precio: 12.50, unidad: 'kg' }, { nombre: 'Pechuga', precio: 16.00, unidad: 'kg' }, { nombre: 'Muslo', precio: 11.00, unidad: 'kg' }, { nombre: 'Alas', precio: 10.00, unidad: 'kg' }, { nombre: 'Pollo Desmenuzado', precio: 18.00, unidad: 'kg' } ] },
-                    cerdo: { emoji: '🐖', nombre: 'Carne de Cerdo', productos: [ { nombre: 'Lomo de Cerdo', precio: 20.00, unidad: 'kg' }, { nombre: 'Chuleta de Cerdo', precio: 19.00, unidad: 'kg' }, { nombre: 'Tocino', precio: 16.00, unidad: 'kg' }, { nombre: 'Jamón', precio: 25.00, unidad: 'kg' } ] },
-                    pescado: { emoji: '🐟', nombre: 'Pescados', productos: [ { nombre: 'Tilapia', precio: 15.00, unidad: 'kg' }, { nombre: 'Trucha', precio: 22.00, unidad: 'kg' }, { nombre: 'Atún', precio: 26.00, unidad: 'kg' }, { nombre: 'Salmón', precio: 40.00, unidad: 'kg' } ] }
+                    res: {
+                        emoji: '🐄',
+                        nombre: 'Carne de Res',
+                        productos: [
+                            { nombre: 'Lomo fino', precio: 28.50, unidad: 'kg' },
+                            { nombre: 'Bistec', precio: 23.00, unidad: 'kg' },
+                            { nombre: 'Chuleta', precio: 24.00, unidad: 'kg' },
+                            { nombre: 'Carne molida', precio: 20.00, unidad: 'kg' },
+                            { nombre: 'Costilla', precio: 18.00, unidad: 'kg' },
+                            { nombre: 'Pulpa', precio: 22.00, unidad: 'kg' },
+                            { nombre: 'Falda', precio: 15.00, unidad: 'kg' },
+                            { nombre: 'Hígado', precio: 10.00, unidad: 'kg' },
+                            { nombre: 'Riñón', precio: 12.00, unidad: 'kg' }
+                        ]
+                    },
+                    cerdo: {
+                        emoji: '🐖',
+                        nombre: 'Carne de Cerdo',
+                        productos: [
+                            { nombre: 'Lomo de cerdo', precio: 20.00, unidad: 'kg' },
+                            { nombre: 'Chuleta de cerdo', precio: 19.00, unidad: 'kg' },
+                            { nombre: 'Tocino', precio: 16.00, unidad: 'kg' },
+                            { nombre: 'Jamón', precio: 25.00, unidad: 'kg' },
+                            { nombre: 'Costilla de cerdo', precio: 15.00, unidad: 'kg' },
+                            { nombre: 'Pierna', precio: 18.00, unidad: 'kg' },
+                            { nombre: 'Chicharrón', precio: 22.00, unidad: 'kg' }
+                        ]
+                    },
+                    pollo: {
+                        emoji: '🐔',
+                        nombre: 'Pollo',
+                        productos: [
+                            { nombre: 'Pollo entero', precio: 12.50, unidad: 'kg' },
+                            { nombre: 'Pechuga', precio: 16.00, unidad: 'kg' },
+                            { nombre: 'Muslo', precio: 11.00, unidad: 'kg' },
+                            { nombre: 'Alas', precio: 10.00, unidad: 'kg' },
+                            { nombre: 'Pollo desmenuzado', precio: 18.00, unidad: 'kg' },
+                            { nombre: 'Menudencias', precio: 5.00, unidad: 'kg' }
+                        ]
+                    },
+                    pescado: {
+                        emoji: '🐟',
+                        nombre: 'Pescados',
+                        productos: [
+                            { nombre: 'Tilapia', precio: 15.00, unidad: 'kg' },
+                            { nombre: 'Trucha', precio: 22.00, unidad: 'kg' },
+                            { nombre: 'Atún', precio: 26.00, unidad: 'kg' },
+                            { nombre: 'Salmón', precio: 40.00, unidad: 'kg' },
+                            { nombre: 'Corvina', precio: 28.00, unidad: 'kg' },
+                            { nombre: 'Bonito', precio: 12.00, unidad: 'kg' },
+                            { nombre: 'Jurel', precio: 10.00, unidad: 'kg' }
+                        ]
+                    },
+                    cordero: {
+                        emoji: '🐏',
+                        nombre: 'Cordero',
+                        productos: [
+                            { nombre: 'Pierna de cordero', precio: 32.00, unidad: 'kg' },
+                            { nombre: 'Chuleta de cordero', precio: 35.00, unidad: 'kg' },
+                            { nombre: 'Costillar', precio: 30.00, unidad: 'kg' }
+                        ]
+                    },
+                    pavo: {
+                        emoji: '🦃',
+                        nombre: 'Pavo',
+                        productos: [
+                            { nombre: 'Pavo entero', precio: 18.00, unidad: 'kg' },
+                            { nombre: 'Pechuga de pavo', precio: 22.00, unidad: 'kg' }
+                        ]
+                    },
+                    embutidos: {
+                        emoji: '🌭',
+                        nombre: 'Embutidos',
+                        productos: [
+                            { nombre: 'Jamón inglés', precio: 32.00, unidad: 'kg' },
+                            { nombre: 'Jamón de pavo', precio: 28.00, unidad: 'kg' },
+                            { nombre: 'Salchicha', precio: 12.00, unidad: 'paquete' },
+                            { nombre: 'Hot dog', precio: 10.00, unidad: 'paquete' },
+                            { nombre: 'Chorizo', precio: 18.00, unidad: 'kg' }
+                        ]
+                    }
                 }
             },
             lacteos: {
                 emoji: '🥛',
                 nombre: 'Lácteos',
                 subcategorias: {
-                    leche: { emoji: '🥛', nombre: 'Leche', productos: [ { nombre: 'Leche Entera', precio: 4.20, unidad: 'L' }, { nombre: 'Leche Descremada', precio: 4.50, unidad: 'L' }, { nombre: 'Leche Deslactosada', precio: 5.00, unidad: 'L' }, { nombre: 'Leche de Almendra', precio: 9.00, unidad: 'L' } ] },
-                    quesos: { emoji: '🧀', nombre: 'Quesos', productos: [ { nombre: 'Queso Fresco', precio: 12.00, unidad: 'kg' }, { nombre: 'Queso Mozzarella', precio: 15.00, unidad: 'kg' }, { nombre: 'Queso Cheddar', precio: 16.50, unidad: 'kg' }, { nombre: 'Queso Manchego', precio: 22.00, unidad: 'kg' } ] },
-                    yogurt: { emoji: '🍶', nombre: 'Yogurt', productos: [ { nombre: 'Yogurt Natural', precio: 8.00, unidad: 'kg' }, { nombre: 'Yogurt con Frutas', precio: 9.50, unidad: 'kg' }, { nombre: 'Yogurt Griego', precio: 12.50, unidad: 'kg' }, { nombre: 'Yogurt Descremado', precio: 8.80, unidad: 'kg' } ] }
+                    leche: {
+                        emoji: '🥛',
+                        nombre: 'Leche',
+                        productos: [
+                            { nombre: 'Leche entera', precio: 4.20, unidad: 'L' },
+                            { nombre: 'Leche descremada', precio: 4.50, unidad: 'L' },
+                            { nombre: 'Leche deslactosada', precio: 5.00, unidad: 'L' },
+                            { nombre: 'Leche de almendra', precio: 9.00, unidad: 'L' },
+                            { nombre: 'Leche evaporada', precio: 3.50, unidad: 'lata' },
+                            { nombre: 'Leche condensada', precio: 6.00, unidad: 'lata' }
+                        ]
+                    },
+                    quesos: {
+                        emoji: '🧀',
+                        nombre: 'Quesos',
+                        productos: [
+                            { nombre: 'Queso fresco', precio: 12.00, unidad: 'kg' },
+                            { nombre: 'Queso mozzarella', precio: 15.00, unidad: 'kg' },
+                            { nombre: 'Queso cheddar', precio: 16.50, unidad: 'kg' },
+                            { nombre: 'Queso manchego', precio: 22.00, unidad: 'kg' },
+                            { nombre: 'Queso andino', precio: 10.00, unidad: 'kg' },
+                            { nombre: 'Queso paria', precio: 14.00, unidad: 'kg' },
+                            { nombre: 'Queso mantecoso', precio: 13.00, unidad: 'kg' }
+                        ]
+                    },
+                    yogurt: {
+                        emoji: '🍶',
+                        nombre: 'Yogurt',
+                        productos: [
+                            { nombre: 'Yogurt natural', precio: 8.00, unidad: 'kg' },
+                            { nombre: 'Yogurt con frutas', precio: 9.50, unidad: 'kg' },
+                            { nombre: 'Yogurt griego', precio: 12.50, unidad: 'kg' },
+                            { nombre: 'Yogurt descremado', precio: 8.80, unidad: 'kg' },
+                            { nombre: 'Yogurt bebible', precio: 4.00, unidad: 'L' }
+                        ]
+                    },
+                    mantequilla: {
+                        emoji: '🧈',
+                        nombre: 'Mantequilla',
+                        productos: [
+                            { nombre: 'Mantequilla sin sal', precio: 12.00, unidad: 'kg' },
+                            { nombre: 'Mantequilla con sal', precio: 12.00, unidad: 'kg' },
+                            { nombre: 'Margarina', precio: 5.00, unidad: 'kg' }
+                        ]
+                    },
+                    crema: {
+                        emoji: '🥄',
+                        nombre: 'Crema',
+                        productos: [
+                            { nombre: 'Crema de leche', precio: 15.00, unidad: 'L' },
+                            { nombre: 'Crema agria', precio: 18.00, unidad: 'L' },
+                            { nombre: 'Crema chantilly', precio: 20.00, unidad: 'L' }
+                        ]
+                    },
+                    postres: {
+                        emoji: '🍮',
+                        nombre: 'Postres lácteos',
+                        productos: [
+                            { nombre: 'Flan', precio: 5.00, unidad: 'unidad' },
+                            { nombre: 'Mazamorra', precio: 3.50, unidad: 'porción' },
+                            { nombre: 'Arroz con leche', precio: 4.00, unidad: 'porción' }
+                        ]
+                    }
                 }
             },
             granos: {
                 emoji: '🌾',
                 nombre: 'Granos y Cereales',
                 subcategorias: {
-                    arroz: { emoji: '🍚', nombre: 'Arroz', productos: [ { nombre: 'Arroz Blanco', precio: 4.00, unidad: 'kg' }, { nombre: 'Arroz Integral', precio: 5.80, unidad: 'kg' }, { nombre: 'Arroz Basmati', precio: 8.00, unidad: 'kg' }, { nombre: 'Arroz de Coco', precio: 6.50, unidad: 'kg' } ] },
-                    frijoles: { emoji: '🫘', nombre: 'Frijoles', productos: [ { nombre: 'Frijol Negro', precio: 5.00, unidad: 'kg' }, { nombre: 'Frijol Rojo', precio: 5.20, unidad: 'kg' }, { nombre: 'Frijol Blanco', precio: 5.50, unidad: 'kg' }, { nombre: 'Lenteja', precio: 6.50, unidad: 'kg' } ] },
-                    pasta: { emoji: '🍝', nombre: 'Pasta', productos: [ { nombre: 'Espaguetti', precio: 5.00, unidad: 'paquete' }, { nombre: 'Macarrones', precio: 5.20, unidad: 'paquete' }, { nombre: 'Penne', precio: 5.80, unidad: 'paquete' }, { nombre: 'Lasaña', precio: 7.20, unidad: 'paquete' } ] }
+                    arroz: {
+                        emoji: '🍚',
+                        nombre: 'Arroz',
+                        productos: [
+                            { nombre: 'Arroz blanco', precio: 4.00, unidad: 'kg' },
+                            { nombre: 'Arroz integral', precio: 5.80, unidad: 'kg' },
+                            { nombre: 'Arroz basmati', precio: 8.00, unidad: 'kg' },
+                            { nombre: 'Arroz de coco', precio: 6.50, unidad: 'kg' },
+                            { nombre: 'Arroz para risotto', precio: 7.50, unidad: 'kg' }
+                        ]
+                    },
+                    frijoles: {
+                        emoji: '🫘',
+                        nombre: 'Frijoles',
+                        productos: [
+                            { nombre: 'Frijol negro', precio: 5.00, unidad: 'kg' },
+                            { nombre: 'Frijol rojo', precio: 5.20, unidad: 'kg' },
+                            { nombre: 'Frijol blanco', precio: 5.50, unidad: 'kg' },
+                            { nombre: 'Frijol canario', precio: 4.80, unidad: 'kg' },
+                            { nombre: 'Frijol bayo', precio: 5.30, unidad: 'kg' }
+                        ]
+                    },
+                    lentejas: {
+                        emoji: '🍲',
+                        nombre: 'Lentejas',
+                        productos: [
+                            { nombre: 'Lenteja', precio: 6.50, unidad: 'kg' },
+                            { nombre: 'Lenteja roja', precio: 7.00, unidad: 'kg' },
+                            { nombre: 'Lenteja partida', precio: 6.80, unidad: 'kg' }
+                        ]
+                    },
+                    garbanzos: {
+                        emoji: '🥣',
+                        nombre: 'Garbanzos',
+                        productos: [
+                            { nombre: 'Garbanzo', precio: 7.50, unidad: 'kg' },
+                            { nombre: 'Garbanzo tostado', precio: 9.00, unidad: 'kg' }
+                        ]
+                    },
+                    quinua: {
+                        emoji: '🌾',
+                        nombre: 'Quinua',
+                        productos: [
+                            { nombre: 'Quinua blanca', precio: 12.00, unidad: 'kg' },
+                            { nombre: 'Quinua roja', precio: 13.00, unidad: 'kg' },
+                            { nombre: 'Quinua negra', precio: 14.00, unidad: 'kg' }
+                        ]
+                    },
+                    avena: {
+                        emoji: '🥣',
+                        nombre: 'Avena',
+                        productos: [
+                            { nombre: 'Avena en hojuelas', precio: 5.00, unidad: 'kg' },
+                            { nombre: 'Avena instantánea', precio: 6.50, unidad: 'kg' }
+                        ]
+                    },
+                    maiz: {
+                        emoji: '🌽',
+                        nombre: 'Maíz',
+                        productos: [
+                            { nombre: 'Maíz morado', precio: 4.00, unidad: 'kg' },
+                            { nombre: 'Maíz amarillo', precio: 3.50, unidad: 'kg' },
+                            { nombre: 'Maíz cancha', precio: 5.00, unidad: 'kg' },
+                            { nombre: 'Harina de maíz', precio: 3.80, unidad: 'kg' }
+                        ]
+                    },
+                    harinas: {
+                        emoji: '🍞',
+                        nombre: 'Harinas',
+                        productos: [
+                            { nombre: 'Harina de trigo', precio: 3.50, unidad: 'kg' },
+                            { nombre: 'Harina integral', precio: 4.50, unidad: 'kg' },
+                            { nombre: 'Harina de maíz', precio: 3.80, unidad: 'kg' },
+                            { nombre: 'Harina de arroz', precio: 6.00, unidad: 'kg' }
+                        ]
+                    },
+                    pasta: {
+                        emoji: '🍝',
+                        nombre: 'Pastas',
+                        productos: [
+                            { nombre: 'Espagueti', precio: 5.00, unidad: 'paquete' },
+                            { nombre: 'Macarrones', precio: 5.20, unidad: 'paquete' },
+                            { nombre: 'Penne', precio: 5.80, unidad: 'paquete' },
+                            { nombre: 'Lasaña', precio: 7.20, unidad: 'paquete' },
+                            { nombre: 'Tallarines', precio: 4.80, unidad: 'paquete' }
+                        ]
+                    }
                 }
             },
             bebidas: {
                 emoji: '🥤',
                 nombre: 'Bebidas',
                 subcategorias: {
-                    gaseosas: { emoji: '🥤', nombre: 'Gaseosas', productos: [ { nombre: 'Coca Cola', precio: 8.00, unidad: 'L' }, { nombre: 'Pepsi', precio: 7.50, unidad: 'L' }, { nombre: 'Sprite', precio: 7.80, unidad: 'L' }, { nombre: 'Fanta', precio: 7.80, unidad: 'L' } ] },
-                    jugos: { emoji: '🧃', nombre: 'Jugos', productos: [ { nombre: 'Jugo de Naranja', precio: 10.00, unidad: 'L' }, { nombre: 'Jugo de Manzana', precio: 10.50, unidad: 'L' }, { nombre: 'Jugo de Uva', precio: 11.50, unidad: 'L' }, { nombre: 'Jugo Multivitamínico', precio: 13.00, unidad: 'L' } ] },
-                    agua: { emoji: '💧', nombre: 'Agua', productos: [ { nombre: 'Agua Mineral', precio: 3.50, unidad: 'L' }, { nombre: 'Agua con Gas', precio: 5.00, unidad: 'L' }, { nombre: 'Agua Saborizada', precio: 6.00, unidad: 'L' } ] }
+                    gaseosas: {
+                        emoji: '🥤',
+                        nombre: 'Gaseosas',
+                        productos: [
+                            { nombre: 'Coca Cola', precio: 8.00, unidad: 'L' },
+                            { nombre: 'Pepsi', precio: 7.50, unidad: 'L' },
+                            { nombre: 'Sprite', precio: 7.80, unidad: 'L' },
+                            { nombre: 'Fanta', precio: 7.80, unidad: 'L' },
+                            { nombre: 'Inca Kola', precio: 7.90, unidad: 'L' }
+                        ]
+                    },
+                    jugos: {
+                        emoji: '🧃',
+                        nombre: 'Jugos',
+                        productos: [
+                            { nombre: 'Jugo de naranja', precio: 10.00, unidad: 'L' },
+                            { nombre: 'Jugo de manzana', precio: 10.50, unidad: 'L' },
+                            { nombre: 'Jugo de uva', precio: 11.50, unidad: 'L' },
+                            { nombre: 'Jugo multivitamínico', precio: 13.00, unidad: 'L' },
+                            { nombre: 'Jugo de piña', precio: 9.00, unidad: 'L' }
+                        ]
+                    },
+                    aguas: {
+                        emoji: '💧',
+                        nombre: 'Aguas',
+                        productos: [
+                            { nombre: 'Agua mineral', precio: 3.50, unidad: 'L' },
+                            { nombre: 'Agua con gas', precio: 5.00, unidad: 'L' },
+                            { nombre: 'Agua saborizada', precio: 6.00, unidad: 'L' },
+                            { nombre: 'Agua de mesa', precio: 2.50, unidad: 'L' }
+                        ]
+                    },
+                    cervezas: {
+                        emoji: '🍺',
+                        nombre: 'Cervezas',
+                        productos: [
+                            { nombre: 'Cerveza Pilsen', precio: 6.00, unidad: 'L' },
+                            { nombre: 'Cerveza Cristal', precio: 5.80, unidad: 'L' },
+                            { nombre: 'Cerveza Cusqueña', precio: 7.50, unidad: 'L' },
+                            { nombre: 'Cerveza Artesanal', precio: 12.00, unidad: 'L' }
+                        ]
+                    },
+                    vinos: {
+                        emoji: '🍷',
+                        nombre: 'Vinos',
+                        productos: [
+                            { nombre: 'Vino tinto', precio: 25.00, unidad: 'botella' },
+                            { nombre: 'Vino blanco', precio: 28.00, unidad: 'botella' },
+                            { nombre: 'Vino espumante', precio: 35.00, unidad: 'botella' }
+                        ]
+                    },
+                    licores: {
+                        emoji: '🥃',
+                        nombre: 'Licores',
+                        productos: [
+                            { nombre: 'Pisco', precio: 40.00, unidad: 'botella' },
+                            { nombre: 'Ron', precio: 35.00, unidad: 'botella' },
+                            { nombre: 'Whisky', precio: 60.00, unidad: 'botella' }
+                        ]
+                    },
+                    infusiones: {
+                        emoji: '🍵',
+                        nombre: 'Infusiones',
+                        productos: [
+                            { nombre: 'Té en bolsas', precio: 8.00, unidad: 'caja' },
+                            { nombre: 'Manzanilla', precio: 5.00, unidad: 'caja' },
+                            { nombre: 'Menta', precio: 5.00, unidad: 'caja' },
+                            { nombre: 'Hierba Luisa', precio: 6.00, unidad: 'caja' }
+                        ]
+                    },
+                    cafe: {
+                        emoji: '☕',
+                        nombre: 'Café',
+                        productos: [
+                            { nombre: 'Café molido', precio: 15.00, unidad: 'kg' },
+                            { nombre: 'Café en grano', precio: 18.00, unidad: 'kg' },
+                            { nombre: 'Café instantáneo', precio: 12.00, unidad: 'frasco' }
+                        ]
+                    }
+                }
+            },
+            higiene_personal: {
+                emoji: '🧼',
+                nombre: 'Higiene Personal',
+                subcategorias: {
+                    cuidado_bucal: {
+                        emoji: '🪥',
+                        nombre: 'Cuidado Bucal',
+                        productos: [
+                            { nombre: 'Cepillo dental', precio: 5.00, unidad: 'unidad' },
+                            { nombre: 'Cepillo eléctrico', precio: 35.00, unidad: 'unidad' },
+                            { nombre: 'Pasta dental (mediana)', precio: 8.50, unidad: 'unidad' },
+                            { nombre: 'Pasta dental (grande)', precio: 12.00, unidad: 'unidad' },
+                            { nombre: 'Enjuague bucal', precio: 10.00, unidad: 'unidad' },
+                            { nombre: 'Hilo dental', precio: 6.00, unidad: 'unidad' },
+                            { nombre: 'Limpiador de lengua', precio: 4.00, unidad: 'unidad' }
+                        ]
+                    },
+                    cuidado_corporal: {
+                        emoji: '🧴',
+                        nombre: 'Cuidado Corporal',
+                        productos: [
+                            { nombre: 'Jabón de barra', precio: 2.50, unidad: 'unidad' },
+                            { nombre: 'Jabón líquido', precio: 6.00, unidad: 'L' },
+                            { nombre: 'Gel de ducha', precio: 8.00, unidad: 'unidad' },
+                            { nombre: 'Crema corporal', precio: 12.00, unidad: 'unidad' },
+                            { nombre: 'Desodorante roll-on', precio: 7.50, unidad: 'unidad' },
+                            { nombre: 'Desodorante aerosol', precio: 9.00, unidad: 'unidad' },
+                            { nombre: 'Talco', precio: 5.00, unidad: 'unidad' }
+                        ]
+                    },
+                    cuidado_capilar: {
+                        emoji: '💇',
+                        nombre: 'Cuidado Capilar',
+                        productos: [
+                            { nombre: 'Shampoo', precio: 12.00, unidad: 'unidad' },
+                            { nombre: 'Acondicionador', precio: 12.00, unidad: 'unidad' },
+                            { nombre: 'Mascarilla capilar', precio: 15.00, unidad: 'unidad' },
+                            { nombre: 'Aceite capilar', precio: 10.00, unidad: 'unidad' },
+                            { nombre: 'Shampoo seco', precio: 8.00, unidad: 'unidad' },
+                            { nombre: 'Gel para peinar', precio: 7.00, unidad: 'unidad' }
+                        ]
+                    },
+                    cuidado_facial: {
+                        emoji: '🧖',
+                        nombre: 'Cuidado Facial',
+                        productos: [
+                            { nombre: 'Limpiador facial', precio: 10.00, unidad: 'unidad' },
+                            { nombre: 'Protector solar', precio: 25.00, unidad: 'unidad' },
+                            { nombre: 'Crema hidratante', precio: 18.00, unidad: 'unidad' },
+                            { nombre: 'Tónico facial', precio: 12.00, unidad: 'unidad' },
+                            { nombre: 'Exfoliante', precio: 14.00, unidad: 'unidad' },
+                            { nombre: 'Mascarilla facial', precio: 8.00, unidad: 'unidad' }
+                        ]
+                    },
+                    afeitado: {
+                        emoji: '🪒',
+                        nombre: 'Afeitado',
+                        productos: [
+                            { nombre: 'Maquinilla desechable', precio: 5.00, unidad: 'paquete' },
+                            { nombre: 'Rastrillo recargable', precio: 15.00, unidad: 'unidad' },
+                            { nombre: 'Cuchillas de repuesto', precio: 8.00, unidad: 'paquete' },
+                            { nombre: 'Crema de afeitar', precio: 6.00, unidad: 'unidad' },
+                            { nombre: 'Gel de afeitar', precio: 7.00, unidad: 'unidad' },
+                            { nombre: 'Loción aftershave', precio: 10.00, unidad: 'unidad' }
+                        ]
+                    },
+                    papel: {
+                        emoji: '🧻',
+                        nombre: 'Papel y Toallas',
+                        productos: [
+                            { nombre: 'Papel higiénico (x4)', precio: 6.00, unidad: 'paquete' },
+                            { nombre: 'Papel higiénico (x12)', precio: 18.00, unidad: 'paquete' },
+                            { nombre: 'Toallas femeninas', precio: 7.00, unidad: 'paquete' },
+                            { nombre: 'Protectores diarios', precio: 5.00, unidad: 'paquete' },
+                            { nombre: 'Pañales', precio: 25.00, unidad: 'paquete' },
+                            { nombre: 'Toallitas húmedas', precio: 6.00, unidad: 'paquete' }
+                        ]
+                    }
+                }
+            },
+            limpieza_hogar: {
+                emoji: '🧹',
+                nombre: 'Limpieza del Hogar',
+                subcategorias: {
+                    lavanderia: {
+                        emoji: '🧺',
+                        nombre: 'Lavandería',
+                        productos: [
+                            { nombre: 'Detergente en polvo (1kg)', precio: 8.00, unidad: 'kg' },
+                            { nombre: 'Detergente líquido (1L)', precio: 12.00, unidad: 'L' },
+                            { nombre: 'Suavizante', precio: 10.00, unidad: 'L' },
+                            { nombre: 'Jabón de lavandería', precio: 3.00, unidad: 'unidad' },
+                            { nombre: 'Quitamanchas', precio: 7.00, unidad: 'unidad' },
+                            { nombre: 'Cloro / lejía', precio: 4.00, unidad: 'L' }
+                        ]
+                    },
+                    cocina: {
+                        emoji: '🍽️',
+                        nombre: 'Cocina',
+                        productos: [
+                            { nombre: 'Detergente para vajilla', precio: 5.00, unidad: 'L' },
+                            { nombre: 'Esponja', precio: 2.00, unidad: 'unidad' },
+                            { nombre: 'Estropajo de acero', precio: 1.50, unidad: 'unidad' },
+                            { nombre: 'Limpiador multiusos', precio: 6.00, unidad: 'L' },
+                            { nombre: 'Desengrasante', precio: 7.00, unidad: 'L' },
+                            { nombre: 'Paños de cocina', precio: 5.00, unidad: 'paquete' }
+                        ]
+                    },
+                    bano: {
+                        emoji: '🚽',
+                        nombre: 'Baño',
+                        productos: [
+                            { nombre: 'Limpiador de baño', precio: 6.00, unidad: 'L' },
+                            { nombre: 'Desinfectante', precio: 8.00, unidad: 'L' },
+                            { nombre: 'Escobilla para baño', precio: 4.00, unidad: 'unidad' },
+                            { nombre: 'Limpiavidrios', precio: 5.00, unidad: 'L' },
+                            { nombre: 'Pastillas para inodoro', precio: 3.00, unidad: 'paquete' }
+                        ]
+                    },
+                    pisos: {
+                        emoji: '🧽',
+                        nombre: 'Pisos y Superficies',
+                        productos: [
+                            { nombre: 'Trapeador', precio: 12.00, unidad: 'unidad' },
+                            { nombre: 'Balde', precio: 8.00, unidad: 'unidad' },
+                            { nombre: 'Cera para pisos', precio: 10.00, unidad: 'L' },
+                            { nombre: 'Limpiador de pisos', precio: 7.00, unidad: 'L' },
+                            { nombre: 'Mopa seca', precio: 15.00, unidad: 'unidad' }
+                        ]
+                    },
+                    insectos: {
+                        emoji: '🦟',
+                        nombre: 'Control de Plagas',
+                        productos: [
+                            { nombre: 'Repelente eléctrico', precio: 18.00, unidad: 'unidad' },
+                            { nombre: 'Aerosol insecticida', precio: 12.00, unidad: 'unidad' },
+                            { nombre: 'Raid', precio: 10.00, unidad: 'unidad' },
+                            { nombre: 'Trampas para cucarachas', precio: 8.00, unidad: 'paquete' },
+                            { nombre: 'Veneno para ratones', precio: 6.00, unidad: 'unidad' }
+                        ]
+                    },
+                    aire: {
+                        emoji: '🌸',
+                        nombre: 'Ambientadores',
+                        productos: [
+                            { nombre: 'Ambientador en aerosol', precio: 7.00, unidad: 'unidad' },
+                            { nombre: 'Difusor eléctrico', precio: 25.00, unidad: 'unidad' },
+                            { nombre: 'Sachet perfumado', precio: 3.00, unidad: 'unidad' },
+                            { nombre: 'Velas aromáticas', precio: 8.00, unidad: 'unidad' }
+                        ]
+                    }
                 }
             }
         };
@@ -804,174 +1204,8 @@
         let categoriaActiva = null;
         let subcategoriaActiva = null;
         let cartOpen = false;
-        let animationInProgress = false;
-        let closingPanel = false;           // Nueva bandera para evitar múltiples cierres
-        let activeTimeouts = [];
-        let activeTransitionHandlers = new Map();
 
-        // ========== FUNCIONES DE ANIMACIÓN MEJORADAS ==========
-        function cancelPendingAnimations() {
-            activeTimeouts.forEach(timeout => clearTimeout(timeout));
-            activeTimeouts = [];
-            activeTransitionHandlers.forEach((handler, el) => {
-                el.removeEventListener('transitionend', handler);
-            });
-            activeTransitionHandlers.clear();
-            animationInProgress = false;
-        }
-
-        function animateStaggered(elements, show, delayMs = 25, maxAnimated = 8, callback) {
-            if (!elements.length) {
-                if (callback) callback();
-                return;
-            }
-
-            cancelPendingAnimations();
-            animationInProgress = true;
-
-            const count = elements.length;
-            let animatedCount = count;
-            let startIndex = 0;
-            if (count > maxAnimated) {
-                animatedCount = maxAnimated;
-                startIndex = count - maxAnimated;
-            } else {
-                animatedCount = count;
-                startIndex = 0;
-            }
-
-            // Aplicar inmediato a los no animados
-            for (let i = 0; i < startIndex; i++) {
-                const el = elements[i];
-                if (show) {
-                    el.style.display = '';
-                    el.style.opacity = '1';
-                    el.style.transform = 'scale(1)';
-                } else {
-                    el.style.display = 'none';
-                    el.style.opacity = '0';
-                    el.style.transform = 'scale(0.9)';
-                }
-            }
-
-            if (animatedCount === 0) {
-                animationInProgress = false;
-                if (callback) callback();
-                return;
-            }
-
-            let remaining = animatedCount;
-            const onAnimateComplete = () => {
-                remaining--;
-                if (remaining === 0) {
-                    animationInProgress = false;
-                    if (callback) callback();
-                }
-            };
-
-            // Animación en cascada
-            for (let i = 0; i < animatedCount; i++) {
-                const idx = startIndex + i;
-                const el = elements[idx];
-                const timeout = setTimeout(() => {
-                    if (show) {
-                        el.style.display = '';
-                        el.style.opacity = '0';
-                        el.style.transform = 'scale(0.9)';
-                        void el.offsetWidth;
-                        const transitionHandler = () => {
-                            el.removeEventListener('transitionend', transitionHandler);
-                            activeTransitionHandlers.delete(el);
-                            onAnimateComplete();
-                        };
-                        el.addEventListener('transitionend', transitionHandler);
-                        activeTransitionHandlers.set(el, transitionHandler);
-                        el.style.opacity = '1';
-                        el.style.transform = 'scale(1)';
-                        const fallback = setTimeout(() => {
-                            if (el.style.display !== 'none') transitionHandler();
-                        }, 350);
-                        activeTimeouts.push(fallback);
-                    } else {
-                        const transitionHandler = () => {
-                            el.removeEventListener('transitionend', transitionHandler);
-                            activeTransitionHandlers.delete(el);
-                            el.style.display = 'none';
-                            onAnimateComplete();
-                        };
-                        el.addEventListener('transitionend', transitionHandler);
-                        activeTransitionHandlers.set(el, transitionHandler);
-                        el.style.opacity = '0';
-                        el.style.transform = 'scale(0.9)';
-                        const fallback = setTimeout(() => {
-                            if (el.style.display !== 'none') transitionHandler();
-                        }, 350);
-                        activeTimeouts.push(fallback);
-                    }
-                }, i * delayMs);
-                activeTimeouts.push(timeout);
-            }
-        }
-
-        function hideElementWithStaggered(elements, callback) {
-            if (animationInProgress) {
-                let attempts = 0;
-                const wait = () => {
-                    if (animationInProgress && attempts < 3) {
-                        attempts++;
-                        setTimeout(wait, 100);
-                    } else {
-                        animateStaggered(elements, false, 25, 8, callback);
-                    }
-                };
-                wait();
-            } else {
-                animateStaggered(elements, false, 25, 8, callback);
-            }
-        }
-
-        function showElementWithStaggered(elements, callback) {
-            if (animationInProgress) {
-                let attempts = 0;
-                const wait = () => {
-                    if (animationInProgress && attempts < 3) {
-                        attempts++;
-                        setTimeout(wait, 100);
-                    } else {
-                        animateStaggered(elements, true, 25, 8, callback);
-                    }
-                };
-                wait();
-            } else {
-                animateStaggered(elements, true, 25, 8, callback);
-            }
-        }
-
-        // ========== RIPPLE ==========
-        function createRipple(event, element) {
-            const rect = element.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
-            const x = event.clientX - rect.left - size / 2;
-            const y = event.clientY - rect.top - size / 2;
-            const ripple = document.createElement('span');
-            ripple.className = 'ripple';
-            ripple.style.width = ripple.style.height = `${size}px`;
-            ripple.style.left = `${x}px`;
-            ripple.style.top = `${y}px`;
-            element.style.position = 'relative';
-            element.style.overflow = 'hidden';
-            element.appendChild(ripple);
-            ripple.addEventListener('animationend', () => ripple.remove());
-        }
-
-        // ========== PULSO CARRITO ==========
-        function pulseCart() {
-            const cartIcon = document.getElementById('cartIcon');
-            cartIcon.classList.add('pulse');
-            setTimeout(() => cartIcon.classList.remove('pulse'), 400);
-        }
-
-        // ========== NAVEGACIÓN CORREGIDA ==========
+        // ========== NAVEGACIÓN SIMPLE (SIN ANIMACIONES COMPLEJAS) ==========
         function generarCategorias() {
             const grid = document.getElementById('categoriasGrid');
             grid.innerHTML = '';
@@ -982,114 +1216,62 @@
                 div.setAttribute('data-categoria', key);
                 div.setAttribute('data-emoji', cat.emoji);
                 div.textContent = cat.nombre;
-                div.style.opacity = '1';
-                div.style.transform = 'scale(1)';
-                div.addEventListener('click', (e) => {
-                    createRipple(e, div);
-                    seleccionarCategoria(key);
-                });
+                div.addEventListener('click', () => seleccionarCategoria(key));
                 grid.appendChild(div);
             });
         }
 
-        function cerrarPanelConAnimacion(callback) {
-            if (!categoriaActiva || closingPanel) {
-                if (callback) callback();
-                return;
-            }
-            closingPanel = true;
-
+        function cerrarPanel() {
             const panel = document.getElementById('subPanel');
-            const subItems = Array.from(document.querySelectorAll('.subcategoria-item'));
-            const prodItems = Array.from(document.querySelectorAll('.producto-item'));
-            const allItems = [...subItems, ...prodItems];
-
-            const finishClose = () => {
-                panel.classList.remove('show');
-                setTimeout(() => {
-                    panel.style.display = 'none';
-                    // Mostrar todas las categorías de nuevo
-                    const categories = Array.from(document.querySelectorAll('.categoria-item'));
-                    categories.forEach(cat => {
-                        cat.style.display = 'flex';
-                        cat.style.opacity = '0';
-                        cat.style.transform = 'scale(0.9)';
-                    });
-                    showElementWithStaggered(categories, () => {
-                        document.querySelectorAll('.categoria-item').forEach(el => el.classList.remove('active'));
-                        categoriaActiva = null;
-                        subcategoriaActiva = null;
-                        closingPanel = false;
-                        if (callback) callback();
-                    });
-                }, 300); // esperar a que termine la animación de salida del panel
-            };
-
-            if (allItems.length) {
-                hideElementWithStaggered(allItems, finishClose);
-            } else {
-                finishClose();
-            }
+            panel.style.display = 'none';
+            const categories = Array.from(document.querySelectorAll('.categoria-item'));
+            categories.forEach(cat => {
+                cat.style.display = 'flex';
+            });
+            document.querySelectorAll('.categoria-item').forEach(el => el.classList.remove('active'));
+            categoriaActiva = null;
+            subcategoriaActiva = null;
         }
 
         function seleccionarCategoria(key) {
-            if (animationInProgress || closingPanel) return;
             if (categoriaActiva === key && document.getElementById('subPanel').style.display === 'block') {
-                cerrarPanelConAnimacion();
+                cerrarPanel();
                 return;
             }
             if (categoriaActiva !== null) {
-                cerrarPanelConAnimacion(() => {
-                    abrirNuevaCategoria(key);
-                });
-            } else {
-                abrirNuevaCategoria(key);
+                cerrarPanel();
             }
-        }
-
-        function abrirNuevaCategoria(key) {
-            if (animationInProgress || closingPanel) return;
             const categories = Array.from(document.querySelectorAll('.categoria-item'));
             const selectedCat = categories.find(cat => cat.dataset.categoria === key);
             const otherCats = categories.filter(cat => cat !== selectedCat);
-            hideElementWithStaggered(otherCats, () => {
-                otherCats.forEach(cat => cat.style.display = 'none');
-                selectedCat.classList.add('active');
-                categoriaActiva = key;
-                subcategoriaActiva = null;
+            otherCats.forEach(cat => cat.style.display = 'none');
+            selectedCat.classList.add('active');
+            categoriaActiva = key;
 
-                const panel = document.getElementById('subPanel');
-                panel.style.display = 'block';
-                void panel.offsetWidth; // fuerza reflow
-                panel.classList.add('show');
+            const panel = document.getElementById('subPanel');
+            panel.style.display = 'block';
 
-                const categoria = productosDB[key];
-                const subGrid = document.getElementById('subcategoriasGrid');
-                subGrid.innerHTML = '';
-                const subKeys = Object.keys(categoria.subcategorias);
-                subKeys.forEach(subKey => {
-                    const sub = categoria.subcategorias[subKey];
-                    const subDiv = document.createElement('div');
-                    subDiv.className = 'subcategoria-item';
-                    subDiv.setAttribute('data-subcategoria', subKey);
-                    subDiv.setAttribute('data-emoji', sub.emoji);
-                    subDiv.textContent = sub.nombre;
-                    subDiv.style.opacity = '0';
-                    subDiv.style.transform = 'scale(0.9)';
-                    subDiv.addEventListener('click', (e) => {
-                        createRipple(e, subDiv);
-                        seleccionarSubcategoria(key, subKey);
-                    });
-                    subGrid.appendChild(subDiv);
+            const categoria = productosDB[key];
+            const subGrid = document.getElementById('subcategoriasGrid');
+            subGrid.innerHTML = '';
+            const subKeys = Object.keys(categoria.subcategorias);
+            subKeys.forEach(subKey => {
+                const sub = categoria.subcategorias[subKey];
+                const subDiv = document.createElement('div');
+                subDiv.className = 'subcategoria-item';
+                subDiv.setAttribute('data-subcategoria', subKey);
+                subDiv.setAttribute('data-emoji', sub.emoji);
+                subDiv.textContent = sub.nombre;
+                subDiv.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    seleccionarSubcategoria(key, subKey);
                 });
-                const newSubItems = Array.from(subGrid.children);
-                showElementWithStaggered(newSubItems);
-                document.getElementById('productosGrid').innerHTML = '';
+                subGrid.appendChild(subDiv);
             });
+            document.getElementById('productosGrid').innerHTML = '';
         }
 
         function seleccionarSubcategoria(catKey, subKey) {
-            if (animationInProgress || closingPanel) return;
             if (subcategoriaActiva === subKey) {
                 volverASubcategorias();
                 return;
@@ -1099,75 +1281,46 @@
             const subGrid = document.getElementById('subcategoriasGrid');
             const items = Array.from(subGrid.querySelectorAll('.subcategoria-item'));
             const toHide = items.filter(item => item.getAttribute('data-subcategoria') !== subKey);
-            hideElementWithStaggered(toHide, () => {
-                toHide.forEach(item => item.style.display = 'none');
-                const selectedItem = items.find(item => item.getAttribute('data-subcategoria') === subKey);
-                if (selectedItem) selectedItem.classList.add('selected');
+            toHide.forEach(item => item.style.display = 'none');
+            const selectedItem = items.find(item => item.getAttribute('data-subcategoria') === subKey);
+            if (selectedItem) selectedItem.classList.add('selected');
 
-                const prodGrid = document.getElementById('productosGrid');
-                prodGrid.innerHTML = '';
-                sub.productos.forEach(p => {
-                    const prodDiv = document.createElement('div');
-                    prodDiv.className = 'producto-item';
-                    prodDiv.style.opacity = '0';
-                    prodDiv.style.transform = 'scale(0.9)';
-                    prodDiv.innerHTML = `
-                        <div class="producto-nombre">${p.nombre}</div>
-                        <div class="producto-precio">S/${p.precio.toFixed(2)}</div>
-                        <div class="producto-unidad">por ${p.unidad}</div>
-                        <div class="btn-agregar">Agregar a lista</div>
-                    `;
-                    prodDiv.addEventListener('click', (e) => {
-                        createRipple(e, prodDiv);
-                        if (e.target.classList.contains('btn-agregar')) e.stopPropagation();
-                        agregarProductoDirectamente(p.nombre, p.precio, p.unidad);
-                    });
-                    prodGrid.appendChild(prodDiv);
+            const prodGrid = document.getElementById('productosGrid');
+            prodGrid.innerHTML = '';
+            sub.productos.forEach(p => {
+                const prodDiv = document.createElement('div');
+                prodDiv.className = 'producto-item';
+                prodDiv.innerHTML = `
+                    <div class="producto-nombre">${p.nombre}</div>
+                    <div class="producto-precio">S/${p.precio.toFixed(2)}</div>
+                    <div class="producto-unidad">por ${p.unidad}</div>
+                    <div class="btn-agregar">Agregar a lista</div>
+                `;
+                prodDiv.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('btn-agregar')) e.stopPropagation();
+                    agregarProductoDirectamente(p.nombre, p.precio, p.unidad);
                 });
-                const newProducts = Array.from(prodGrid.children);
-                showElementWithStaggered(newProducts);
+                prodGrid.appendChild(prodDiv);
             });
         }
 
         function volverASubcategorias() {
-            if (animationInProgress || closingPanel) return;
-            if (!categoriaActiva) return;
             const prodGrid = document.getElementById('productosGrid');
-            const products = Array.from(prodGrid.children);
-            if (products.length) {
-                hideElementWithStaggered(products, () => {
-                    prodGrid.innerHTML = '';
-                    const subGrid = document.getElementById('subcategoriasGrid');
-                    const allSubItems = Array.from(subGrid.children);
-                    allSubItems.forEach(item => {
-                        item.style.display = 'flex';
-                        item.style.opacity = '0';
-                        item.style.transform = 'scale(0.9)';
-                        item.classList.remove('selected');
-                    });
-                    showElementWithStaggered(allSubItems);
-                    subcategoriaActiva = null;
-                });
-            } else {
-                const subGrid = document.getElementById('subcategoriasGrid');
-                const allSubItems = Array.from(subGrid.children);
-                allSubItems.forEach(item => {
-                    item.style.display = 'flex';
-                    item.style.opacity = '0';
-                    item.style.transform = 'scale(0.9)';
-                    item.classList.remove('selected');
-                });
-                showElementWithStaggered(allSubItems);
-                subcategoriaActiva = null;
-            }
+            prodGrid.innerHTML = '';
+            const subGrid = document.getElementById('subcategoriasGrid');
+            const allSubItems = Array.from(subGrid.children);
+            allSubItems.forEach(item => {
+                item.style.display = 'flex';
+                item.classList.remove('selected');
+            });
+            subcategoriaActiva = null;
         }
 
-        // ========== FUNCIONES DE LISTA Y CARRITO (sin cambios) ==========
+        // ========== FUNCIONES DE LISTA Y CARRITO ==========
         function agregarProductoDirectamente(nombre, precio, unidad) {
             listaProductos.push({ id: Date.now(), nombre, cantidad: 1, unidad, precio });
             actualizarLista();
             mostrarNotificacion(`${nombre} agregado a la lista`);
-            pulseCart();
         }
 
         function agregarProducto() {
@@ -1183,7 +1336,6 @@
             document.getElementById('precio').value = '';
             document.getElementById('producto').focus();
             mostrarNotificacion('Producto agregado');
-            pulseCart();
         }
 
         function eliminarProducto(id) {
@@ -1494,11 +1646,6 @@
         document.getElementById('producto').addEventListener('keypress', e => { if(e.key==='Enter') agregarProducto(); });
         document.getElementById('cantidad').addEventListener('keypress', e => { if(e.key==='Enter') agregarProducto(); });
         document.getElementById('precio').addEventListener('keypress', e => { if(e.key==='Enter') agregarProducto(); });
-        const btnAdd = document.getElementById('btnAddProducto');
-        btnAdd.addEventListener('click', (e) => {
-            createRipple(e, btnAdd);
-            agregarProducto();
-        });
 
         generarCategorias();
         actualizarLista();
